@@ -6,16 +6,22 @@
 <title>CAT Service - Prenotazione Deluxe</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;}
+html, body{
+    height:100%;
+    margin:0;
+    padding:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    background: radial-gradient(circle at 20% 20%, #c62828, #9e9e9e, #f5f5f5);
+    color:white;
+    overflow-y:auto;
+    -webkit-overflow-scrolling: touch; /* scroll fluido iOS */
+}
+
 body{
-    min-height:100vh;
     display:flex;
     flex-direction:column;
     align-items:center;
     justify-content:flex-start;
-    background: radial-gradient(circle at 20% 20%, #c62828, #9e9e9e, #f5f5f5);
-    overflow-y:auto;
-    color:white;
     padding:30px 10px;
 }
 
@@ -41,7 +47,7 @@ body{
     100% { transform: translateY(-300px) scale(0); opacity:0; }
 }
 
-/* LOGO ANIMATO */
+/* LOGO */
 .header{margin-bottom:20px; display:flex; justify-content:center; position:relative;}
 .header img{
     max-width:140px;
@@ -53,7 +59,7 @@ body{
     100%{transform:scale(1) rotate(-2deg);}
 }
 
-/* CONTAINER PREMIUM */
+/* CONTAINER PREMIUM SCROLLABILE */
 .container{
     width:100%;
     max-width:450px;
@@ -63,10 +69,12 @@ body{
     padding:30px 25px;
     box-shadow:0 15px 40px rgba(0,0,0,0.5), inset 0 0 10px rgba(255,255,255,0.1);
     border:1px solid rgba(255,255,255,0.25);
-    position:relative;
+    max-height:90vh; /* container massimo al 90% viewport */
+    overflow-y:auto; /* scroll interno se necessario */
+    -webkit-overflow-scrolling: touch;
 }
 
-/* TITOLO CON FUOCO */
+/* TITOLO FUOCO */
 h2{text-align:center;font-size:24px;margin-bottom:25px;}
 .fire{
     display:inline-block;
@@ -115,7 +123,7 @@ h2{text-align:center;font-size:24px;margin-bottom:25px;}
 }
 .input-group input.error,.input-group select.error{border:2px solid red !important;}
 
-/* BOTTONE WHATSAPP ANIMATO GRADIENT */
+/* BOTTONE WHATSAPP */
 button{
     width:100%;
     padding:16px;
@@ -135,73 +143,46 @@ button{
     overflow:hidden;
     animation:btnGradient 3s ease infinite, pulse 2s infinite;
 }
-@keyframes btnGradient{
-    0%{background-position:0% 50%;}
-    50%{background-position:100% 50%;}
-    100%{background-position:0% 50%;}
-}
+@keyframes btnGradient{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
 .whatsapp-icon{width:26px;height:26px;animation:iconBounce 1.2s infinite;}
 @keyframes iconBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-4px);}}
 @keyframes pulse{0%{box-shadow:0 0 15px rgba(34,197,94,0.6);}50%{box-shadow:0 0 30px rgba(34,197,94,1);}100%{box-shadow:0 0 15px rgba(34,197,94,0.6);}}
-button::before{
-    content:"";
-    position:absolute;
-    width:200%;
-    height:100%;
-    background:linear-gradient(120deg,transparent,rgba(255,255,255,0.6),transparent);
-    top:0;left:-100%;
-    animation:shine 3s infinite;
-}
+button::before{content:"";position:absolute;width:200%;height:100%;background:linear-gradient(120deg,transparent,rgba(255,255,255,0.6),transparent);top:0;left:-100%;animation:shine 3s infinite;}
 @keyframes shine{0%{left:-100%;}50%{left:100%;}100%{left:100%;}}
 
-/* SCRITTA SOTTO IL BOTTONE CON NEON LAMPEGGIANTE */
+/* SCRITTA CAT SERVICE FUOCO NEON */
 .animatedText{
     text-align:center;
-    margin-top:15px;
+    margin-top:20px;
     font-weight:bold;
-    color:#ffd700;
-    font-size:22px;
+    color:#ff9933;
+    font-size:30px;
     animation: neonGlow 1.5s infinite alternate, glowBounce 1.5s infinite alternate;
-    text-shadow:0 0 5px #fff200,0 0 10px #ffd700,0 0 15px #ffcc00,0 0 20px #ffaa00;
+    text-shadow:0 0 5px #ffcc66,0 0 10px #ff9933,0 0 20px #ff6600,0 0 30px #ff6600;
 }
-@keyframes glowBounce{
-    0%{transform:translateY(0) scale(1);}
-    50%{transform:translateY(-6px) scale(1.05);}
-    100%{transform:translateY(0) scale(1);}
-}
-@keyframes neonGlow{
-    0%{text-shadow:0 0 5px #fff200,0 0 10px #ffd700,0 0 15px #ffcc00,0 0 20px #ffaa00;}
-    50%{text-shadow:0 0 10px #fff200,0 0 20px #ffd700,0 0 30px #ffcc00,0 0 40px #ffaa00;}
-    100%{text-shadow:0 0 5px #fff200,0 0 10px #ffd700,0 0 15px #ffcc00,0 0 20px #ffaa00;}
-}
+@keyframes glowBounce{0%{transform:translateY(0) scale(1);}50%{transform:translateY(-6px) scale(1.05);}100%{transform:translateY(0) scale(1);}}
+@keyframes neonGlow{0%{text-shadow:0 0 5px #ffcc66,0 0 10px #ff9933,0 0 20px #ff6600,0 0 30px #ff6600;}50%{text-shadow:0 0 12px #ffcc66,0 0 25px #ff9933,0 0 40px #ff6600,0 0 50px #ff6600;}100%{text-shadow:0 0 5px #ffcc66,0 0 10px #ff9933,0 0 20px #ff6600,0 0 30px #ff6600;}}
 
 /* MODALE */
-.modal{
-    position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.8);backdrop-filter:blur(6px);
-}
+.modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.8);backdrop-filter:blur(6px);}
 .box{background:rgba(0,0,0,0.95);color:white;padding:25px;border-radius:20px;text-align:center;}
-.box button{margin:8px;padding:12px 22px;border:none;border-radius:10px;font-weight:bold;cursor:pointer;}
-.ok{background:#22c55e;}
-.no{background:#555;}
+.box button{margin:8px;padding:12px 22px;border-radius:12px;font-weight:bold;cursor:pointer;}
+.box .ok{background:#22c55e;color:white;}
+.box .no{background:#555;color:white;}
 
-/* SUCCESS OVERLAY */
-.successOverlay{
-    position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);backdrop-filter:blur(10px);opacity:0;pointer-events:none;transition:0.4s;
-}
+/* SUCCESS */
+.successOverlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);backdrop-filter:blur(10px);opacity:0;pointer-events:none;transition:0.4s;}
 .successOverlay.active{opacity:1;}
-.successBox{width:130px;height:130px;border-radius:50%;background:#22c55e;display:flex;align-items:center;justify-content:center;transform:scale(0.5);animation:pop 0.5s forwards;}
+.successBox{width:120px;height:120px;border-radius:50%;background:#22c55e;display:flex;align-items:center;justify-content:center;transform:scale(0.5);animation:pop 0.5s forwards;}
 @keyframes pop{to{transform:scale(1);}}
 .check{font-size:50px;color:white;animation:fadeIn 0.5s 0.3s forwards;opacity:0;}
 @keyframes fadeIn{to{opacity:1;}}
 
 /* RESPONSIVO */
 @media(max-width:480px){
-    .container{padding:20px;border-radius:20px;}
-    h2{font-size:20px;}
-    input, select, textarea{font-size:15px;padding:14px;}
-    button{font-size:16px;padding:14px;}
-    .icon{font-size:16px;}
-    .animatedText{font-size:18px;}
+    .container{padding:20px 15px;}
+    h2{font-size:22px;}
+    .animatedText{font-size:26px;}
 }
 </style>
 </head>
@@ -214,115 +195,92 @@ button::before{
 </div>
 
 <div class="container">
-
 <h2><span class="fire">🔥</span> Prenota il tuo intervento</h2>
 
-<div class="input-group"><span class="icon">👤</span><input id="nome" placeholder="Nome" required></div>
-<div class="input-group"><span class="icon">👤</span><input id="cognome" placeholder="Cognome" required></div>
-<div class="input-group"><span class="icon">📍</span><input id="indirizzo" placeholder="Indirizzo completo" required></div>
-<div class="input-group"><span class="icon">📞</span><input id="telefono" placeholder="Telefono" required></div>
-<div class="input-group"><span class="icon">☎️</span><input id="telefono_fisso" placeholder="Telefono fisso (facoltativo)"></div>
-<div class="input-group"><span class="icon">🔥</span><input id="marca" placeholder="Marca stufa" required></div>
-<div class="input-group"><span class="icon">🛠</span><input id="modello" placeholder="Modello stufa (facoltativo)"></div>
-
+<div class="input-group"><span class="icon">👤</span><input id="nome" placeholder="Nome"></div>
+<div class="input-group"><span class="icon">👤</span><input id="cognome" placeholder="Cognome"></div>
+<div class="input-group"><span class="icon">📍</span><input id="indirizzo" placeholder="Indirizzo completo"></div>
+<div class="input-group"><span class="icon">📞</span><input id="telefono" placeholder="Telefono"></div>
+<div class="input-group"><span class="icon">🔥</span><input id="marca" placeholder="Marca stufa"></div>
 <div class="input-group"><span class="icon">🛠</span>
-<select id="tipoIntervento" required>
+<select id="tipo">
 <option value="">Tipologia intervento</option>
 <option>Manutenzione</option>
 <option>Riparazione</option>
 <option>Prima accensione</option>
-</select></div>
-
-<div class="input-group"><span class="icon">📝</span>
-<textarea id="note" placeholder="Descrivi brevemente il problema (facoltativo)"></textarea></div>
-
+</select>
+</div>
+<div class="input-group"><span class="icon">📝</span><textarea id="note" placeholder="Descrivi brevemente il problema (facoltativo)"></textarea></div>
 <div class="input-group"><span class="icon">📅</span><input id="data" readonly></div>
 
 <button id="btn"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" class="whatsapp-icon">Prenota su WhatsApp</button>
-<div class="animatedText">CAT SERVICE DI FABIO CAMPITIELLO</div>
 
+<div class="animatedText">CAT SERVICE DI FABIO CAMPITIELLO</div>
 </div>
 
-<!-- MODALE -->
 <div class="modal" id="modal">
 <div class="box">
-<h3>Conferma invio</h3>
-<p>Inviare la prenotazione su WhatsApp?</p>
+<h3>Conferma invio prenotazione?</h3>
 <button class="ok" id="conferma">Invia</button>
 <button class="no" id="annulla">Annulla</button>
 </div>
 </div>
 
-<!-- SUCCESS -->
 <div class="successOverlay" id="success">
 <div class="successBox"><div class="check">✓</div></div>
 </div>
 
 <script>
-// DATA AUTOMATICA
-document.getElementById("data").value = new Date().toLocaleDateString("it-IT");
+data.value=new Date().toLocaleDateString("it-IT");
 
-let messaggio="";
+let msg="";
+btn.onclick=()=>{
+    let campi=["nome","cognome","indirizzo","telefono","marca","tipo"];
+    let ok=true;
+    campi.forEach(id=>{
+        let el=document.getElementById(id);
+        el.classList.remove("error");
+        if(!el.value){el.classList.add("error"); ok=false;}
+    });
+    if(!ok) return;
+    if(navigator.vibrate) navigator.vibrate(100);
+
+    msg=`🔥 Prenotazione CAT Service
+Nome: ${nome.value} ${cognome.value}
+Indirizzo: ${indirizzo.value}
+Telefono: ${telefono.value}
+Marca: ${marca.value}
+Tipo intervento: ${tipo.value}
+Data: ${data.value}
+${note.value? "Problema: "+note.value : ""}`;
+
+    modal.style.display="flex";
+};
+
+conferma.onclick=()=>{
+    if(navigator.vibrate) navigator.vibrate(200);
+    modal.style.display="none";
+    success.classList.add("active");
+    setTimeout(()=>{
+        success.classList.remove("active");
+        window.open("https://wa.me/393394245508?text="+encodeURIComponent(msg));
+    },1200);
+};
+
+annulla.onclick=()=>{modal.style.display="none";}
+
+// SCINTILLE SFONDO
 const sparkContainer = document.getElementById("sparkContainer");
-
-// SCINTILLE
 function createSpark(){
     const spark=document.createElement("div");
     spark.className="sparkParticle";
     spark.style.left=Math.random()*window.innerWidth+"px";
     spark.style.top=window.innerHeight+"px";
-    spark.style.animationDuration=(1.5+Math.random()*1)+"s";
+    spark.style.animationDuration=(1.5+Math.random()*1.2)+"s";
     sparkContainer.appendChild(spark);
-    setTimeout(()=>spark.remove(),2000);
+    setTimeout(()=>spark.remove(),2200);
 }
 setInterval(createSpark,150);
-
-// MODALE E INVIO
-const btn=document.getElementById("btn");
-const modal=document.getElementById("modal");
-const success=document.getElementById("success");
-
-btn.onclick=()=>{
-    const campi=["nome","cognome","indirizzo","telefono","marca","tipoIntervento"];
-    let ok=true;
-    campi.forEach(id=>{
-        const el=document.getElementById(id);
-        el.classList.remove("error");
-        if(!el.value){el.classList.add("error"); ok=false;}
-    });
-    if(!ok) return;
-
-    if(navigator.vibrate) navigator.vibrate(50);
-
-    messaggio=`🔥 Prenotazione CAT Service
-Nome: ${document.getElementById("nome").value}
-Cognome: ${document.getElementById("cognome").value}
-Indirizzo: ${document.getElementById("indirizzo").value}
-Telefono: ${document.getElementById("telefono").value}
-Telefono fisso: ${document.getElementById("telefono_fisso").value}
-Marca stufa: ${document.getElementById("marca").value}
-Modello stufa: ${document.getElementById("modello").value}
-Tipo intervento: ${document.getElementById("tipoIntervento").value}
-Descrizione problema: ${document.getElementById("note").value}
-Data prenotazione intervento: ${document.getElementById("data").value}`;
-
-    modal.style.display="flex";
-}
-
-// ANNULLA MODALE
-document.getElementById("annulla").onclick=()=>{modal.style.display="none";}
-
-// CONFERMA MODALE + VIBRAZIONE + SUCCESSO
-document.getElementById("conferma").onclick=()=>{
-    modal.style.display="none";
-    if(navigator.vibrate) navigator.vibrate(150);
-    success.classList.add("active");
-    setTimeout(()=>{
-        success.classList.remove("active");
-        window.open("https://wa.me/393394245508?text="+encodeURIComponent(messaggio));
-    },1500);
-};
 </script>
-
 </body>
 </html>
