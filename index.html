@@ -43,12 +43,12 @@ body{
 }
 @keyframes rise{
     0% { transform: translateY(0) scale(0.5); opacity:1; }
-    80% { transform: translateY(-250px) scale(1); opacity:0.5; }
-    100% { transform: translateY(-300px) scale(0); opacity:0; }
+    80% { transform: translateY(-300px) scale(1); opacity:0.5; }
+    100% { transform: translateY(-350px) scale(0); opacity:0; }
 }
 
 /* LOGO */
-.header{margin-bottom:20px; display:flex; justify-content:center; position:relative;}
+.header{margin-bottom:20px; display:flex; justify-content:center;}
 .header img{
     max-width:140px;
     animation:logoFire 1.2s infinite alternate;
@@ -59,7 +59,7 @@ body{
     100%{transform:scale(1) rotate(-2deg);}
 }
 
-/* CONTAINER PREMIUM SCROLLABILE */
+/* CONTAINER PREMIUM */
 .container{
     width:100%;
     max-width:450px;
@@ -69,9 +69,6 @@ body{
     padding:30px 25px;
     box-shadow:0 15px 40px rgba(0,0,0,0.5), inset 0 0 10px rgba(255,255,255,0.1);
     border:1px solid rgba(255,255,255,0.25);
-    max-height:90vh;
-    overflow-y:auto;
-    -webkit-overflow-scrolling: touch;
 }
 
 /* TITOLO FUOCO */
@@ -150,18 +147,18 @@ button{
 button::before{content:"";position:absolute;width:200%;height:100%;background:linear-gradient(120deg,transparent,rgba(255,255,255,0.6),transparent);top:0;left:-100%;animation:shine 3s infinite;}
 @keyframes shine{0%{left:-100%;}50%{left:100%;}100%{left:100%;}}
 
-/* SCRITTA CAT SERVICE FUOCO ROSSO */
+/* SCRITTA CAT SERVICE ROSSA + GLOW */
 .animatedText{
     text-align:center;
     margin-top:20px;
     font-weight:bold;
-    color:#ff3333;
-    font-size:32px;
+    color:#ff0000;
+    font-size:40px;
     animation: neonGlow 1.5s infinite alternate, glowBounce 1.5s infinite alternate;
-    text-shadow:0 0 5px #ff6666,0 0 10px #ff3333,0 0 20px #ff1111,0 0 30px #ff1111;
+    text-shadow:0 0 10px #ff6666,0 0 20px #ff3333,0 0 35px #ff1111,0 0 50px #ff1111;
 }
-@keyframes glowBounce{0%{transform:translateY(0) scale(1);}50%{transform:translateY(-6px) scale(1.05);}100%{transform:translateY(0) scale(1);}}
-@keyframes neonGlow{0%{text-shadow:0 0 5px #ff6666,0 0 10px #ff3333,0 0 20px #ff1111,0 0 30px #ff1111;}50%{text-shadow:0 0 12px #ff6666,0 0 25px #ff3333,0 0 40px #ff1111,0 0 50px #ff1111;}100%{text-shadow:0 0 5px #ff6666,0 0 10px #ff3333,0 0 20px #ff1111,0 0 30px #ff1111;}}
+@keyframes glowBounce{0%{transform:translateY(0) scale(1);}50%{transform:translateY(-10px) scale(1.05);}100%{transform:translateY(0) scale(1);}}
+@keyframes neonGlow{0%{text-shadow:0 0 10px #ff6666,0 0 20px #ff3333,0 0 35px #ff1111,0 0 50px #ff1111;}50%{text-shadow:0 0 20px #ff6666,0 0 35px #ff3333,0 0 50px #ff1111,0 0 70px #ff1111;}100%{text-shadow:0 0 10px #ff6666,0 0 20px #ff3333,0 0 35px #ff1111,0 0 50px #ff1111;}}
 
 /* MODALE */
 .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.8);backdrop-filter:blur(6px);}
