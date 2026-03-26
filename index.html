@@ -23,7 +23,6 @@ body{
     align-items:center;
     justify-content:flex-start;
     padding:30px 10px;
-    perspective: 1000px; /* per parallax */
 }
 
 /* SFONDO SCINTILLE */
@@ -73,7 +72,6 @@ body{
     max-height:90vh;
     overflow-y:auto;
     -webkit-overflow-scrolling: touch;
-    transition: transform 0.2s ease-out; /* parallax */
 }
 
 /* TITOLO FUOCO */
@@ -196,7 +194,7 @@ button::before{content:"";position:absolute;width:200%;height:100%;background:li
     <img src="./logo.png" alt="Logo CAT Service">
 </div>
 
-<div class="container" id="mainContainer">
+<div class="container">
 <h2><span class="fire">🔥</span> Prenota il tuo intervento</h2>
 
 <div class="input-group"><span class="icon">👤</span><input id="nome" placeholder="Nome"></div>
@@ -283,14 +281,6 @@ function createSpark(){
     setTimeout(()=>spark.remove(),2200);
 }
 setInterval(createSpark,150);
-
-// PARALLAX SCROLL
-const container=document.getElementById("mainContainer");
-window.addEventListener('scroll',()=>{
-    let scrollY=window.scrollY;
-    container.style.transform=`translateY(${scrollY*0.05}px)`; // leggero parallax
-    sparkContainer.style.transform=`translateY(${scrollY*0.03}px)`;
-});
 </script>
 </body>
 </html>
