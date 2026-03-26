@@ -6,35 +6,38 @@
 <title>CAT Service - Prenotazione</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif;}
-
+*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;}
 body{
     min-height:100vh;
     display:flex;
     justify-content:center;
     align-items:flex-start;
     padding:20px 0;
+    background: radial-gradient(circle at 20% 20%, #c62828, #9e9e9e, #f5f5f5);
+    overflow:hidden;
     color:white;
-    background: linear-gradient(135deg, #c62828, #f5f5f5, #9e9e9e);
-    background-size: 400% 400%;
-    animation:gradientMove 15s ease infinite;
 }
 
-@keyframes gradientMove {
-    0%{background-position:0% 50%;}
-    50%{background-position:100% 50%;}
-    100%{background-position:0% 50%;}
+/* SCINTILLE SULLO SFONDO */
+#sparkContainer{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:-2;
 }
-
-/* HEADER LOGO */
-.header{
-    text-align:center;
-    margin-bottom:15px;
+.sparkParticle{
+    position:absolute;
+    width:4px;
+    height:4px;
+    border-radius:50%;
+    background:orange;
+    opacity:0.8;
+    animation:rise 2s linear infinite;
 }
-.header img{
-    max-width:140px;
-    display:block;
-    margin:0 auto;
+@keyframes rise{
+    0% { transform: translateY(0) scale(0.5); opacity:1; }
+    80% { transform: translateY(-200px) scale(1); opacity:0.5; }
+    100% { transform: translateY(-250px) scale(0); opacity:0; }
 }
 
 /* CONTAINER */
@@ -42,38 +45,51 @@ body{
     width:90%;
     max-width:420px;
     background:rgba(0,0,0,0.5);
-    backdrop-filter:blur(12px);
+    backdrop-filter:blur(20px);
     padding:25px;
-    border-radius:14px;
-    box-shadow:0 5px 25px rgba(0,0,0,0.4);
+    border-radius:25px;
+    box-shadow:0 0 40px rgba(0,0,0,0.6);
+    border:1px solid rgba(255,255,255,0.2);
+    position:relative;
 }
 
-/* TITOLI */
-h2{text-align:center;color:#c62828;margin-bottom:20px;font-size:22px;}
+/* HEADER LOGO */
+.header{text-align:center;margin-bottom:15px;}
+.header img{max-width:140px;display:block;margin:0 auto;}
 
-/* INPUT E SELECT */
-input, select{
+/* TITOLO CON FUOCO */
+h2{text-align:center;margin-bottom:20px;}
+.fire{
+    display:inline-block;
+    font-size:22px;
+    animation:fireContinuous 1s infinite alternate;
+}
+@keyframes fireContinuous{
+    0% { transform: scale(1.1) rotate(-5deg); text-shadow:0 0 5px #ff9800,0 0 15px #ff5722,0 0 25px #ff0000;}
+    50% { transform: scale(1.2) rotate(3deg); text-shadow:0 0 10px #ff9800,0 0 25px #ff5722,0 0 40px #ff0000;}
+    100% { transform: scale(1.1) rotate(-5deg); text-shadow:0 0 5px #ff9800,0 0 15px #ff5722,0 0 25px #ff0000;}
+}
+
+/* INPUT CON ICONE */
+.input-group{position:relative;margin-bottom:12px;}
+.input-group input, .input-group select, .input-group textarea{
     width:100%;
-    padding:14px;
-    margin-bottom:12px;
-    border-radius:10px;
+    padding:14px 14px 14px 45px;
+    border-radius:12px;
     border:none;
-    font-size:16px;
-    outline:none;
     background:rgba(255,255,255,0.15);
     color:white;
+    outline:none;
     transition:0.3s;
 }
-input::placeholder{color:#ddd;}
-input:focus, select:focus{background:rgba(255,255,255,0.25);transform:scale(1.02);}
-
-/* LABEL */
-label{
-    font-size:14px;
-    margin-bottom:5px;
-    display:block;
-    color:#fff;
-}
+.input-group input::placeholder,
+.input-group select::placeholder,
+.input-group textarea::placeholder{color:#ddd;}
+.input-group input:focus,
+.input-group select:focus,
+.input-group textarea:focus{background:rgba(255,255,255,0.25);transform:scale(1.02);}
+.icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);opacity:0.8;font-size:16px;}
+.input-group input.error,.input-group select.error{border:2px solid red !important;}
 
 /* PULSANTE WHATSAPP ANIMATO */
 button{
@@ -86,23 +102,15 @@ button{
     font-size:17px;
     font-weight:bold;
     cursor:pointer;
-    position:relative;
-    overflow:hidden;
     display:flex;
     align-items:center;
     justify-content:center;
     gap:10px;
+    position:relative;
+    overflow:hidden;
     animation:pulse 2s infinite;
 }
-
-/* ICONA WHATSAPP ANIMATA */
-.whatsapp-icon{
-    width:24px;
-    height:24px;
-    animation:iconBounce 1.2s infinite;
-}
-
-/* EFFETTI */
+.whatsapp-icon{width:24px;height:24px;animation:iconBounce 1.2s infinite;}
 @keyframes iconBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-4px);}}
 @keyframes pulse{0%{box-shadow:0 0 10px rgba(34,197,94,0.6);}50%{box-shadow:0 0 25px rgba(34,197,94,1);}100%{box-shadow:0 0 10px rgba(34,197,94,0.6);}}
 button::before{
@@ -110,159 +118,147 @@ button::before{
     position:absolute;
     width:200%;
     height:100%;
-    background:linear-gradient(120deg,transparent,rgba(255,255,255,0.6),transparent);
+    background:linear-gradient(120deg,transparent,rgba(255,255,255,0.7),transparent);
     top:0;left:-100%;
     animation:shine 3s infinite;
 }
 @keyframes shine{0%{left:-100%;}50%{left:100%;}100%{left:100%;}}
-button:active{transform:scale(0.95);}
-
-/* FIAMMA SCINTILLANTE */
-.fire{
-    display:inline-block;
-    font-size:18px;
-    animation:fireContinuous 1s infinite alternate;
-}
-@keyframes fireContinuous{
-    0% { transform: scale(1.1) rotate(-5deg); text-shadow:0 0 5px #ff9800,0 0 15px #ff5722,0 0 25px #ff0000;}
-    25% { transform: scale(1.3) rotate(5deg); text-shadow:0 0 10px #ff9800,0 0 25px #ff5722,0 0 40px #ff0000;}
-    50% { transform: scale(1.2) rotate(-3deg); text-shadow:0 0 7px #ff9800,0 0 20px #ff5722,0 0 35px #ff0000;}
-    75% { transform: scale(1.35) rotate(4deg); text-shadow:0 0 12px #ff9800,0 0 28px #ff5722,0 0 45px #ff0000;}
-    100% { transform: scale(1.1) rotate(-5deg); text-shadow:0 0 5px #ff9800,0 0 15px #ff5722,0 0 25px #ff0000;}
-}
 
 /* MODALE */
 .modal{
-    position:fixed;width:100%;height:100%;background:rgba(0,0,0,0.6);top:0;left:0;
-    display:none;justify-content:center;align-items:center;
+    position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.8);backdrop-filter:blur(6px);
 }
 .box{
-    background:rgba(0,0,0,0.9);
-    color:white;
-    padding:25px;
-    border-radius:12px;
-    text-align:center;
-    width:90%;
-    max-width:320px;
+    background:#020617;color:#fff;padding:25px;border-radius:15px;text-align:center;
 }
-.box button{width:45%;padding:12px;margin:5px;border:none;border-radius:6px;font-weight:bold;}
-.ok{background:#22c55e;color:white;}
-.no{background:#555;color:white;}
+.box button{margin:5px;padding:12px 20px;border:none;border-radius:8px;cursor:pointer;font-weight:bold;}
+.ok{background:#22c55e;}
+.no{background:#555;}
 
-.success{
-    display:none;text-align:center;color:#2e7d32;margin-top:10px;font-weight:bold;
+/* SUCCESS OVERLAY */
+.successOverlay{
+    position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);backdrop-filter:blur(10px);opacity:0;pointer-events:none;transition:0.4s;
 }
+.successOverlay.active{opacity:1;}
+.successBox{width:120px;height:120px;border-radius:50%;background:#22c55e;display:flex;align-items:center;justify-content:center;transform:scale(0.5);animation:pop 0.5s forwards;}
+@keyframes pop{to{transform:scale(1);}}
+.check{font-size:50px;color:white;animation:fadeIn 0.5s 0.3s forwards;opacity:0;}
+@keyframes fadeIn{to{opacity:1;}}
 
 /* RESPONSIVO */
-@media (max-width:480px){
-    h2{font-size:20px;}
-    input, select{font-size:15px;padding:12px;}
-    button{font-size:16px;padding:12px;}
-    .fire{font-size:16px;}
-    .header img{max-width:100px;}
-}
+@media(max-width:480px){.container{padding:20px;border-radius:20px;}h2{font-size:20px;}button{font-size:16px;padding:14px;}}
 </style>
 </head>
-
 <body>
 
-<div class="header">
-    <img src="./logo.png" alt="Logo CAT Service">
-</div>
+<div id="sparkContainer"></div>
+
+<div class="header"><img src="./logo.png" alt="Logo CAT Service"></div>
 
 <div class="container">
-    <h2>Prenota il tuo intervento</h2>
 
-    <input type="text" id="nome" placeholder="Nome" required>
-    <input type="text" id="cognome" placeholder="Cognome" required>
-    <input type="text" id="indirizzo" placeholder="Indirizzo completo" required>
-    <input type="tel" id="telefono" placeholder="Telefono" required>
-    <input type="tel" id="telefono_fisso" placeholder="Telefono fisso (facoltativo)">
-    <input type="text" id="marca" placeholder="Marca stufa" required>
-    <input type="text" id="modello" placeholder="Modello stufa (facoltativo)">
-    <select id="tipoIntervento" required>
-        <option value="">Tipologia intervento</option>
-        <option value="Manutenzione">Manutenzione</option>
-        <option value="Riparazione">Riparazione</option>
-        <option value="Prima accensione">Prima accensione</option>
-    </select>
+<h2><span class="fire">🔥</span> Prenota il tuo intervento</h2>
 
-    <label>Data prenotazione intervento:</label>
-    <input type="text" id="data" readonly>
+<div class="input-group"><span class="icon">👤</span><input id="nome" placeholder="Nome" required></div>
+<div class="input-group"><span class="icon">👤</span><input id="cognome" placeholder="Cognome" required></div>
+<div class="input-group"><span class="icon">📍</span><input id="indirizzo" placeholder="Indirizzo completo" required></div>
+<div class="input-group"><span class="icon">📞</span><input id="telefono" placeholder="Telefono" required></div>
+<div class="input-group"><span class="icon">📞</span><input id="telefono_fisso" placeholder="Telefono fisso (facoltativo)"></div>
+<div class="input-group"><span class="icon">🔥</span><input id="marca" placeholder="Marca stufa" required></div>
+<div class="input-group"><span class="icon">🛠</span><input id="modello" placeholder="Modello stufa (facoltativo)"></div>
 
-    <button id="btn">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" class="whatsapp-icon" alt="WhatsApp">
-        Prenota su WhatsApp
-    </button>
-
-    <div style="text-align:center;margin-top:12px;">
-        <span class="fire">🔥 CAT Service di Fabio Campitiello</span>
-    </div>
-
-    <div class="success" id="successMsg">
-        ✅ Prenotazione inviata! Apri WhatsApp e premi INVIA
-    </div>
+<div class="input-group"><span class="icon">🛠</span>
+<select id="tipoIntervento" required>
+<option value="">Tipologia intervento</option>
+<option>Manutenzione</option>
+<option>Riparazione</option>
+<option>Prima accensione</option>
+</select>
 </div>
 
+<div class="input-group"><span class="icon">📝</span>
+<textarea id="note" placeholder="Descrivi brevemente il problema (facoltativo)"></textarea>
+</div>
+
+<div class="input-group"><span class="icon">📅</span><input id="data" readonly></div>
+
+<button id="btn"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" class="whatsapp-icon">Prenota su WhatsApp</button>
+
+</div>
+
+<!-- MODALE -->
 <div class="modal" id="modal">
-    <div class="box">
-        <h3>Conferma</h3>
-        <p>Inviare la prenotazione su WhatsApp?</p>
-        <button class="no" id="annulla">Annulla</button>
-        <button class="ok" id="conferma">Invia</button>
-    </div>
+<div class="box">
+<h3>Conferma invio</h3>
+<p>Inviare la prenotazione su WhatsApp?</p>
+<button class="ok" id="conferma">Invia</button>
+<button class="no" id="annulla">Annulla</button>
+</div>
+</div>
+
+<!-- SUCCESS -->
+<div class="successOverlay" id="success">
+<div class="successBox"><div class="check">✓</div></div>
 </div>
 
 <script>
-window.onload=function(){
-    let oggi = new Date();
-    let g = String(oggi.getDate()).padStart(2,'0');
-    let m = String(oggi.getMonth()+1).padStart(2,'0');
-    let a = oggi.getFullYear();
-    document.getElementById("data").value = g+"/"+m+"/"+a;
-};
+// DATA AUTOMATICA
+document.getElementById("data").value = new Date().toLocaleDateString("it-IT");
 
 let messaggio="";
-document.getElementById("btn").onclick=function(){
-    let nome=document.getElementById("nome").value;
-    let cognome=document.getElementById("cognome").value;
-    let indirizzo=document.getElementById("indirizzo").value;
-    let telefono=document.getElementById("telefono").value;
-    let telefonoFisso=document.getElementById("telefono_fisso").value;
-    let marca=document.getElementById("marca").value;
-    let modello=document.getElementById("modello").value;
-    let tipoIntervento=document.getElementById("tipoIntervento").value;
-    let data=document.getElementById("data").value;
+const sparkContainer = document.getElementById("sparkContainer");
 
-    if(!nome||!cognome||!indirizzo||!telefono||!marca||!tipoIntervento){
-        alert("Compila tutti i campi obbligatori!");
-        return;
-    }
+// CREAZIONE SCINTILLE
+function createSpark(){
+    const spark=document.createElement("div");
+    spark.className="sparkParticle";
+    spark.style.left=Math.random()*window.innerWidth+"px";
+    spark.style.top=window.innerHeight+"px";
+    spark.style.animationDuration=(1.5+Math.random()*1)+"s";
+    sparkContainer.appendChild(spark);
+    setTimeout(()=>spark.remove(),2000);
+}
+setInterval(createSpark,150);
+
+// MODALE E INVIO
+const btn=document.getElementById("btn");
+const modal=document.getElementById("modal");
+const success=document.getElementById("success");
+
+btn.onclick=()=>{
+    const campi=["nome","cognome","indirizzo","telefono","marca","tipoIntervento"];
+    let ok=true;
+    campi.forEach(id=>{
+        const el=document.getElementById(id);
+        el.classList.remove("error");
+        if(!el.value){el.classList.add("error"); ok=false;}
+    });
+    if(!ok) return;
 
     messaggio=`🔥 Prenotazione CAT Service
-Nome: ${nome}
-Cognome: ${cognome}
-Indirizzo: ${indirizzo}
-Telefono: ${telefono}
-Telefono fisso: ${telefonoFisso}
-Marca stufa: ${marca}
-Modello stufa: ${modello}
-Tipo intervento: ${tipoIntervento}
-Data prenotazione intervento: ${data}`;
+Nome: ${document.getElementById("nome").value}
+Cognome: ${document.getElementById("cognome").value}
+Indirizzo: ${document.getElementById("indirizzo").value}
+Telefono: ${document.getElementById("telefono").value}
+Telefono fisso: ${document.getElementById("telefono_fisso").value}
+Marca stufa: ${document.getElementById("marca").value}
+Modello stufa: ${document.getElementById("modello").value}
+Tipo intervento: ${document.getElementById("tipoIntervento").value}
+Descrizione problema: ${document.getElementById("note").value}
+Data prenotazione intervento: ${document.getElementById("data").value}`;
 
-    document.getElementById("modal").style.display="flex";
+    modal.style.display="flex";
 }
 
-document.getElementById("annulla").onclick=function(){
-    document.getElementById("modal").style.display="none";
-}
-
-document.getElementById("conferma").onclick=function(){
-    let url="https://wa.me/393394245508?text="+encodeURIComponent(messaggio);
-    window.open(url,"_blank");
-    document.getElementById("modal").style.display="none";
-    document.getElementById("successMsg").style.display="block";
-}
+document.getElementById("annulla").onclick=()=>{modal.style.display="none";}
+document.getElementById("conferma").onclick=()=>{
+    modal.style.display="none";
+    success.classList.add("active");
+    setTimeout(()=>{
+        success.classList.remove("active");
+        window.open("https://wa.me/393394245508?text="+encodeURIComponent(messaggio));
+    },1500);
+};
 </script>
 
 </body>
