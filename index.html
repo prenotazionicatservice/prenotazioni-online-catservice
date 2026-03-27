@@ -3,211 +3,387 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CAT Service - Prenotazione Deluxe</title>
+<title>C.A.T. SERVICE - Prenotazione</title>
 
 <style>
-:root{--vh:100vh;}
-html, body{
-    height:100%; margin:0; padding:0;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-    background: radial-gradient(circle at 20% 20%, #c62828, #9e9e9e, #f5f5f5);
-    color:white;
-    overflow-y:auto;
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial;
 }
 
-/* SFONDO SCINTILLE */
-#sparkContainer{position:fixed; inset:0; pointer-events:none; z-index:-2;}
-.sparkParticle{position:absolute;width:4px;height:4px;border-radius:50%;background:orange;opacity:0.8; animation:rise 2s linear infinite;}
-@keyframes rise{0%{transform:translateY(0) scale(0.5);opacity:1;}80%{transform:translateY(-300px) scale(1);opacity:0.5;}100%{transform:translateY(-350px) scale(0);opacity:0;}}
+body{
+    background: radial-gradient(circle at 20% 20%, #450a0a, #000000);
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding: 20px;
+}
 
-/* LOGO */
-.header{margin:20px 0;display:flex;justify-content:center;}
-.header img{max-width:140px;animation:logoFire 1.2s infinite alternate;}
-@keyframes logoFire{0%{transform:scale(1) rotate(-2deg);}50%{transform:scale(1.05) rotate(2deg);}100%{transform:scale(1) rotate(-2deg);}}
+/* TITOLO ANIMATO */
+.logo-container {
+    text-align: center;
+    margin-bottom: 25px;
+}
 
-/* CONTAINER */
+h2{
+    color:#fff;
+    font-size:26px;
+    letter-spacing:2px;
+    text-transform: uppercase;
+    animation:titleGlow 2s infinite alternate;
+}
+
+h3.sub-logo {
+    color: #ef4444;
+    font-size: 14px;
+    margin-top: 5px;
+    letter-spacing: 1px;
+}
+
+@keyframes titleGlow{
+    0%{ text-shadow:0 0 5px #ef4444; transform:scale(1);}
+    100%{ text-shadow:0 0 20px #ffffff; transform:scale(1.05);}
+}
+
 .container{
-    width:90%; max-width:550px; margin:auto;
-    background:linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.12));
-    backdrop-filter:blur(25px);
-    border-radius:25px;
-    padding:30px 25px;
-    box-shadow:0 15px 40px rgba(0,0,0,0.5), inset 0 0 10px rgba(255,255,255,0.1);
-    border:1px solid rgba(255,255,255,0.25);
-    display:flex; flex-direction:column;
-}
-
-/* TITOLI */
-h2{text-align:center;font-size:24px;margin-bottom:25px;}
-.fire{display:inline-block;font-size:24px;animation:fireContinuous 1s infinite alternate;}
-@keyframes fireContinuous{0%{transform:scale(1.1) rotate(-5deg);text-shadow:0 0 5px #ff9800,0 0 15px #ff5722,0 0 25px #ff0000;}50%{transform:scale(1.2) rotate(3deg);text-shadow:0 0 10px #ff9800,0 0 25px #ff5722,0 0 40px #ff0000;}100%{transform:scale(1.1) rotate(-5deg);text-shadow:0 0 5px #ff9800,0 0 15px #ff5722,0 0 25px #ff0000;}}
-
-/* INPUT */
-.input-group{position:relative;margin-bottom:15px;}
-.input-group input,
-.input-group select,
-.input-group textarea{
     width:100%;
-    padding:16px 16px 16px 45px;
-    border-radius:15px;
-    border:none;
-    background:rgba(255,255,255,0.15);
-    color:white;
-    font-size:16px;
+    max-width:420px;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(20px);
+    border-radius:25px;
+    padding:25px;
+    box-shadow:0 0 40px rgba(0,0,0,0.7);
+    border: 1px solid rgba(239, 68, 68, 0.3);
 }
 
-.input-group textarea{min-height:100px;resize:none;}
-
-/* ICONE */
-.icon{position:absolute;left:15px;top:50%;transform:translateY(-50%);font-size:18px;transition:0.3s;}
-
-/* 🔥 ICONA ATTIVA */
-.input-group.active .icon{
-    color:#22c55e;
-    transform:translateY(-50%) scale(1.2);
-    text-shadow:0 0 10px #22c55e;
+/* INPUT & ICON FLOAT */
+.input-group{
+    margin-bottom:12px;
 }
 
-/* TAP */
-@keyframes tap{
-    0%{transform:scale(1);}
-    50%{transform:scale(0.92);}
-    100%{transform:scale(1);}
-}
-.tap{animation:tap 0.15s ease;}
-
-/* BOTTONE */
-button{
-    width:100%; padding:16px;
-    border:none; border-radius:18px;
-    background:linear-gradient(45deg,#22c55e,#16a34a);
-    color:white;font-size:17px;font-weight:bold;
-    cursor:pointer;
+.input-icon{
+    position:relative;
+    display:flex;
+    align-items:center;
 }
 
-/* ANTEPRIMA */
-#previewBox p{
-    background:#22c55e;
-    color:#000;
-    padding:10px;
+.input-icon span{
+    position:absolute;
+    left:12px;
+    font-size:18px;
+    transition:0.3s;
+    animation: floatIcon 2s ease-in-out infinite;
+}
+
+@keyframes floatIcon{
+    0%{ transform: translateY(0);}
+    50%{ transform: translateY(-4px);}
+    100%{ transform: translateY(0);}
+}
+
+.input-icon span:hover{ transform:scale(1.3); }
+
+.input-icon input,
+.input-icon select,
+.input-icon textarea{
+    padding-left:45px;
+}
+
+.input-icon.active span{
+    color:#ef4444;
+    transform: scale(1.2);
+    text-shadow:0 0 10px #ef4444;
+    animation: none; /* Si ferma quando scrivi per non disturbare */
+}
+
+input, select, textarea{
+    width:100%;
+    padding:14px;
     border-radius:12px;
+    border:none;
+    background:rgba(255,255,255,0.12);
+    color:#fff;
+    font-size:15px;
+    transition: 0.3s;
+}
+
+input:focus, select:focus, textarea:focus{
+    background:rgba(255,255,255,0.2);
+    outline: 1px solid #ef4444;
+}
+
+textarea{
+    min-height:90px;
+    resize:none;
+}
+
+label{
+    font-size:11px;
+    color:#ccc;
+    margin-bottom:5px;
+    display:block;
+    text-transform: uppercase;
+    padding-left: 5px;
+}
+
+/* BOTTONE PULSANTE */
+button#btn{
+    width:100%;
+    padding:16px;
+    margin-top:15px;
+    border:none;
+    border-radius:14px;
+    background:linear-gradient(45deg,#b91c1c,#ef4444);
+    color:white;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+    animation:pulse 2s infinite;
+    text-transform: uppercase;
+}
+
+@keyframes pulse{
+    0%{ box-shadow:0 0 10px #b91c1c;}
+    50%{ box-shadow:0 0 25px #ef4444;}
+    100%{ box-shadow:0 0 10px #b91c1c;}
+}
+
+/* TAP EFFECT */
+.tap{ animation:tap 0.15s ease; }
+@keyframes tap{
+    0%{ transform:scale(1);}
+    50%{ transform:scale(0.95);}
+    100%{ transform:scale(1);}
 }
 
 /* MODAL */
-.modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.8);}
-.box{background:#000;padding:20px;border-radius:15px;}
+.modal{
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.9);
+    top:0;left:0;
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index: 9999;
+}
+
+.box{
+    background:#000;
+    color:#fff;
+    padding:25px;
+    border-radius:20px;
+    text-align:center;
+    border: 2px solid #ef4444;
+}
+
+.modal-btns { display: flex; gap: 10px; margin-top: 20px; }
+.ok{background:#ef4444; color:white; border:none; padding:12px; border-radius:10px; flex:1; font-weight:bold; cursor:pointer;}
+.no{background:#444; color:white; border:none; padding:12px; border-radius:10px; flex:1; cursor:pointer;}
+
+/* ANTEPRIMA */
+#previewBox p{
+    background:#fff;
+    color:#000;
+    padding:12px;
+    border-radius:12px;
+    font-size: 14px;
+    margin-top:10px;
+    line-height: 1.5;
+}
+
+.success-info{
+    text-align:center;
+    color:#ef4444;
+    margin-top:15px;
+    font-weight:bold;
+    font-size: 13px;
+    animation:blink 1.5s infinite;
+}
+
+@keyframes blink{
+    0%,100%{opacity:1;}
+    50%{opacity:0.5;}
+}
 </style>
 </head>
 
 <body>
 
-<div id="sparkContainer"></div>
-
-<div class="header">
-<img src="./logo.png">
-</div>
-
 <div class="container">
+    <div class="logo-container">
+        <h2>C.A.T. SERVICE</h2>
+        <h3 class="sub-logo">di Fabio Campitiello</h3>
+    </div>
 
-<h2><span class="fire">🔥</span> Prenota il tuo intervento</h2>
+    <div class="input-group">
+        <div class="input-icon">
+            <span>👤</span>
+            <input type="text" id="nome" placeholder="Nome">
+        </div>
+    </div>
 
-<div class="input-group"><input id="nome" placeholder="Nome"><span class="icon">👤</span></div>
-<div class="input-group"><input id="cognome" placeholder="Cognome"><span class="icon">👤</span></div>
-<div class="input-group"><input id="indirizzo" placeholder="Indirizzo completo"><span class="icon">📍</span></div>
-<div class="input-group"><input id="telefono" placeholder="Telefono"><span class="icon">📞</span></div>
-<div class="input-group"><input id="telefono_fisso" placeholder="Telefono fisso (facoltativo)"><span class="icon">☎️</span></div>
-<div class="input-group"><input id="marca" placeholder="Marca stufa"><span class="icon">🔥</span></div>
-<div class="input-group"><input id="modello" placeholder="Modello stufa (facoltativo)"><span class="icon">🔧</span></div>
+    <div class="input-group">
+        <div class="input-icon">
+            <span>👤</span>
+            <input type="text" id="cognome" placeholder="Cognome">
+        </div>
+    </div>
 
-<div class="input-group">
-<select id="tipo">
-<option value="">Tipologia intervento</option>
-<option>Manutenzione</option>
-<option>Riparazione</option>
-<option>Prima accensione</option>
-</select>
-<span class="icon">🛠</span>
-</div>
+    <div class="input-group">
+        <div class="input-icon">
+            <span>📍</span>
+            <input type="text" id="indirizzo" placeholder="Indirizzo completo">
+        </div>
+    </div>
 
-<div class="input-group">
-<textarea id="note" placeholder="Descrivi brevemente il problema (facoltativo)"></textarea>
-<span class="icon">📝</span>
-</div>
+    <div class="input-group">
+        <div class="input-icon">
+            <span>📱</span>
+            <input type="tel" id="telefono" placeholder="Telefono cellulare">
+        </div>
+    </div>
 
-<div class="input-group">
-<input id="data" readonly>
-<span class="icon">📅</span>
-</div>
+    <div class="input-group">
+        <div class="input-icon">
+            <span>☎️</span>
+            <input type="tel" id="telefono_fisso" placeholder="Telefono fisso (facoltativo)">
+        </div>
+    </div>
 
-<button id="btn">Prenota su WhatsApp</button>
+    <div class="input-group">
+        <div class="input-icon">
+            <span>🔥</span>
+            <input type="text" id="marca" placeholder="Marca stufa">
+        </div>
+    </div>
 
-<!-- ANTEPRIMA -->
-<div id="previewBox" style="display:none; margin-top:15px;">
-    <div style="background:#111;padding:15px;border-radius:15px;">
-        <strong>Anteprima messaggio:</strong>
-        <p id="previewText" style="margin-top:10px;white-space:pre-line;background:#22c55e;color:#000;padding:10px;border-radius:12px;"></p>
+    <div class="input-group">
+        <div class="input-icon">
+            <span>⚙️</span>
+            <input type="text" id="modello" placeholder="Modello stufa (facoltativo)">
+        </div>
+    </div>
+
+    <div class="input-group">
+        <div class="input-icon">
+            <span>🧰</span>
+            <select id="tipoIntervento">
+                <option value="">Tipologia intervento</option>
+                <option value="Manutenzione">Manutenzione</option>
+                <option value="Riparazione">Riparazione</option>
+                <option value="Prima accensione">Prima accensione</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="input-group">
+        <label>Problematica (facoltativo)</label>
+        <div class="input-icon">
+            <span>🛠️</span>
+            <textarea id="problema" placeholder="Descrivi brevemente il guasto"></textarea>
+        </div>
+    </div>
+
+    <div class="input-group">
+        <label>Data odierna</label>
+        <input type="text" id="data" readonly style="text-align:center; color:#ef4444; font-weight:bold;">
+    </div>
+
+    <button id="btn">Prenota su WhatsApp</button>
+
+    <div id="previewBox" style="display:none; margin-top:15px;">
+        <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px;">
+            <strong style="color:#fff; font-size:12px;">Messaggio generato:</strong>
+            <p id="previewText" style="white-space:pre-line;"></p>
+        </div>
+    </div>
+
+    <div class="success-info">
+        ✅ Clicca e poi invia su WhatsApp
     </div>
 </div>
 
-<div class="animatedText">CAT SERVICE DI FABIO CAMPITIELLO</div>
-</div>
-
 <div class="modal" id="modal">
-<div class="box">
-<h3>Conferma invio prenotazione?</h3>
-<button class="ok" id="conferma">Invia</button>
-<button class="no" id="annulla">Annulla</button>
-</div>
+    <div class="box">
+        <h3>Conferma</h3>
+        <p>Inviare la richiesta a C.A.T. SERVICE?</p>
+        <div class="modal-btns">
+            <button class="no" id="annulla">Modifica</button>
+            <button class="ok" id="conferma">Invia Ora</button>
+        </div>
+    </div>
 </div>
 
 <script>
-data.value=new Date().toLocaleDateString("it-IT");
+window.onload=function(){
+    let oggi=new Date();
+    let g=String(oggi.getDate()).padStart(2,'0');
+    let m=String(oggi.getMonth()+1).padStart(2,'0');
+    let a=oggi.getFullYear();
+    document.getElementById("data").value=g+"/"+m+"/"+a;
+};
 
-let msg="";
+let messaggio="";
 
-btn.onclick=()=>{
-    let campi=["nome","cognome","indirizzo","telefono","marca","tipo"];
-    let ok=true;
+document.getElementById("btn").onclick=function(){
+    let nome=document.getElementById("nome").value;
+    let cognome=document.getElementById("cognome").value;
+    let indirizzo=document.getElementById("indirizzo").value;
+    let telefono=document.getElementById("telefono").value;
+    let telefonoFisso=document.getElementById("telefono_fisso").value;
+    let marca=document.getElementById("marca").value;
+    let modello=document.getElementById("modello").value;
+    let tipo=document.getElementById("tipoIntervento").value;
+    let problema=document.getElementById("problema").value;
+    let data=document.getElementById("data").value;
 
-    campi.forEach(id=>{
-        let el=document.getElementById(id);
-        if(!el.value){ok=false;}
-    });
-
-    if(!ok){
-        alert("Compila tutti i campi obbligatori!");
+    if(!nome||!cognome||!indirizzo||!telefono||!marca||!tipo){
+        alert("Attenzione: Compila i campi obbligatori prima di continuare.");
         return;
     }
 
-    msg=`🔥 Prenotazione CAT Service
-Nome: ${nome.value} ${cognome.value}
-Indirizzo: ${indirizzo.value}
-Telefono: ${telefono.value}
-Telefono fisso: ${telefono_fisso.value || "N/A"}
-Marca: ${marca.value}
-Modello: ${modello.value || "N/A"}
-Tipo intervento: ${tipo.value}
-Data: ${data.value}
-${note.value? "Problema: "+note.value : ""}`;
+    messaggio=`*RICHIESTA INTERVENTO*
+*C.A.T. SERVICE*
 
-    previewText.innerText = msg;
-    previewBox.style.display = "block";
+👤 *Cliente:* ${nome} ${cognome}
+📍 *Indirizzo:* ${indirizzo}
+📱 *Cell:* ${telefono}
+${telefonoFisso ? "☎️ *Fisso:* " + telefonoFisso : ""}
 
-    modal.style.display="flex";
+🔥 *Stufa:* ${marca}
+⚙️ *Modello:* ${modello || "N/D"}
+
+🧰 *Intervento:* ${tipo}
+${problema ? "🛠️ *Problema:* " + problema : ""}
+
+📅 *Data:* ${data}`;
+
+    document.getElementById("previewText").innerText = messaggio;
+    document.getElementById("previewBox").style.display = "block";
+    document.getElementById("modal").style.display="flex";
 };
 
-conferma.onclick=()=>{
-    window.open("https://wa.me/393394245508?text="+encodeURIComponent(msg));
-    modal.style.display="none";
+document.getElementById("annulla").onclick=function(){
+    document.getElementById("modal").style.display="none";
 };
 
-annulla.onclick=()=>modal.style.display="none";
+document.getElementById("conferma").onclick=function(){
+    let numeroWhatsApp = "393394245508";
+    let url="https://wa.me/" + numeroWhatsApp + "?text="+encodeURIComponent(messaggio);
+    window.open(url,"_blank");
+    document.getElementById("modal").style.display="none";
+};
 
-/* ICONE ATTIVE */
-document.querySelectorAll(".input-group input, .input-group select, .input-group textarea")
-.forEach(el=>{
+/* GESTIONE ICONE E TAP */
+document.querySelectorAll(".input-icon input, .input-icon select, .input-icon textarea")
+.forEach(el => {
     el.addEventListener("input", function(){
-        if(this.value.trim()!==""){
+        if(this.value.trim() !== ""){
             this.parentElement.classList.add("active");
         } else {
             this.parentElement.classList.remove("active");
@@ -215,11 +391,10 @@ document.querySelectorAll(".input-group input, .input-group select, .input-group
     });
 });
 
-/* TAP */
-document.querySelectorAll("input,select,textarea,button").forEach(el=>{
+document.querySelectorAll("button, input, select, textarea").forEach(el=>{
     el.addEventListener("click", function(){
         this.classList.add("tap");
-        setTimeout(()=>this.classList.remove("tap"),150);
+        setTimeout(()=> this.classList.remove("tap"),150);
     });
 });
 </script>
