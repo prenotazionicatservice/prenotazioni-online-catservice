@@ -22,10 +22,17 @@ body{
     padding: 20px;
 }
 
-/* TITOLO ANIMATO */
+/* LOGO E TITOLO ANIMATO */
 .logo-container {
     text-align: center;
     margin-bottom: 25px;
+}
+
+.logo-img {
+    width: 180px;
+    height: auto;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.2));
 }
 
 h2{
@@ -96,7 +103,7 @@ h3.sub-logo {
     color:#ef4444;
     transform: scale(1.2);
     text-shadow:0 0 10px #ef4444;
-    animation: none; /* Si ferma quando scrivi per non disturbare */
+    animation: none;
 }
 
 input, select, textarea{
@@ -216,6 +223,7 @@ button#btn{
 
 <div class="container">
     <div class="logo-container">
+        <img src="logo.png" alt="Logo C.A.T. Service" class="logo-img">
         <h2>C.A.T. SERVICE</h2>
         <h3 class="sub-logo">di Fabio Campitiello</h3>
     </div>
