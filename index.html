@@ -34,10 +34,13 @@ html, body{
     padding:30px 25px;
     box-shadow:0 15px 40px rgba(0,0,0,0.5), inset 0 0 10px rgba(255,255,255,0.1);
     border:1px solid rgba(255,255,255,0.25);
+    display:flex; flex-direction:column;
 }
 
 /* TITOLI */
 h2{text-align:center;font-size:24px;margin-bottom:25px;}
+.fire{display:inline-block;font-size:24px;animation:fireContinuous 1s infinite alternate;}
+@keyframes fireContinuous{0%{transform:scale(1.1) rotate(-5deg);text-shadow:0 0 5px #ff9800,0 0 15px #ff5722,0 0 25px #ff0000;}50%{transform:scale(1.2) rotate(3deg);text-shadow:0 0 10px #ff9800,0 0 25px #ff5722,0 0 40px #ff0000;}100%{transform:scale(1.1) rotate(-5deg);text-shadow:0 0 5px #ff9800,0 0 15px #ff5722,0 0 25px #ff0000;}}
 
 /* INPUT */
 .input-group{position:relative;margin-bottom:15px;}
@@ -53,16 +56,12 @@ h2{text-align:center;font-size:24px;margin-bottom:25px;}
     font-size:16px;
 }
 
-/* ICONE */
-.icon{
-    position:absolute;
-    left:15px;
-    top:50%;
-    transform:translateY(-50%);
-    font-size:18px;
-}
+.input-group textarea{min-height:100px;resize:none;}
 
-/* ICONA ATTIVA */
+/* ICONE */
+.icon{position:absolute;left:15px;top:50%;transform:translateY(-50%);font-size:18px;transition:0.3s;}
+
+/* 🔥 ICONA ATTIVA */
 .input-group.active .icon{
     color:#22c55e;
     transform:translateY(-50%) scale(1.2);
@@ -77,17 +76,12 @@ h2{text-align:center;font-size:24px;margin-bottom:25px;}
 }
 .tap{animation:tap 0.15s ease;}
 
-textarea{min-height:100px;resize:none;}
-
 /* BOTTONE */
 button{
-    width:100%;
-    padding:16px;
-    border:none;
-    border-radius:18px;
+    width:100%; padding:16px;
+    border:none; border-radius:18px;
     background:linear-gradient(45deg,#22c55e,#16a34a);
-    color:white;
-    font-size:17px;
+    color:white;font-size:17px;font-weight:bold;
     cursor:pointer;
 }
 
@@ -100,14 +94,7 @@ button{
 }
 
 /* MODAL */
-.modal{
-    position:fixed;
-    inset:0;
-    display:none;
-    justify-content:center;
-    align-items:center;
-    background:rgba(0,0,0,0.8);
-}
+.modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.8);}
 .box{background:#000;padding:20px;border-radius:15px;}
 </style>
 </head>
@@ -122,19 +109,19 @@ button{
 
 <div class="container">
 
-<h2>🔥 Prenota intervento</h2>
+<h2><span class="fire">🔥</span> Prenota il tuo intervento</h2>
 
 <div class="input-group"><input id="nome" placeholder="Nome"><span class="icon">👤</span></div>
 <div class="input-group"><input id="cognome" placeholder="Cognome"><span class="icon">👤</span></div>
-<div class="input-group"><input id="indirizzo" placeholder="Indirizzo"><span class="icon">📍</span></div>
+<div class="input-group"><input id="indirizzo" placeholder="Indirizzo completo"><span class="icon">📍</span></div>
 <div class="input-group"><input id="telefono" placeholder="Telefono"><span class="icon">📞</span></div>
-<div class="input-group"><input id="telefono_fisso" placeholder="Telefono fisso"><span class="icon">☎️</span></div>
-<div class="input-group"><input id="marca" placeholder="Marca"><span class="icon">🔥</span></div>
-<div class="input-group"><input id="modello" placeholder="Modello"><span class="icon">🔧</span></div>
+<div class="input-group"><input id="telefono_fisso" placeholder="Telefono fisso (facoltativo)"><span class="icon">☎️</span></div>
+<div class="input-group"><input id="marca" placeholder="Marca stufa"><span class="icon">🔥</span></div>
+<div class="input-group"><input id="modello" placeholder="Modello stufa (facoltativo)"><span class="icon">🔧</span></div>
 
 <div class="input-group">
 <select id="tipo">
-<option value="">Tipo intervento</option>
+<option value="">Tipologia intervento</option>
 <option>Manutenzione</option>
 <option>Riparazione</option>
 <option>Prima accensione</option>
@@ -143,7 +130,7 @@ button{
 </div>
 
 <div class="input-group">
-<textarea id="note" placeholder="Problema"></textarea>
+<textarea id="note" placeholder="Descrivi brevemente il problema (facoltativo)"></textarea>
 <span class="icon">📝</span>
 </div>
 
@@ -154,17 +141,22 @@ button{
 
 <button id="btn">Prenota su WhatsApp</button>
 
-<div id="previewBox" style="display:none;margin-top:15px;">
-<p id="previewText"></p>
+<!-- ANTEPRIMA -->
+<div id="previewBox" style="display:none; margin-top:15px;">
+    <div style="background:#111;padding:15px;border-radius:15px;">
+        <strong>Anteprima messaggio:</strong>
+        <p id="previewText" style="margin-top:10px;white-space:pre-line;background:#22c55e;color:#000;padding:10px;border-radius:12px;"></p>
+    </div>
 </div>
 
+<div class="animatedText">CAT SERVICE DI FABIO CAMPITIELLO</div>
 </div>
 
 <div class="modal" id="modal">
 <div class="box">
-<p>Inviare su WhatsApp?</p>
-<button id="conferma">Invia</button>
-<button id="annulla">Annulla</button>
+<h3>Conferma invio prenotazione?</h3>
+<button class="ok" id="conferma">Invia</button>
+<button class="no" id="annulla">Annulla</button>
 </div>
 </div>
 
@@ -174,46 +166,61 @@ data.value=new Date().toLocaleDateString("it-IT");
 let msg="";
 
 btn.onclick=()=>{
-if(!nome.value||!cognome.value||!indirizzo.value||!telefono.value||!marca.value||!tipo.value){
-alert("Compila i campi!");
-return;
-}
+    let campi=["nome","cognome","indirizzo","telefono","marca","tipo"];
+    let ok=true;
 
-msg=`Prenotazione
+    campi.forEach(id=>{
+        let el=document.getElementById(id);
+        if(!el.value){ok=false;}
+    });
+
+    if(!ok){
+        alert("Compila tutti i campi obbligatori!");
+        return;
+    }
+
+    msg=`🔥 Prenotazione CAT Service
 Nome: ${nome.value} ${cognome.value}
 Indirizzo: ${indirizzo.value}
 Telefono: ${telefono.value}
+Telefono fisso: ${telefono_fisso.value || "N/A"}
 Marca: ${marca.value}
-Tipo: ${tipo.value}
-${note.value ? "Problema: "+note.value : ""}
-Data: ${data.value}`;
+Modello: ${modello.value || "N/A"}
+Tipo intervento: ${tipo.value}
+Data: ${data.value}
+${note.value? "Problema: "+note.value : ""}`;
 
-previewText.innerText=msg;
-previewBox.style.display="block";
+    previewText.innerText = msg;
+    previewBox.style.display = "block";
 
-modal.style.display="flex";
+    modal.style.display="flex";
 };
 
 conferma.onclick=()=>{
-window.open("https://wa.me/393394245508?text="+encodeURIComponent(msg));
-modal.style.display="none";
+    window.open("https://wa.me/393394245508?text="+encodeURIComponent(msg));
+    modal.style.display="none";
 };
 
 annulla.onclick=()=>modal.style.display="none";
 
 /* ICONE ATTIVE */
-document.querySelectorAll("input,select,textarea").forEach(el=>{
-el.addEventListener("input",function(){
-this.parentElement.classList.toggle("active", this.value.trim()!=="");
-});
+document.querySelectorAll(".input-group input, .input-group select, .input-group textarea")
+.forEach(el=>{
+    el.addEventListener("input", function(){
+        if(this.value.trim()!==""){
+            this.parentElement.classList.add("active");
+        } else {
+            this.parentElement.classList.remove("active");
+        }
+    });
 });
 
 /* TAP */
 document.querySelectorAll("input,select,textarea,button").forEach(el=>{
-el.addEventListener("click",function(){
-this.classList.add("tap");
-setTimeout(()=>this.classList.remove("tap"),150);
-});
+    el.addEventListener("click", function(){
+        this.classList.add("tap");
+        setTimeout(()=>this.classList.remove("tap"),150);
+    });
 });
 </script>
 
