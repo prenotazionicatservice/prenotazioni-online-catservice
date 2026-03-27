@@ -66,7 +66,7 @@ h3.sub-logo {
     border: 1px solid rgba(239, 68, 68, 0.3);
 }
 
-/* INPUT & ICON FLOAT */
+/* INPUT & ICON FLOAT/GLOW */
 .input-group{
     margin-bottom:12px;
 }
@@ -81,8 +81,9 @@ h3.sub-logo {
     position:absolute;
     left:12px;
     font-size:18px;
-    transition:0.3s;
+    transition: all 0.3s ease;
     animation: floatIcon 2s ease-in-out infinite;
+    color: #fff;
 }
 
 @keyframes floatIcon{
@@ -91,19 +92,18 @@ h3.sub-logo {
     100%{ transform: translateY(0);}
 }
 
-.input-icon span:hover{ transform:scale(1.3); }
+/* EFFETTO ILLUMINAZIONE QUANDO ATTIVO */
+.input-icon.active span{
+    color: #ef4444; /* Rosso acceso */
+    text-shadow: 0 0 15px #ef4444, 0 0 30px #ef4444; /* Bagliore intenso */
+    transform: scale(1.3) translateY(0);
+    animation: none; /* L'icona si ferma e brilla */
+}
 
 .input-icon input,
 .input-icon select,
 .input-icon textarea{
     padding-left:45px;
-}
-
-.input-icon.active span{
-    color:#ef4444;
-    transform: scale(1.2);
-    text-shadow:0 0 10px #ef4444;
-    animation: none;
 }
 
 input, select, textarea{
@@ -387,9 +387,14 @@ document.getElementById("conferma").onclick=function(){
     document.getElementById("modal").style.display="none";
 };
 
-/* GESTIONE ICONE E TAP */
-document.querySelectorAll(".input-icon input, .input-icon select, .input-icon textarea")
-.forEach(el => {
+/* GESTIONE ICONE ILLUMINATE E TAP */
+const inputs = document.querySelectorAll(".input-icon input, .input-icon select, .input-icon textarea");
+
+inputs.forEach(el => {
+    // Controllo al caricamento (se il browser autocompila)
+    if(el.value.trim() !== "") el.parentElement.classList.add("active");
+
+    // Controllo durante l'input
     el.addEventListener("input", function(){
         if(this.value.trim() !== ""){
             this.parentElement.classList.add("active");
