@@ -137,7 +137,7 @@ label{
 button#btn{
     width:100%;
     padding:16px;
-    margin-top:15px;
+    margin-top:10px;
     border:none;
     border-radius:14px;
     background:linear-gradient(45deg,#b91c1c,#ef4444);
@@ -210,6 +210,15 @@ button#btn{
     0%,100%{opacity:1;}
     50%{opacity:0.5;}
 }
+
+.privacy-notice {
+    font-size: 10px;
+    color: #aaa;
+    text-align: center;
+    margin-top: 15px;
+    line-height: 1.4;
+    padding: 0 10px;
+}
 </style>
 </head>
 
@@ -237,9 +246,31 @@ button#btn{
     <div class="input-group">
         <div class="input-icon"><span>☎️</span><input type="tel" id="telefono_fisso" placeholder="Telefono fisso (facoltativo)"></div>
     </div>
+
     <div class="input-group">
-        <div class="input-icon"><span>🔥</span><input type="text" id="marca" placeholder="Marca stufa"></div>
+        <div class="input-icon">
+            <span>🔥</span>
+            <select id="marcaSelect">
+                <option value="">Marca Stufa</option>
+                <option value="MCZ">MCZ</option>
+                <option value="PALAZZETTI">PALAZZETTI</option>
+                <option value="RAVELLI">RAVELLI</option>
+                <option value="MORETTI DESIGN">MORETTI DESIGN</option>
+                <option value="PEGASO">PEGASO</option>
+                <option value="RED">RED</option>
+                <option value="BRISACH">BRISACH</option>
+                <option value="CADEL">CADEL</option>
+                <option value="FREEPOINT">FREEPOINT</option>
+                <option value="ROYAL">ROYAL</option>
+                <option value="Altro">Altro (specifica)</option>
+            </select>
+        </div>
     </div>
+
+    <div class="input-group" id="marcaAltroGroup" style="display:none;">
+        <div class="input-icon"><span>✍️</span><input type="text" id="marcaAltro" placeholder="Specifica marca"></div>
+    </div>
+
     <div class="input-group">
         <div class="input-icon"><span>⚙️</span><input type="text" id="modello" placeholder="Modello stufa (facoltativo)"></div>
     </div>
@@ -306,6 +337,10 @@ button#btn{
         <input type="text" id="data" readonly style="text-align:center; color:#ef4444; font-weight:bold;">
     </div>
 
+    <div class="privacy-notice">
+        Inviando la richiesta dichiari di aver letto l'informativa privacy e acconsenti al trattamento dei dati personali (GDPR) per la gestione dell'assistenza tecnica.
+    </div>
+
     <button id="btn">Prenota su WhatsApp</button>
 
     <div id="previewBox" style="display:none; margin-top:15px;">
@@ -343,10 +378,23 @@ const problemaSelect = document.getElementById("problemaSelect");
 const erroriDisplayGroup = document.getElementById("erroriDisplayGroup");
 const listaErrori = document.getElementById("listaErrori");
 const altroBox = document.getElementById("altroBox");
+const marcaSelect = document.getElementById("marcaSelect");
+const marcaAltroGroup = document.getElementById("marcaAltroGroup");
+const marcaAltroInput = document.getElementById("marcaAltro");
 
-// Gestione visibilità sezioni
+// Gestione visibilità sezioni problemi
 tipoSelect.onchange = function() {
     sezioneProblemi.style.display = (this.value === "Prima accensione") ? "none" : "block";
+};
+
+// Gestione marca "Altro"
+marcaSelect.onchange = function() {
+    if(this.value === "Altro") {
+        marcaAltroGroup.style.display = "block";
+    } else {
+        marcaAltroGroup.style.display = "none";
+        marcaAltroInput.value = "";
+    }
 };
 
 problemaSelect.onchange = function() {
@@ -363,12 +411,17 @@ document.getElementById("btn").onclick=function(){
     let indirizzo=document.getElementById("indirizzo").value.trim();
     let telefono=document.getElementById("telefono").value.trim();
     let telefonoFisso=document.getElementById("telefono_fisso").value.trim();
-    let marca=document.getElementById("marca").value.trim();
     let modello=document.getElementById("modello").value.trim();
     let tipo=tipoSelect.value;
     let data=document.getElementById("data").value;
+    
+    // Logica Marca Finale
+    let marcaFinale = marcaSelect.value;
+    if(marcaFinale === "Altro") {
+        marcaFinale = marcaAltroInput.value.trim();
+    }
 
-    if(!nome||!cognome||!indirizzo||!telefono||!marca||!tipo){
+    if(!nome||!cognome||!indirizzo||!telefono||!marcaFinale||!tipo){
         alert("Attenzione: Compila i campi obbligatori prima di continuare.");
         return;
     }
@@ -388,7 +441,7 @@ document.getElementById("btn").onclick=function(){
 📱 *Cell:* ${telefono}
 ${telefonoFisso ? "☎️ *Fisso:* " + telefonoFisso : ""}
 
-🔥 *Stufa:* ${marca}
+🔥 *Stufa:* ${marcaFinale}
 ⚙️ *Modello:* ${modello || "N/D"}
 
 🧰 *Intervento:* ${tipo}
@@ -412,7 +465,6 @@ document.getElementById("conferma").onclick=function(){
     document.getElementById("modal").style.display="none";
 };
 
-/* GESTIONE ICONE ILLUMINATE */
 const inputs = document.querySelectorAll(".input-icon input, .input-icon select, .input-icon textarea");
 inputs.forEach(el => {
     el.addEventListener("input", function(){
