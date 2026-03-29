@@ -22,7 +22,6 @@ body{
     padding: 20px;
 }
 
-/* LOGO E TITOLO ANIMATO */
 .logo-container {
     text-align: center;
     margin-bottom: 25px;
@@ -66,7 +65,6 @@ h3.sub-logo {
     border: 1px solid rgba(239, 68, 68, 0.3);
 }
 
-/* INPUT & ICON FLOAT/GLOW */
 .input-group{
     margin-bottom:12px;
 }
@@ -84,6 +82,7 @@ h3.sub-logo {
     transition: all 0.3s ease;
     animation: floatIcon 2s ease-in-out infinite;
     color: #fff;
+    z-index: 5;
 }
 
 @keyframes floatIcon{
@@ -92,12 +91,11 @@ h3.sub-logo {
     100%{ transform: translateY(0);}
 }
 
-/* EFFETTO ILLUMINAZIONE QUANDO ATTIVO */
 .input-icon.active span{
-    color: #ef4444; /* Rosso acceso */
-    text-shadow: 0 0 15px #ef4444, 0 0 30px #ef4444; /* Bagliore intenso */
+    color: #ef4444; 
+    text-shadow: 0 0 15px #ef4444, 0 0 30px #ef4444; 
     transform: scale(1.3) translateY(0);
-    animation: none; /* L'icona si ferma e brilla */
+    animation: none; 
 }
 
 .input-icon input,
@@ -136,7 +134,6 @@ label{
     padding-left: 5px;
 }
 
-/* BOTTONE PULSANTE */
 button#btn{
     width:100%;
     padding:16px;
@@ -158,7 +155,6 @@ button#btn{
     100%{ box-shadow:0 0 10px #b91c1c;}
 }
 
-/* TAP EFFECT */
 .tap{ animation:tap 0.15s ease; }
 @keyframes tap{
     0%{ transform:scale(1);}
@@ -166,7 +162,6 @@ button#btn{
     100%{ transform:scale(1);}
 }
 
-/* MODAL */
 .modal{
     position:fixed;
     width:100%;
@@ -192,7 +187,6 @@ button#btn{
 .ok{background:#ef4444; color:white; border:none; padding:12px; border-radius:10px; flex:1; font-weight:bold; cursor:pointer;}
 .no{background:#444; color:white; border:none; padding:12px; border-radius:10px; flex:1; cursor:pointer;}
 
-/* ANTEPRIMA */
 #previewBox p{
     background:#fff;
     color:#000;
@@ -229,52 +223,25 @@ button#btn{
     </div>
 
     <div class="input-group">
-        <div class="input-icon">
-            <span>👤</span>
-            <input type="text" id="nome" placeholder="Nome">
-        </div>
+        <div class="input-icon"><span>👤</span><input type="text" id="nome" placeholder="Nome"></div>
     </div>
-
     <div class="input-group">
-        <div class="input-icon">
-            <span>👤</span>
-            <input type="text" id="cognome" placeholder="Cognome">
-        </div>
+        <div class="input-icon"><span>👤</span><input type="text" id="cognome" placeholder="Cognome"></div>
     </div>
-
     <div class="input-group">
-        <div class="input-icon">
-            <span>📍</span>
-            <input type="text" id="indirizzo" placeholder="Indirizzo completo">
-        </div>
+        <div class="input-icon"><span>📍</span><input type="text" id="indirizzo" placeholder="Indirizzo completo"></div>
     </div>
-
     <div class="input-group">
-        <div class="input-icon">
-            <span>📱</span>
-            <input type="tel" id="telefono" placeholder="Telefono cellulare">
-        </div>
+        <div class="input-icon"><span>📱</span><input type="tel" id="telefono" placeholder="Telefono cellulare"></div>
     </div>
-
     <div class="input-group">
-        <div class="input-icon">
-            <span>☎️</span>
-            <input type="tel" id="telefono_fisso" placeholder="Telefono fisso (facoltativo)">
-        </div>
+        <div class="input-icon"><span>☎️</span><input type="tel" id="telefono_fisso" placeholder="Telefono fisso (facoltativo)"></div>
     </div>
-
     <div class="input-group">
-        <div class="input-icon">
-            <span>🔥</span>
-            <input type="text" id="marca" placeholder="Marca stufa">
-        </div>
+        <div class="input-icon"><span>🔥</span><input type="text" id="marca" placeholder="Marca stufa"></div>
     </div>
-
     <div class="input-group">
-        <div class="input-icon">
-            <span>⚙️</span>
-            <input type="text" id="modello" placeholder="Modello stufa (facoltativo)">
-        </div>
+        <div class="input-icon"><span>⚙️</span><input type="text" id="modello" placeholder="Modello stufa (facoltativo)"></div>
     </div>
 
     <div class="input-group">
@@ -289,11 +256,48 @@ button#btn{
         </div>
     </div>
 
-    <div class="input-group">
-        <label>Problematica (facoltativo)</label>
-        <div class="input-icon">
-            <span>🛠️</span>
-            <textarea id="problema" placeholder="Descrivi brevemente il guasto"></textarea>
+    <div id="sezioneProblemi">
+        <div class="input-group">
+            <label>Problematica</label>
+            <div class="input-icon">
+                <span>🛠️</span>
+                <select id="problemaSelect">
+                    <option value="">Seleziona problema</option>
+                    <option value="Errore sul display">Errore sul display ⚠️</option>
+                    <option value="Stufa non si accende">Stufa non si accende</option>
+                    <option value="Si spegne da sola">Si spegne da sola</option>
+                    <option value="Non carica pellet">Non carica pellet</option>
+                    <option value="Altro">Altro (specifica sotto)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="input-group" id="erroriDisplayGroup" style="display:none;">
+            <label>Tipo di errore</label>
+            <div class="input-icon">
+                <span>📟</span>
+                <select id="listaErrori">
+                    <option value="">Seleziona l'allarme...</option>
+                    <option value="Errore Sonda K">Errore Sonda K</option>
+                    <option value="Errore Autopulizia">Errore Autopulizia</option>
+                    <option value="Errore Pressione Alta">Errore Pressione Alta</option>
+                    <option value="Errore Pressione Bassa">Errore Pressione Bassa</option>
+                    <option value="Errore Debimetro">Errore Debimetro</option>
+                    <option value="Errore No Flusso">Errore No Flusso</option>
+                    <option value="Errore Porta Aperta">Errore Porta Aperta</option>
+                    <option value="Errore Depressione">Errore Depressione</option>
+                    <option value="Errore Sicurezza Termica">Errore Sicurezza Termica</option>
+                    <option value="Altro">Altro errore non in lista</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="input-group" id="altroBox" style="display:none;">
+            <label>Descrizione guasto</label>
+            <div class="input-icon">
+                <span>📝</span>
+                <textarea id="problemaNote" placeholder="Descrivi brevemente il guasto"></textarea>
+            </div>
         </div>
     </div>
 
@@ -330,30 +334,51 @@ button#btn{
 <script>
 window.onload=function(){
     let oggi=new Date();
-    let g=String(oggi.getDate()).padStart(2,'0');
-    let m=String(oggi.getMonth()+1).padStart(2,'0');
-    let a=oggi.getFullYear();
-    document.getElementById("data").value=g+"/"+m+"/"+a;
+    document.getElementById("data").value = oggi.toLocaleDateString('it-IT');
+};
+
+const tipoSelect = document.getElementById("tipoIntervento");
+const sezioneProblemi = document.getElementById("sezioneProblemi");
+const problemaSelect = document.getElementById("problemaSelect");
+const erroriDisplayGroup = document.getElementById("erroriDisplayGroup");
+const listaErrori = document.getElementById("listaErrori");
+const altroBox = document.getElementById("altroBox");
+
+// Gestione visibilità sezioni
+tipoSelect.onchange = function() {
+    sezioneProblemi.style.display = (this.value === "Prima accensione") ? "none" : "block";
+};
+
+problemaSelect.onchange = function() {
+    erroriDisplayGroup.style.display = (this.value === "Errore sul display") ? "block" : "none";
+    altroBox.style.display = (this.value === "Altro" || this.value === "Errore sul display") ? "block" : "none";
+    if(this.value !== "Errore sul display") listaErrori.value = "";
 };
 
 let messaggio="";
 
 document.getElementById("btn").onclick=function(){
-    let nome=document.getElementById("nome").value;
-    let cognome=document.getElementById("cognome").value;
-    let indirizzo=document.getElementById("indirizzo").value;
-    let telefono=document.getElementById("telefono").value;
-    let telefonoFisso=document.getElementById("telefono_fisso").value;
-    let marca=document.getElementById("marca").value;
-    let modello=document.getElementById("modello").value;
-    let tipo=document.getElementById("tipoIntervento").value;
-    let problema=document.getElementById("problema").value;
+    let nome=document.getElementById("nome").value.trim();
+    let cognome=document.getElementById("cognome").value.trim();
+    let indirizzo=document.getElementById("indirizzo").value.trim();
+    let telefono=document.getElementById("telefono").value.trim();
+    let telefonoFisso=document.getElementById("telefono_fisso").value.trim();
+    let marca=document.getElementById("marca").value.trim();
+    let modello=document.getElementById("modello").value.trim();
+    let tipo=tipoSelect.value;
     let data=document.getElementById("data").value;
 
     if(!nome||!cognome||!indirizzo||!telefono||!marca||!tipo){
         alert("Attenzione: Compila i campi obbligatori prima di continuare.");
         return;
     }
+
+    let dettaglioProblema = problemaSelect.value;
+    if (dettaglioProblema === "Errore sul display" && listaErrori.value) {
+        dettaglioProblema = "Errore: " + listaErrori.value;
+    }
+    const note = document.getElementById("problemaNote").value.trim();
+    if (note) dettaglioProblema += (dettaglioProblema ? " | Note: " : "") + note;
 
     messaggio=`*RICHIESTA INTERVENTO*
 *C.A.T. SERVICE*
@@ -367,7 +392,7 @@ ${telefonoFisso ? "☎️ *Fisso:* " + telefonoFisso : ""}
 ⚙️ *Modello:* ${modello || "N/D"}
 
 🧰 *Intervento:* ${tipo}
-${problema ? "🛠️ *Problema:* " + problema : ""}
+${dettaglioProblema ? "🛠️ *Problema:* " + dettaglioProblema : ""}
 
 📅 *Data:* ${data}`;
 
@@ -387,27 +412,16 @@ document.getElementById("conferma").onclick=function(){
     document.getElementById("modal").style.display="none";
 };
 
-/* GESTIONE ICONE ILLUMINATE E TAP */
+/* GESTIONE ICONE ILLUMINATE */
 const inputs = document.querySelectorAll(".input-icon input, .input-icon select, .input-icon textarea");
-
 inputs.forEach(el => {
-    // Controllo al caricamento (se il browser autocompila)
-    if(el.value.trim() !== "") el.parentElement.classList.add("active");
-
-    // Controllo durante l'input
     el.addEventListener("input", function(){
-        if(this.value.trim() !== ""){
-            this.parentElement.classList.add("active");
-        } else {
-            this.parentElement.classList.remove("active");
-        }
+        if(this.value.trim() !== "") this.parentElement.classList.add("active");
+        else this.parentElement.classList.remove("active");
     });
-});
-
-document.querySelectorAll("button, input, select, textarea").forEach(el=>{
-    el.addEventListener("click", function(){
-        this.classList.add("tap");
-        setTimeout(()=> this.classList.remove("tap"),150);
+    el.addEventListener("change", function(){
+        if(this.value.trim() !== "") this.parentElement.classList.add("active");
+        else this.parentElement.classList.remove("active");
     });
 });
 </script>
