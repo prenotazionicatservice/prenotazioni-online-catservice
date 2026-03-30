@@ -21,11 +21,11 @@
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            padding: 80px 15px 20px 15px; /* Padding superiore per Navbar */
+            padding: 80px 15px 20px 15px; 
             color: #fff;
         }
 
-        /* --- 1. NAVBAR MINI LOGO --- */
+        /* --- NAVBAR --- */
         .navbar {
             position: fixed;
             top: 0;
@@ -42,44 +42,17 @@
             z-index: 1000;
         }
 
-        .nav-content {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+        .nav-content { display: flex; align-items: center; gap: 12px; }
+        .mini-logo { height: 35px; width: auto; filter: drop-shadow(0 0 5px #ef4444); }
+        .nav-title { font-weight: bold; font-size: 14px; letter-spacing: 1px; color: #ef4444; text-transform: uppercase; }
 
-        .mini-logo {
-            height: 35px;
-            width: auto;
-            filter: drop-shadow(0 0 5px #ef4444);
-        }
-
-        .nav-title {
-            font-weight: bold;
-            font-size: 14px;
-            letter-spacing: 1px;
-            color: #ef4444;
-            text-transform: uppercase;
-        }
-
-        /* --- 2. ANIMAZIONE GLOW APERTURA --- */
+        /* --- ANIMAZIONE GLOW APERTURA --- */
         @keyframes openingGlow {
-            0% { 
-                opacity: 0; 
-                transform: translateY(20px); 
-                box-shadow: 0 0 0px rgba(239, 68, 68, 0);
-            }
-            50% {
-                box-shadow: 0 0 40px rgba(239, 68, 68, 0.4);
-            }
-            100% { 
-                opacity: 1; 
-                transform: translateY(0); 
-                box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-            }
+            0% { opacity: 0; transform: translateY(20px); box-shadow: 0 0 0px rgba(239, 68, 68, 0); }
+            50% { box-shadow: 0 0 40px rgba(239, 68, 68, 0.4); }
+            100% { opacity: 1; transform: translateY(0); box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
         }
 
-        /* CONTENITORE PRINCIPALE */
         .container {
             width: 100%;
             max-width: 450px; 
@@ -89,16 +62,10 @@
             border-radius: 20px;
             padding: 25px;
             border: 1px solid rgba(239, 68, 68, 0.3);
-            /* Attivazione animazione Glow */
             animation: openingGlow 1.2s ease-out forwards;
         }
 
-        .logo-container {
-            text-align: center;
-            margin-bottom: 25px;
-            position: relative;
-        }
-
+        .logo-container { text-align: center; margin-bottom: 25px; }
         .logo-img {
             width: 220px;
             max-width: 100%;
@@ -112,16 +79,29 @@
         }
 
         @keyframes logoPulse {
-            0% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(239, 68, 68, 0.4)); }
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(239, 68, 68, 0.4)); }
             50% { transform: scale(1.05); filter: drop-shadow(0 0 20px rgba(239, 68, 68, 0.8)); }
-            100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(239, 68, 68, 0.4)); }
         }
 
         .input-group { margin-bottom: 15px; width: 100%; }
         label { display: block; font-size: 11px; color: #ef4444; text-transform: uppercase; margin-bottom: 5px; padding-left: 5px; font-weight: bold; }
         
         .input-icon { position: relative; display: flex; align-items: center; width: 100%; }
-        .input-icon span { position: absolute; left: 12px; font-size: 18px; z-index: 5; pointer-events: none; }
+        
+        /* RIPRISTINO ILLUMINAZIONE ICONE */
+        .input-icon span {
+            position: absolute;
+            left: 12px;
+            font-size: 18px;
+            z-index: 5;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .input-icon:focus-within span {
+            text-shadow: 0 0 15px #ef4444, 0 0 25px #ef4444;
+            transform: scale(1.2);
+        }
 
         input, select, textarea {
             width: 100%;
@@ -139,7 +119,6 @@
             outline: none;
             background: rgba(255, 255, 255, 0.15);
             border-color: #ef4444;
-            box-shadow: 0 0 10px rgba(239, 68, 68, 0.2);
         }
 
         button#btn {
@@ -161,9 +140,6 @@
             0%, 100% { box-shadow: 0 0 5px rgba(239, 68, 68, 0.5); }
             50% { box-shadow: 0 0 25px rgba(239, 68, 68, 0.9); }
         }
-
-        .success-info { text-align: center; color: #ef4444; font-weight: bold; font-size: 13px; margin-top: 10px; animation: textFlash 1.5s infinite; }
-        @keyframes textFlash { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
 
         .modal {
             position: fixed;
@@ -281,6 +257,8 @@
                     <option value="Errore Debimetro">Errore Debimetro</option>
                     <option value="Errore No Flusso">Errore No Flusso</option>
                     <option value="Errore Porta Aperta">Errore Porta Aperta</option>
+                    <option value="Errore Depressione">Errore Depressione (Specifico)</option>
+                    <option value="Errore Sicurezza Termica">Errore Sicurezza Termica (Specifico)</option>
                     <option value="Altro">Altro errore</option>
                 </select>
             </div>
@@ -298,7 +276,6 @@
     </div>
 
     <button id="btn">Prenota su WhatsApp</button>
-    <div class="success-info">✅ Verrai indirizzato a WhatsApp</div>
 </div>
 
 <div class="modal" id="modal">
@@ -321,11 +298,9 @@
     const sezioneProblemi = document.getElementById("sezioneProblemi");
     const problemaSelect = document.getElementById("problemaSelect");
     const erroriDisplayGroup = document.getElementById("erroriDisplayGroup");
-    const listaErrori = document.getElementById("listaErrori");
     const altroBox = document.getElementById("altroBox");
     const marcaSelect = document.getElementById("marcaSelect");
     const marcaAltroGroup = document.getElementById("marcaAltroGroup");
-    const marcaAltroInput = document.getElementById("marcaAltro");
 
     tipoSelect.onchange = function() { sezioneProblemi.style.display = (this.value === "Prima accensione") ? "none" : "block"; };
     marcaSelect.onchange = function() { marcaAltroGroup.style.display = (this.value === "Altro") ? "block" : "none"; };
@@ -341,20 +316,18 @@
         let cognome = document.getElementById("cognome").value.trim();
         let indirizzo = document.getElementById("indirizzo").value.trim();
         let telefono = document.getElementById("telefono").value.trim();
-        let marca = marcaSelect.value === "Altro" ? marcaAltroInput.value : marcaSelect.value;
+        let marca = marcaSelect.value === "Altro" ? document.getElementById("marcaAltro").value : marcaSelect.value;
         let tipo = tipoSelect.value;
 
         if(!nome || !cognome || !indirizzo || !telefono || !marca || !tipo) {
-            alert("Compila i campi obbligatori.");
-            return;
+            alert("Compila i campi obbligatori."); return;
         }
 
         let prob = problemaSelect.value;
-        if(prob === "Errore sul display") prob = "Errore: " + listaErrori.value;
+        if(prob === "Errore sul display") prob = "Errore: " + document.getElementById("listaErrori").value;
         let note = document.getElementById("problemaNote").value;
 
         messaggioGlobal = `*RICHIESTA INTERVENTO*\n*C.A.T. SERVICE*\n\n👤 *Cliente:* ${nome} ${cognome}\n📍 *Indirizzo:* ${indirizzo}\n📱 *Cell:* ${telefono}\n🔥 *Stufa:* ${marca}\n🧰 *Intervento:* ${tipo}\n🛠️ *Problema:* ${prob}${note ? " ("+note+")" : ""}\n📅 *Data:* ${document.getElementById("data").value}`;
-
         document.getElementById("modal").style.display = "flex";
     };
 
