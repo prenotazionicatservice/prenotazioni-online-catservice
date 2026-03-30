@@ -56,7 +56,6 @@
             border-radius: 10px;
         }
 
-        /* --- LOGO ANIMATO SISTEMATO --- */
         .logo-img {
             width: 220px;
             max-width: 100%;
@@ -75,21 +74,6 @@
             100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(239, 68, 68, 0.4)); }
         }
 
-        h2 {
-            font-size: 24px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            color: #fff;
-            margin-bottom: 5px;
-        }
-
-        .sub-logo {
-            color: #ef4444;
-            font-size: 14px;
-            font-weight: 400;
-        }
-
-        /* GRUPPI DI INPUT */
         .input-group {
             margin-bottom: 15px;
             width: 100%;
@@ -180,8 +164,6 @@
             100% { box-shadow: 0 0 5px rgba(239, 68, 68, 0.5); }
         }
 
-        button#btn:active { transform: scale(0.98); }
-
         .privacy-notice {
             font-size: 10px;
             color: #aaa;
@@ -196,7 +178,6 @@
             font-weight: bold;
             font-size: 13px;
             margin-top: 10px;
-            text-shadow: 0 0 10px rgba(239, 68, 68, 0.6);
             animation: textFlash 1.5s infinite;
         }
 
@@ -245,10 +226,10 @@
 
 <body>
 
-<div class="logo-container">
-    <img src="logo.PNG?v=1" alt="C.A.T. Service" class="logo-img" onerror="this.src='logo.png';">
-</div>
-
+<div class="container">
+    <div class="logo-container">
+        <img src="logo.PNG?v=1" alt="C.A.T. Service" class="logo-img" onerror="this.src='logo.png';">
+    </div>
 
     <div class="input-group">
         <div class="input-icon"><span>👤</span><input type="text" id="nome" placeholder="Nome"></div>
@@ -384,9 +365,7 @@
     <div class="success-info">
         ✅ Verrai indirizzato a WhatsApp
     </div>
-</div>
-
-<div class="modal" id="modal">
+</div> <div class="modal" id="modal">
     <div class="box">
         <h3>Conferma Inviata</h3>
         <p>Vuoi procedere con l'invio del messaggio?</p>
