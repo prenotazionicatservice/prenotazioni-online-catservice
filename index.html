@@ -38,36 +38,34 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.6);
         }
 
-     .logo-container {
-    text-align: center;
-    margin-bottom: 25px;
-    position: relative;
-}
-
-.logo-container::after {
-    content: "";
-    position: absolute;
-    width: 120px;
-    height: 3px;
-    background: linear-gradient(90deg, transparent, #ef4444, transparent);
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    border-radius: 10px;
-}
+        .logo-container {
+            text-align: center;
+            margin-bottom: 25px;
+            position: relative;
         }
 
-        /* --- LOGO ANIMATO --- */
-   .logo-img {
-    width: 220px;
-    max-width: 100%;
-    height: auto;
-    margin-bottom: 20px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    filter: drop-shadow(0 0 12px rgba(239, 68, 68, 0.5));
-}
+        .logo-container::after {
+            content: "";
+            position: absolute;
+            width: 120px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #ef4444, transparent);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 10px;
+        }
+
+        /* --- LOGO ANIMATO SISTEMATO --- */
+        .logo-img {
+            width: 220px;
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            filter: drop-shadow(0 0 12px rgba(239, 68, 68, 0.5));
             animation: logoPulse 3s infinite ease-in-out;
         }
 
@@ -114,7 +112,6 @@
             width: 100%;
         }
 
-        /* --- ICONE LUMINOSE AL FOCUS --- */
         .input-icon span {
             position: absolute;
             left: 12px;
@@ -161,7 +158,6 @@
             resize: none;
         }
 
-        /* --- BOTTONE LUMINOSO --- */
         button#btn {
             width: 100%;
             padding: 16px;
@@ -184,9 +180,7 @@
             100% { box-shadow: 0 0 5px rgba(239, 68, 68, 0.5); }
         }
 
-        button#btn:active {
-            transform: scale(0.98);
-        }
+        button#btn:active { transform: scale(0.98); }
 
         .privacy-notice {
             font-size: 10px;
@@ -196,7 +190,6 @@
             line-height: 1.4;
         }
 
-        /* --- SCRITTA REINDIRIZZAMENTO LUMINOSA --- */
         .success-info {
             text-align: center;
             color: #ef4444;
@@ -213,7 +206,6 @@
             100% { opacity: 0.6; }
         }
 
-        /* MODALE */
         .modal {
             position: fixed;
             inset: 0;
@@ -256,7 +248,6 @@
 <div class="container">
     <div class="logo-container">
         <img src="logo.PNG" alt="C.A.T. Service di Fabio Campitiello" class="logo-img">
-       
     </div>
 
     <div class="input-group">
