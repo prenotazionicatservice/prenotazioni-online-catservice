@@ -21,8 +21,62 @@
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            padding: 20px 15px;
+            padding: 80px 15px 20px 15px; /* Padding superiore per Navbar */
             color: #fff;
+        }
+
+        /* --- 1. NAVBAR MINI LOGO --- */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            border-bottom: 1px solid rgba(239, 68, 68, 0.4);
+            z-index: 1000;
+        }
+
+        .nav-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .mini-logo {
+            height: 35px;
+            width: auto;
+            filter: drop-shadow(0 0 5px #ef4444);
+        }
+
+        .nav-title {
+            font-weight: bold;
+            font-size: 14px;
+            letter-spacing: 1px;
+            color: #ef4444;
+            text-transform: uppercase;
+        }
+
+        /* --- 2. ANIMAZIONE GLOW APERTURA --- */
+        @keyframes openingGlow {
+            0% { 
+                opacity: 0; 
+                transform: translateY(20px); 
+                box-shadow: 0 0 0px rgba(239, 68, 68, 0);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(239, 68, 68, 0.4);
+            }
+            100% { 
+                opacity: 1; 
+                transform: translateY(0); 
+                box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            }
         }
 
         /* CONTENITORE PRINCIPALE */
@@ -35,25 +89,14 @@
             border-radius: 20px;
             padding: 25px;
             border: 1px solid rgba(239, 68, 68, 0.3);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            /* Attivazione animazione Glow */
+            animation: openingGlow 1.2s ease-out forwards;
         }
 
         .logo-container {
             text-align: center;
             margin-bottom: 25px;
             position: relative;
-        }
-
-        .logo-container::after {
-            content: "";
-            position: absolute;
-            width: 120px;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, #ef4444, transparent);
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-radius: 10px;
         }
 
         .logo-img {
@@ -74,41 +117,11 @@
             100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(239, 68, 68, 0.4)); }
         }
 
-        .input-group {
-            margin-bottom: 15px;
-            width: 100%;
-        }
-
-        label {
-            display: block;
-            font-size: 11px;
-            color: #ef4444;
-            text-transform: uppercase;
-            margin-bottom: 5px;
-            padding-left: 5px;
-            font-weight: bold;
-        }
-
-        .input-icon {
-            position: relative;
-            display: flex;
-            align-items: center;
-            width: 100%;
-        }
-
-        .input-icon span {
-            position: absolute;
-            left: 12px;
-            font-size: 18px;
-            z-index: 5;
-            pointer-events: none;
-            transition: all 0.3s ease;
-        }
-
-        .input-icon:focus-within span {
-            text-shadow: 0 0 15px #ef4444, 0 0 25px #ef4444;
-            transform: scale(1.2);
-        }
+        .input-group { margin-bottom: 15px; width: 100%; }
+        label { display: block; font-size: 11px; color: #ef4444; text-transform: uppercase; margin-bottom: 5px; padding-left: 5px; font-weight: bold; }
+        
+        .input-icon { position: relative; display: flex; align-items: center; width: 100%; }
+        .input-icon span { position: absolute; left: 12px; font-size: 18px; z-index: 5; pointer-events: none; }
 
         input, select, textarea {
             width: 100%;
@@ -129,19 +142,6 @@
             box-shadow: 0 0 10px rgba(239, 68, 68, 0.2);
         }
 
-        select {
-            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23ef4444%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
-            background-repeat: no-repeat;
-            background-position: right 12px top 50%;
-            background-size: 12px auto;
-            padding-right: 30px;
-        }
-
-        textarea {
-            min-height: 80px;
-            resize: none;
-        }
-
         button#btn {
             width: 100%;
             padding: 16px;
@@ -154,38 +154,16 @@
             font-weight: bold;
             cursor: pointer;
             text-transform: uppercase;
-            box-shadow: 0 0 15px rgba(185, 28, 28, 0.5);
             animation: btnGlow 2s infinite ease-in-out;
         }
 
         @keyframes btnGlow {
-            0% { box-shadow: 0 0 5px rgba(239, 68, 68, 0.5); }
+            0%, 100% { box-shadow: 0 0 5px rgba(239, 68, 68, 0.5); }
             50% { box-shadow: 0 0 25px rgba(239, 68, 68, 0.9); }
-            100% { box-shadow: 0 0 5px rgba(239, 68, 68, 0.5); }
         }
 
-        .privacy-notice {
-            font-size: 10px;
-            color: #aaa;
-            text-align: center;
-            margin: 15px 0;
-            line-height: 1.4;
-        }
-
-        .success-info {
-            text-align: center;
-            color: #ef4444;
-            font-weight: bold;
-            font-size: 13px;
-            margin-top: 10px;
-            animation: textFlash 1.5s infinite;
-        }
-
-        @keyframes textFlash {
-            0% { opacity: 0.6; }
-            50% { opacity: 1; text-shadow: 0 0 15px #ef4444; }
-            100% { opacity: 0.6; }
-        }
+        .success-info { text-align: center; color: #ef4444; font-weight: bold; font-size: 13px; margin-top: 10px; animation: textFlash 1.5s infinite; }
+        @keyframes textFlash { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
 
         .modal {
             position: fixed;
@@ -198,54 +176,32 @@
             padding: 20px;
         }
 
-        .box {
-            background: #111;
-            padding: 25px;
-            border-radius: 20px;
-            text-align: center;
-            border: 2px solid #ef4444;
-            width: 100%;
-            max-width: 320px;
-        }
-
+        .box { background: #111; padding: 25px; border-radius: 20px; text-align: center; border: 2px solid #ef4444; width: 100%; max-width: 320px; }
         .modal-btns { display: flex; gap: 10px; margin-top: 20px; }
         .ok { background: #ef4444; color: white; border: none; padding: 12px; border-radius: 10px; flex: 1; font-weight: bold; }
         .no { background: #444; color: white; border: none; padding: 12px; border-radius: 10px; flex: 1; }
-
-        #previewBox p {
-            background: #fff;
-            color: #000;
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 13px;
-            margin-top: 10px;
-            text-align: left;
-        }
     </style>
 </head>
 
 <body>
+
+<nav class="navbar">
+    <div class="nav-content">
+        <img src="logo.PNG" alt="Mini Logo" class="mini-logo" onerror="this.src='logo.png';">
+        <span class="nav-title">C.A.T. Service</span>
+    </div>
+</nav>
 
 <div class="container">
     <div class="logo-container">
         <img src="logo.PNG?v=1" alt="C.A.T. Service" class="logo-img" onerror="this.src='logo.png';">
     </div>
 
-    <div class="input-group">
-        <div class="input-icon"><span>👤</span><input type="text" id="nome" placeholder="Nome"></div>
-    </div>
-    <div class="input-group">
-        <div class="input-icon"><span>👤</span><input type="text" id="cognome" placeholder="Cognome"></div>
-    </div>
-    <div class="input-group">
-        <div class="input-icon"><span>📍</span><input type="text" id="indirizzo" placeholder="Indirizzo completo"></div>
-    </div>
-    <div class="input-group">
-        <div class="input-icon"><span>📱</span><input type="tel" id="telefono" placeholder="Telefono cellulare"></div>
-    </div>
-    <div class="input-group">
-        <div class="input-icon"><span>☎️</span><input type="tel" id="telefono_fisso" placeholder="Telefono fisso (facoltativo)"></div>
-    </div>
+    <div class="input-group"><div class="input-icon"><span>👤</span><input type="text" id="nome" placeholder="Nome"></div></div>
+    <div class="input-group"><div class="input-icon"><span>👤</span><input type="text" id="cognome" placeholder="Cognome"></div></div>
+    <div class="input-group"><div class="input-icon"><span>📍</span><input type="text" id="indirizzo" placeholder="Indirizzo completo"></div></div>
+    <div class="input-group"><div class="input-icon"><span>📱</span><input type="tel" id="telefono" placeholder="Telefono cellulare"></div></div>
+    <div class="input-group"><div class="input-icon"><span>☎️</span><input type="tel" id="telefono_fisso" placeholder="Telefono fisso (facoltativo)"></div></div>
 
     <div class="input-group">
         <div class="input-icon">
@@ -269,14 +225,8 @@
             </select>
         </div>
     </div>
-
-    <div class="input-group" id="marcaAltroGroup" style="display:none;">
-        <div class="input-icon"><span>✍️</span><input type="text" id="marcaAltro" placeholder="Specifica marca"></div>
-    </div>
-
-    <div class="input-group">
-        <div class="input-icon"><span>⚙️</span><input type="text" id="modello" placeholder="Modello stufa (facoltativo)"></div>
-    </div>
+    <div class="input-group" id="marcaAltroGroup" style="display:none;"><div class="input-icon"><span>✍️</span><input type="text" id="marcaAltro" placeholder="Specifica marca"></div></div>
+    <div class="input-group"><div class="input-icon"><span>⚙️</span><input type="text" id="modello" placeholder="Modello stufa (facoltativo)"></div></div>
 
     <div class="input-group">
         <div class="input-icon">
@@ -324,15 +274,13 @@
                     <option value="AL 8 - No Depressione">AL 8 - No Depressione</option>
                     <option value="AL 9 - Coclea">AL 9 - Blocco Coclea</option>
                     <option value="Service">Scritta SERVICE</option>
-                     <option value="Errore Sonda K">Errore Sonda K</option>
-                        <option value="Errore Autopulizia">Errore Autopulizia</option>
-                        <option value="Errore Pressione Alta">Errore Pressione Alta</option>
-                        <option value="Errore Pressione Bassa">Errore Pressione Bassa</option>
-                        <option value="Errore Debimetro">Errore Debimetro</option>
-                        <option value="Errore No Flusso">Errore No Flusso</option>
-                        <option value="Errore Porta Aperta">Errore Porta Aperta</option>
-                        <option value="Errore Depressione">Errore Depressione (Specifico)</option>
-                        <option value="Errore Sicurezza Termica">Errore Sicurezza Termica (Specifico)</option>
+                    <option value="Errore Sonda K">Errore Sonda K</option>
+                    <option value="Errore Autopulizia">Errore Autopulizia</option>
+                    <option value="Errore Pressione Alta">Errore Pressione Alta</option>
+                    <option value="Errore Pressione Bassa">Errore Pressione Bassa</option>
+                    <option value="Errore Debimetro">Errore Debimetro</option>
+                    <option value="Errore No Flusso">Errore No Flusso</option>
+                    <option value="Errore Porta Aperta">Errore Porta Aperta</option>
                     <option value="Altro">Altro errore</option>
                 </select>
             </div>
@@ -340,10 +288,7 @@
 
         <div class="input-group" id="altroBox" style="display:none;">
             <label>Descrizione guasto</label>
-            <div class="input-icon">
-                <span>📝</span>
-                <textarea id="problemaNote" placeholder="Descrivi il guasto"></textarea>
-            </div>
+            <div class="input-icon"><span>📝</span><textarea id="problemaNote" placeholder="Descrivi il guasto"></textarea></div>
         </div>
     </div>
 
@@ -352,23 +297,14 @@
         <input type="text" id="data" readonly style="text-align:center; color:#ef4444; font-weight:bold; background:rgba(0,0,0,0.2);">
     </div>
 
-    <div class="privacy-notice">
-        L'invio acconsente al trattamento dei dati (GDPR) per l'assistenza tecnica.
-    </div>
-
     <button id="btn">Prenota su WhatsApp</button>
+    <div class="success-info">✅ Verrai indirizzato a WhatsApp</div>
+</div>
 
-    <div id="previewBox" style="display:none; margin-top:15px;">
-        <p id="previewText" style="white-space:pre-line;"></p>
-    </div>
-
-    <div class="success-info">
-        ✅ Verrai indirizzato a WhatsApp
-    </div>
-</div> <div class="modal" id="modal">
+<div class="modal" id="modal">
     <div class="box">
         <h3>Conferma Inviata</h3>
-        <p>Vuoi procedere con l'invio del messaggio?</p>
+        <p style="color:#ccc; margin:10px 0;">Vuoi procedere con l'invio del messaggio?</p>
         <div class="modal-btns">
             <button class="no" id="annulla">Modifica</button>
             <button class="ok" id="conferma">Invia</button>
@@ -378,8 +314,7 @@
 
 <script>
     window.onload = function() {
-        let oggi = new Date();
-        document.getElementById("data").value = oggi.toLocaleDateString('it-IT');
+        document.getElementById("data").value = new Date().toLocaleDateString('it-IT');
     };
 
     const tipoSelect = document.getElementById("tipoIntervento");
@@ -392,14 +327,8 @@
     const marcaAltroGroup = document.getElementById("marcaAltroGroup");
     const marcaAltroInput = document.getElementById("marcaAltro");
 
-    tipoSelect.onchange = function() {
-        sezioneProblemi.style.display = (this.value === "Prima accensione") ? "none" : "block";
-    };
-
-    marcaSelect.onchange = function() {
-        marcaAltroGroup.style.display = (this.value === "Altro") ? "block" : "none";
-    };
-
+    tipoSelect.onchange = function() { sezioneProblemi.style.display = (this.value === "Prima accensione") ? "none" : "block"; };
+    marcaSelect.onchange = function() { marcaAltroGroup.style.display = (this.value === "Altro") ? "block" : "none"; };
     problemaSelect.onchange = function() {
         erroriDisplayGroup.style.display = (this.value === "Errore sul display") ? "block" : "none";
         altroBox.style.display = (this.value === "Altro" || this.value === "Errore sul display") ? "block" : "none";
@@ -426,18 +355,13 @@
 
         messaggioGlobal = `*RICHIESTA INTERVENTO*\n*C.A.T. SERVICE*\n\n👤 *Cliente:* ${nome} ${cognome}\n📍 *Indirizzo:* ${indirizzo}\n📱 *Cell:* ${telefono}\n🔥 *Stufa:* ${marca}\n🧰 *Intervento:* ${tipo}\n🛠️ *Problema:* ${prob}${note ? " ("+note+")" : ""}\n📅 *Data:* ${document.getElementById("data").value}`;
 
-        document.getElementById("previewText").innerText = messaggioGlobal;
-        document.getElementById("previewBox").style.display = "block";
         document.getElementById("modal").style.display = "flex";
     };
 
-    document.getElementById("annulla").onclick = function() {
-        document.getElementById("modal").style.display = "none";
-    };
+    document.getElementById("annulla").onclick = function() { document.getElementById("modal").style.display = "none"; };
 
     document.getElementById("conferma").onclick = function() {
-        let url = "https://wa.me/393394245508?text=" + encodeURIComponent(messaggioGlobal);
-        window.open(url, "_blank");
+        window.open("https://wa.me/393394245508?text=" + encodeURIComponent(messaggioGlobal), "_blank");
         document.getElementById("modal").style.display = "none";
     };
 </script>
