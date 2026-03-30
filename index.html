@@ -21,11 +21,11 @@
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            padding: 80px 15px 20px 15px; 
+            padding: 80px 15px 40px 15px; 
             color: #fff;
         }
 
-        /* --- NAVBAR --- */
+        /* --- 1. NAVBAR MINI LOGO --- */
         .navbar {
             position: fixed;
             top: 0;
@@ -46,7 +46,7 @@
         .mini-logo { height: 35px; width: auto; filter: drop-shadow(0 0 5px #ef4444); }
         .nav-title { font-weight: bold; font-size: 14px; letter-spacing: 1px; color: #ef4444; text-transform: uppercase; }
 
-        /* --- ANIMAZIONE GLOW APERTURA --- */
+        /* --- 2. ANIMAZIONE GLOW APERTURA --- */
         @keyframes openingGlow {
             0% { opacity: 0; transform: translateY(20px); box-shadow: 0 0 0px rgba(239, 68, 68, 0); }
             50% { box-shadow: 0 0 40px rgba(239, 68, 68, 0.4); }
@@ -88,7 +88,7 @@
         
         .input-icon { position: relative; display: flex; align-items: center; width: 100%; }
         
-        /* RIPRISTINO ILLUMINAZIONE ICONE */
+        /* ILLUMINAZIONE ICONE */
         .input-icon span {
             position: absolute;
             left: 12px;
@@ -119,6 +119,7 @@
             outline: none;
             background: rgba(255, 255, 255, 0.15);
             border-color: #ef4444;
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.2);
         }
 
         button#btn {
@@ -139,6 +140,28 @@
         @keyframes btnGlow {
             0%, 100% { box-shadow: 0 0 5px rgba(239, 68, 68, 0.5); }
             50% { box-shadow: 0 0 25px rgba(239, 68, 68, 0.9); }
+        }
+
+        .privacy-notice {
+            font-size: 10px;
+            color: #aaa;
+            text-align: center;
+            margin: 15px 0;
+            line-height: 1.4;
+        }
+
+        .success-info {
+            text-align: center;
+            color: #ef4444;
+            font-weight: bold;
+            font-size: 13px;
+            margin-top: 10px;
+            animation: textFlash 1.5s infinite;
+        }
+
+        @keyframes textFlash {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; text-shadow: 0 0 15px #ef4444; }
         }
 
         .modal {
@@ -275,7 +298,15 @@
         <input type="text" id="data" readonly style="text-align:center; color:#ef4444; font-weight:bold; background:rgba(0,0,0,0.2);">
     </div>
 
+    <div class="privacy-notice">
+        L'invio acconsente al trattamento dei dati (GDPR) per l'assistenza tecnica.
+    </div>
+
     <button id="btn">Prenota su WhatsApp</button>
+
+    <div class="success-info">
+        ✅ Verrai indirizzato a WhatsApp
+    </div>
 </div>
 
 <div class="modal" id="modal">
@@ -284,7 +315,7 @@
         <p style="color:#ccc; margin:10px 0;">Vuoi procedere con l'invio del messaggio?</p>
         <div class="modal-btns">
             <button class="no" id="annulla">Modifica</button>
-            <button class="ok" id="conferma">Invia</button>
+            <button class="ok" id="conferma">Invia Ora</button>
         </div>
     </div>
 </div>
@@ -341,3 +372,4 @@
 
 </body>
 </html>
+
