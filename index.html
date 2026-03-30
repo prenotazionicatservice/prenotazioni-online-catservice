@@ -1,225 +1,206 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>C.A.T. SERVICE - Prenotazione</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>C.A.T. SERVICE - Prenotazione</title>
 
-<style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial;
-}
+    <style>
+        /* RESET GENERALE */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
 
-body{
-    background: radial-gradient(circle at 20% 20%, #450a0a, #000000);
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding: 20px;
-}
+        body {
+            background: #200505;
+            background: radial-gradient(circle at 50% 50%, #450a0a, #000000);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px 15px;
+            color: #fff;
+        }
 
-.logo-container {
-    text-align: center;
-    margin-bottom: 25px;
-}
+        /* CONTENITORE PRINCIPALE */
+        .container {
+            width: 100%;
+            max-width: 450px; /* Larghezza perfetta per PC e Mobile */
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px); /* Fix per iPhone */
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+        }
 
-.logo-img {
-    width: 180px;
-    height: auto;
-    margin-bottom: 10px;
-    filter: drop-shadow(0 0 10px rgba(255,255,255,0.2));
-}
+        .logo-container {
+            text-align: center;
+            margin-bottom: 25px;
+        }
 
-h2{
-    color:#fff;
-    font-size:26px;
-    letter-spacing:2px;
-    text-transform: uppercase;
-    animation:titleGlow 2s infinite alternate;
-}
+        .logo-img {
+            width: 160px;
+            height: auto;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.4));
+        }
 
-h3.sub-logo {
-    color: #ef4444;
-    font-size: 14px;
-    margin-top: 5px;
-    letter-spacing: 1px;
-}
+        h2 {
+            font-size: 24px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #fff;
+            margin-bottom: 5px;
+        }
 
-@keyframes titleGlow{
-    0%{ text-shadow:0 0 5px #ef4444; transform:scale(1);}
-    100%{ text-shadow:0 0 20px #ffffff; transform:scale(1.05);}
-}
+        .sub-logo {
+            color: #ef4444;
+            font-size: 14px;
+            font-weight: 400;
+        }
 
-.container{
-    width:100%;
-    max-width:420px;
-    background:rgba(255,255,255,0.08);
-    backdrop-filter:blur(20px);
-    border-radius:25px;
-    padding:25px;
-    box-shadow:0 0 40px rgba(0,0,0,0.7);
-    border: 1px solid rgba(239, 68, 68, 0.3);
-}
+        /* GRUPPI DI INPUT */
+        .input-group {
+            margin-bottom: 15px;
+            width: 100%;
+        }
 
-.input-group{
-    margin-bottom:12px;
-}
+        label {
+            display: block;
+            font-size: 11px;
+            color: #ef4444;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            padding-left: 5px;
+            font-weight: bold;
+        }
 
-.input-icon{
-    position:relative;
-    display:flex;
-    align-items:center;
-}
+        .input-icon {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
 
-.input-icon span{
-    position:absolute;
-    left:12px;
-    font-size:18px;
-    transition: all 0.3s ease;
-    animation: floatIcon 2s ease-in-out infinite;
-    color: #fff;
-    z-index: 5;
-}
+        .input-icon span {
+            position: absolute;
+            left: 12px;
+            font-size: 18px;
+            z-index: 5;
+            pointer-events: none;
+        }
 
-@keyframes floatIcon{
-    0%{ transform: translateY(0);}
-    50%{ transform: translateY(-4px);}
-    100%{ transform: translateY(0);}
-}
+        /* INPUT, SELECT, TEXTAREA */
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px 12px 42px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 16px; /* Evita zoom automatico su iPhone */
+            transition: 0.3s;
+            -webkit-appearance: none; /* Rimuove stili default iOS */
+        }
 
-.input-icon.active span{
-    color: #ef4444; 
-    text-shadow: 0 0 15px #ef4444, 0 0 30px #ef4444; 
-    transform: scale(1.3) translateY(0);
-    animation: none; 
-}
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.15);
+            border-color: #ef4444;
+        }
 
-.input-icon input,
-.input-icon select,
-.input-icon textarea{
-    padding-left:45px;
-}
+        /* FIX PER SELECT SU MOBILE */
+        select {
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23ef4444%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px top 50%;
+            background-size: 12px auto;
+            padding-right: 30px;
+        }
 
-input, select, textarea{
-    width:100%;
-    padding:14px;
-    border-radius:12px;
-    border:none;
-    background:rgba(255,255,255,0.12);
-    color:#fff;
-    font-size:15px;
-    transition: 0.3s;
-}
+        textarea {
+            min-height: 80px;
+            resize: none;
+        }
 
-input:focus, select:focus, textarea:focus{
-    background:rgba(255,255,255,0.2);
-    outline: 1px solid #ef4444;
-}
+        /* BOTTONE */
+        button#btn {
+            width: 100%;
+            padding: 16px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(45deg, #b91c1c, #ef4444);
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(185, 28, 28, 0.4);
+        }
 
-textarea{
-    min-height:90px;
-    resize:none;
-}
+        button#btn:active {
+            transform: scale(0.98);
+        }
 
-label{
-    font-size:11px;
-    color:#ccc;
-    margin-bottom:5px;
-    display:block;
-    text-transform: uppercase;
-    padding-left: 5px;
-}
+        .privacy-notice {
+            font-size: 10px;
+            color: #aaa;
+            text-align: center;
+            margin: 15px 0;
+            line-height: 1.4;
+        }
 
-button#btn{
-    width:100%;
-    padding:16px;
-    margin-top:10px;
-    border:none;
-    border-radius:14px;
-    background:linear-gradient(45deg,#b91c1c,#ef4444);
-    color:white;
-    font-size:17px;
-    font-weight:bold;
-    cursor:pointer;
-    animation:pulse 2s infinite;
-    text-transform: uppercase;
-}
+        .success-info {
+            text-align: center;
+            color: #ef4444;
+            font-weight: bold;
+            font-size: 13px;
+            margin-top: 10px;
+        }
 
-@keyframes pulse{
-    0%{ box-shadow:0 0 10px #b91c1c;}
-    50%{ box-shadow:0 0 25px #ef4444;}
-    100%{ box-shadow:0 0 10px #b91c1c;}
-}
+        /* MODALE */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            padding: 20px;
+        }
 
-.tap{ animation:tap 0.15s ease; }
-@keyframes tap{
-    0%{ transform:scale(1);}
-    50%{ transform:scale(0.95);}
-    100%{ transform:scale(1);}
-}
+        .box {
+            background: #111;
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            border: 2px solid #ef4444;
+            width: 100%;
+            max-width: 320px;
+        }
 
-.modal{
-    position:fixed;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,0.9);
-    top:0;left:0;
-    display:none;
-    justify-content:center;
-    align-items:center;
-    z-index: 9999;
-}
+        .modal-btns { display: flex; gap: 10px; margin-top: 20px; }
+        .ok { background: #ef4444; color: white; border: none; padding: 12px; border-radius: 10px; flex: 1; font-weight: bold; }
+        .no { background: #444; color: white; border: none; padding: 12px; border-radius: 10px; flex: 1; }
 
-.box{
-    background:#000;
-    color:#fff;
-    padding:25px;
-    border-radius:20px;
-    text-align:center;
-    border: 2px solid #ef4444;
-}
-
-.modal-btns { display: flex; gap: 10px; margin-top: 20px; }
-.ok{background:#ef4444; color:white; border:none; padding:12px; border-radius:10px; flex:1; font-weight:bold; cursor:pointer;}
-.no{background:#444; color:white; border:none; padding:12px; border-radius:10px; flex:1; cursor:pointer;}
-
-#previewBox p{
-    background:#fff;
-    color:#000;
-    padding:12px;
-    border-radius:12px;
-    font-size: 14px;
-    margin-top:10px;
-    line-height: 1.5;
-}
-
-.success-info{
-    text-align:center;
-    color:#ef4444;
-    margin-top:15px;
-    font-weight:bold;
-    font-size: 13px;
-    animation:blink 1.5s infinite;
-}
-
-@keyframes blink{
-    0%,100%{opacity:1;}
-    50%{opacity:0.5;}
-}
-
-.privacy-notice {
-    font-size: 10px;
-    color: #aaa;
-    text-align: center;
-    margin-top: 15px;
-    line-height: 1.4;
-    padding: 0 10px;
-}
-</style>
+        /* PREVIEW TESTO */
+        #previewBox p {
+            background: #fff;
+            color: #000;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-top: 10px;
+            text-align: left;
+        }
+    </style>
 </head>
 
 <body>
@@ -228,7 +209,7 @@ button#btn{
     <div class="logo-container">
         <img src="logo.png" alt="Logo C.A.T. Service" class="logo-img">
         <h2>C.A.T. SERVICE</h2>
-        <h3 class="sub-logo">di Fabio Campitiello</h3>
+        <div class="sub-logo">di Fabio Campitiello</div>
     </div>
 
     <div class="input-group">
@@ -308,30 +289,20 @@ button#btn{
             <label>Tipo di errore</label>
             <div class="input-icon">
                 <span>📟</span>
-             <select id="listaErrori">
-                        <option value="">Seleziona l'allarme...</option>
-                        <option value="AL 1 - Blackout">AL 1 - Blackout / Mancanza Rete</option>
-                        <option value="AL 2 - Sonda Fumi">AL 2 - Sonda Fumi Guasta</option>
-                        <option value="AL 3 - Hot Fumi">AL 3 - Hot Fumi (Eccessivo Calore)</option>
-                        <option value="AL 4 - Aspiratore">AL 4 - Guasto Estrattore Fumi</option>
-                        <option value="AL 5 - No Accensione">AL 5 - Mancata Accensione</option>
-                        <option value="AL 6 - No Pellet">AL 6 - Mancanza Pellet / Fiamma</option>
-                        <option value="AL 7 - Termico">AL 7 - Sicurezza Termica (Reset)</option>
-                        <option value="AL 8 - No Depressione">AL 8 - Errore Depressione / Canna Fumaria</option>
-                        <option value="AL 9 - Coclea">AL 9 - Blocco Sistema Carico Pellet</option>
-                        <option value="Service">Scritta 'SERVICE' / Scadenza Ore</option>
-                        <option value="Errore Sonda K">Errore Sonda K</option>
-                        <option value="Errore Autopulizia">Errore Autopulizia</option>
-                        <option value="Errore Pressione Alta">Errore Pressione Alta</option>
-                        <option value="Errore Pressione Bassa">Errore Pressione Bassa</option>
-                        <option value="Errore Debimetro">Errore Debimetro</option>
-                        <option value="Errore No Flusso">Errore No Flusso</option>
-                        <option value="Errore Porta Aperta">Errore Porta Aperta</option>
-                        <option value="Errore Depressione">Errore Depressione (Specifico)</option>
-                        <option value="Errore Sicurezza Termica">Errore Sicurezza Termica (Specifico)</option>
-                        <option value="Altro">Altro errore non in lista</option>
-                    </select>
-                </div>
+                <select id="listaErrori">
+                    <option value="">Seleziona l'allarme...</option>
+                    <option value="AL 1 - Blackout">AL 1 - Blackout</option>
+                    <option value="AL 2 - Sonda Fumi">AL 2 - Sonda Fumi</option>
+                    <option value="AL 3 - Hot Fumi">AL 3 - Hot Fumi</option>
+                    <option value="AL 4 - Aspiratore">AL 4 - Guasto Estrattore</option>
+                    <option value="AL 5 - No Accensione">AL 5 - No Accensione</option>
+                    <option value="AL 6 - No Pellet">AL 6 - No Pellet</option>
+                    <option value="AL 7 - Termico">AL 7 - Sicurezza Termica</option>
+                    <option value="AL 8 - No Depressione">AL 8 - No Depressione</option>
+                    <option value="AL 9 - Coclea">AL 9 - Blocco Coclea</option>
+                    <option value="Service">Scritta SERVICE</option>
+                    <option value="Altro">Altro errore</option>
+                </select>
             </div>
         </div>
 
@@ -339,155 +310,107 @@ button#btn{
             <label>Descrizione guasto</label>
             <div class="input-icon">
                 <span>📝</span>
-                <textarea id="problemaNote" placeholder="Descrivi brevemente il guasto"></textarea>
+                <textarea id="problemaNote" placeholder="Descrivi il guasto"></textarea>
             </div>
         </div>
     </div>
 
     <div class="input-group">
-        <label>Data odierna</label>
-        <input type="text" id="data" readonly style="text-align:center; color:#ef4444; font-weight:bold;">
+        <label>Data di oggi</label>
+        <input type="text" id="data" readonly style="text-align:center; color:#ef4444; font-weight:bold; background:rgba(0,0,0,0.2);">
     </div>
 
     <div class="privacy-notice">
-        Inviando la richiesta dichiari di aver letto l'informativa privacy e acconsenti al trattamento dei dati personali (GDPR) per la gestione dell'assistenza tecnica.
+        L'invio acconsente al trattamento dei dati (GDPR) per l'assistenza tecnica.
     </div>
 
     <button id="btn">Prenota su WhatsApp</button>
 
     <div id="previewBox" style="display:none; margin-top:15px;">
-        <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px;">
-            <strong style="color:#fff; font-size:12px;">Messaggio generato:</strong>
-            <p id="previewText" style="white-space:pre-line;"></p>
-        </div>
+        <p id="previewText" style="white-space:pre-line;"></p>
     </div>
 
     <div class="success-info">
-        ✅ Clicca e poi invia su WhatsApp
+        ✅ Verrai indirizzato a WhatsApp
     </div>
 </div>
 
 <div class="modal" id="modal">
     <div class="box">
-        <h3>Conferma</h3>
-        <p>Inviare la richiesta a C.A.T. SERVICE?</p>
+        <h3>Conferma Inviata</h3>
+        <p>Vuoi procedere con l'invio del messaggio?</p>
         <div class="modal-btns">
             <button class="no" id="annulla">Modifica</button>
-            <button class="ok" id="conferma">Invia Ora</button>
+            <button class="ok" id="conferma">Invia</button>
         </div>
     </div>
 </div>
 
 <script>
-window.onload=function(){
-    let oggi=new Date();
-    document.getElementById("data").value = oggi.toLocaleDateString('it-IT');
-};
+    // Imposta Data
+    window.onload = function() {
+        let oggi = new Date();
+        document.getElementById("data").value = oggi.toLocaleDateString('it-IT');
+    };
 
-const tipoSelect = document.getElementById("tipoIntervento");
-const sezioneProblemi = document.getElementById("sezioneProblemi");
-const problemaSelect = document.getElementById("problemaSelect");
-const erroriDisplayGroup = document.getElementById("erroriDisplayGroup");
-const listaErrori = document.getElementById("listaErrori");
-const altroBox = document.getElementById("altroBox");
-const marcaSelect = document.getElementById("marcaSelect");
-const marcaAltroGroup = document.getElementById("marcaAltroGroup");
-const marcaAltroInput = document.getElementById("marcaAltro");
+    const tipoSelect = document.getElementById("tipoIntervento");
+    const sezioneProblemi = document.getElementById("sezioneProblemi");
+    const problemaSelect = document.getElementById("problemaSelect");
+    const erroriDisplayGroup = document.getElementById("erroriDisplayGroup");
+    const listaErrori = document.getElementById("listaErrori");
+    const altroBox = document.getElementById("altroBox");
+    const marcaSelect = document.getElementById("marcaSelect");
+    const marcaAltroGroup = document.getElementById("marcaAltroGroup");
+    const marcaAltroInput = document.getElementById("marcaAltro");
 
-// Gestione visibilità sezioni problemi
-tipoSelect.onchange = function() {
-    sezioneProblemi.style.display = (this.value === "Prima accensione") ? "none" : "block";
-};
+    tipoSelect.onchange = function() {
+        sezioneProblemi.style.display = (this.value === "Prima accensione") ? "none" : "block";
+    };
 
-// Gestione marca "Altro"
-marcaSelect.onchange = function() {
-    if(this.value === "Altro") {
-        marcaAltroGroup.style.display = "block";
-    } else {
-        marcaAltroGroup.style.display = "none";
-        marcaAltroInput.value = "";
-    }
-};
+    marcaSelect.onchange = function() {
+        marcaAltroGroup.style.display = (this.value === "Altro") ? "block" : "none";
+    };
 
-problemaSelect.onchange = function() {
-    erroriDisplayGroup.style.display = (this.value === "Errore sul display") ? "block" : "none";
-    altroBox.style.display = (this.value === "Altro" || this.value === "Errore sul display") ? "block" : "none";
-    if(this.value !== "Errore sul display") listaErrori.value = "";
-};
+    problemaSelect.onchange = function() {
+        erroriDisplayGroup.style.display = (this.value === "Errore sul display") ? "block" : "none";
+        altroBox.style.display = (this.value === "Altro" || this.value === "Errore sul display") ? "block" : "none";
+    };
 
-let messaggio="";
+    let messaggioGlobal = "";
 
-document.getElementById("btn").onclick=function(){
-    let nome=document.getElementById("nome").value.trim();
-    let cognome=document.getElementById("cognome").value.trim();
-    let indirizzo=document.getElementById("indirizzo").value.trim();
-    let telefono=document.getElementById("telefono").value.trim();
-    let telefonoFisso=document.getElementById("telefono_fisso").value.trim();
-    let modello=document.getElementById("modello").value.trim();
-    let tipo=tipoSelect.value;
-    let data=document.getElementById("data").value;
-    
-    // Logica Marca Finale
-    let marcaFinale = marcaSelect.value;
-    if(marcaFinale === "Altro") {
-        marcaFinale = marcaAltroInput.value.trim();
-    }
+    document.getElementById("btn").onclick = function() {
+        let nome = document.getElementById("nome").value.trim();
+        let cognome = document.getElementById("cognome").value.trim();
+        let indirizzo = document.getElementById("indirizzo").value.trim();
+        let telefono = document.getElementById("telefono").value.trim();
+        let marca = marcaSelect.value === "Altro" ? marcaAltroInput.value : marcaSelect.value;
+        let tipo = tipoSelect.value;
 
-    if(!nome||!cognome||!indirizzo||!telefono||!marcaFinale||!tipo){
-        alert("Attenzione: Compila i campi obbligatori prima di continuare.");
-        return;
-    }
+        if(!nome || !cognome || !indirizzo || !telefono || !marca || !tipo) {
+            alert("Compila i campi obbligatori.");
+            return;
+        }
 
-    let dettaglioProblema = problemaSelect.value;
-    if (dettaglioProblema === "Errore sul display" && listaErrori.value) {
-        dettaglioProblema = "Errore: " + listaErrori.value;
-    }
-    const note = document.getElementById("problemaNote").value.trim();
-    if (note) dettaglioProblema += (dettaglioProblema ? " | Note: " : "") + note;
+        let prob = problemaSelect.value;
+        if(prob === "Errore sul display") prob = "Errore: " + listaErrori.value;
+        let note = document.getElementById("problemaNote").value;
 
-    messaggio=`*RICHIESTA INTERVENTO*
-*C.A.T. SERVICE*
+        messaggioGlobal = `*RICHIESTA INTERVENTO*\n*C.A.T. SERVICE*\n\n👤 *Cliente:* ${nome} ${cognome}\n📍 *Indirizzo:* ${indirizzo}\n📱 *Cell:* ${telefono}\n🔥 *Stufa:* ${marca}\n🧰 *Intervento:* ${tipo}\n🛠️ *Problema:* ${prob}${note ? " ("+note+")" : ""}\n📅 *Data:* ${document.getElementById("data").value}`;
 
-👤 *Cliente:* ${nome} ${cognome}
-📍 *Indirizzo:* ${indirizzo}
-📱 *Cell:* ${telefono}
-${telefonoFisso ? "☎️ *Fisso:* " + telefonoFisso : ""}
+        document.getElementById("previewText").innerText = messaggioGlobal;
+        document.getElementById("previewBox").style.display = "block";
+        document.getElementById("modal").style.display = "flex";
+    };
 
-🔥 *Stufa:* ${marcaFinale}
-⚙️ *Modello:* ${modello || "N/D"}
+    document.getElementById("annulla").onclick = function() {
+        document.getElementById("modal").style.display = "none";
+    };
 
-🧰 *Intervento:* ${tipo}
-${dettaglioProblema ? "🛠️ *Problema:* " + dettaglioProblema : ""}
-
-📅 *Data:* ${data}`;
-
-    document.getElementById("previewText").innerText = messaggio;
-    document.getElementById("previewBox").style.display = "block";
-    document.getElementById("modal").style.display="flex";
-};
-
-document.getElementById("annulla").onclick=function(){
-    document.getElementById("modal").style.display="none";
-};
-
-document.getElementById("conferma").onclick=function(){
-    let numeroWhatsApp = "393394245508";
-    let url="https://wa.me/" + numeroWhatsApp + "?text="+encodeURIComponent(messaggio);
-    window.open(url,"_blank");
-    document.getElementById("modal").style.display="none";
-};
-
-const inputs = document.querySelectorAll(".input-icon input, .input-icon select, .input-icon textarea");
-inputs.forEach(el => {
-    el.addEventListener("input", function(){
-        if(this.value.trim() !== "") this.parentElement.classList.add("active");
-        else this.parentElement.classList.remove("active");
-    });
-    el.addEventListener("change", function(){
-        if(this.value.trim() !== "") this.parentElement.classList.add("active");
-        else this.parentElement.classList.remove("active");
-    });
-});
+    document.getElementById("conferma").onclick = function() {
+        let url = "https://wa.me/393394245508?text=" + encodeURIComponent(messaggioGlobal);
+        window.open(url, "_blank");
+        document.getElementById("modal").style.display = "none";
+    };
 </script>
 
 </body>
