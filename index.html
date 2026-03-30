@@ -38,17 +38,36 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.6);
         }
 
-        .logo-container {
-            text-align: center;
-            margin-bottom: 25px;
+     .logo-container {
+    text-align: center;
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.logo-container::after {
+    content: "";
+    position: absolute;
+    width: 120px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #ef4444, transparent);
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 10px;
+}
         }
 
         /* --- LOGO ANIMATO --- */
-        .logo-img {
-            width: 160px;
-            height: auto;
-            margin-bottom: 10px;
-            filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.4));
+   .logo-img {
+    width: 220px;
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    filter: drop-shadow(0 0 12px rgba(239, 68, 68, 0.5));
+}
             animation: logoPulse 3s infinite ease-in-out;
         }
 
@@ -236,9 +255,8 @@
 
 <div class="container">
     <div class="logo-container">
-        <img src="logo.png" alt="Logo C.A.T. Service" class="logo-img">
-        <h2>C.A.T. SERVICE</h2>
-        <div class="sub-logo">di Fabio Campitiello</div>
+        <img src="logo.PNG" alt="C.A.T. Service di Fabio Campitiello" class="logo-img">
+       
     </div>
 
     <div class="input-group">
