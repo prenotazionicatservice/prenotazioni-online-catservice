@@ -7,211 +7,85 @@
 
     <style>
         /* RESET GENERALE */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
-
-        body {
-            background: #200505;
-            background: radial-gradient(circle at 50% 50%, #450a0a, #000000);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        
+        body { 
+            background: #200505; 
+            background: radial-gradient(circle at 50% 50%, #450a0a, #000000); 
+            min-height: 100vh; 
+            display: flex; 
+            justify-content: center; 
+            align-items: flex-start; 
             padding: 80px 15px 40px 15px; 
-            color: #fff;
+            color: #fff; 
         }
 
-        /* --- NAVBAR --- */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 60px;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            display: flex;
-            align-items: center;
-            padding: 0 20px;
-            border-bottom: 1px solid rgba(239, 68, 68, 0.4);
-            z-index: 1000;
+        /* NAVBAR */
+        .navbar { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 60px; 
+            background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px); 
+            -webkit-backdrop-filter: blur(10px); display: flex; align-items: center; 
+            padding: 0 20px; border-bottom: 1px solid rgba(239, 68, 68, 0.4); z-index: 1000; 
         }
-
         .nav-content { display: flex; align-items: center; gap: 12px; }
         .mini-logo { height: 35px; width: auto; filter: drop-shadow(0 0 5px #ef4444); }
         .nav-title { font-weight: bold; font-size: 14px; letter-spacing: 1px; color: #ef4444; text-transform: uppercase; }
 
-        .container {
-            width: 100%;
-            max-width: 450px; 
-            background: rgba(255, 255, 255, 0.07);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px); 
-            border-radius: 20px;
-            padding: 25px;
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            animation: openingGlow 1.2s ease-out forwards;
+        /* CONTAINER */
+        .container { 
+            width: 100%; max-width: 450px; background: rgba(255, 255, 255, 0.07); 
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); 
+            border-radius: 20px; padding: 25px; border: 1px solid rgba(239, 68, 68, 0.3); 
+            animation: openingGlow 1.2s ease-out forwards; 
         }
-
-        @keyframes openingGlow {
-            0% { opacity: 0; transform: translateY(20px); }
-            100% { opacity: 1; transform: translateY(0); box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
+        
+        @keyframes openingGlow { 
+            0% { opacity: 0; transform: translateY(20px); } 
+            100% { opacity: 1; transform: translateY(0); box-shadow: 0 15px 35px rgba(0,0,0,0.6); } 
         }
 
         .logo-container { text-align: center; margin-bottom: 25px; }
-        .logo-img {
-            width: 220px;
-            max-width: 100%;
-            height: auto;
-            margin-bottom: 20px;
-            filter: drop-shadow(0 0 12px rgba(239, 68, 68, 0.5));
-            animation: logoPulse 3s infinite ease-in-out;
+        .logo-img { 
+            width: 220px; max-width: 100%; height: auto; margin-bottom: 20px; 
+            filter: drop-shadow(0 0 12px rgba(239, 68, 68, 0.5)); 
+            animation: logoPulse 3s infinite ease-in-out; 
         }
+        @keyframes logoPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
 
-        @keyframes logoPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
+        /* PROGRESS BAR */
+        .progress-container { width: 100%; background: rgba(255,255,255,0.1); height: 20px; border-radius: 10px; margin-bottom: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); }
+        .progress-bar { height: 100%; width: 0%; background: #ef4444; transition: width 0.5s ease; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; color: white; }
 
-        /* --- PROGRESS BAR --- */
-        .progress-container {
-            width: 100%;
-            background: rgba(255,255,255,0.1);
-            height: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-        .progress-bar {
-            height: 100%;
-            width: 0%;
-            background: #ef4444;
-            transition: width 0.5s ease, background 0.5s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 10px;
-            font-weight: bold;
-            color: white;
-        }
-
-        /* --- GRID PER CAMPI UNITI --- */
-        .input-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
+        /* INPUTS */
+        .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
         .input-group { margin-bottom: 15px; width: 100%; }
         label { display: block; font-size: 11px; color: #ef4444; text-transform: uppercase; margin-bottom: 5px; padding-left: 5px; font-weight: bold; }
-        
         .input-icon { position: relative; display: flex; align-items: center; width: 100%; }
-        .input-icon span {
-            position: absolute;
-            left: 12px;
-            font-size: 18px;
-            z-index: 5;
-            pointer-events: none;
-        }
+        .input-icon span { position: absolute; left: 12px; font-size: 18px; z-index: 5; pointer-events: none; }
 
-        input, select, textarea {
-            width: 100%;
-            padding: 12px 15px 12px 42px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            color: #fff;
-            font-size: 16px; 
-            transition: 0.3s;
+        input, select, textarea { 
+            width: 100%; padding: 12px 15px 12px 42px; background: rgba(255, 255, 255, 0.1); 
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; color: #fff; 
+            font-size: 16px; transition: 0.3s; 
         }
+        select option { background-color: #1a1a1a; color: white; }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: #ef4444; background: rgba(255, 255, 255, 0.15); }
 
-        select option {
-            background-color: #1a1a1a;
-            color: white;
+        /* BOTTONE WHATSAPP */
+        button#btn { 
+            position: relative; width: 100%; padding: 18px; margin-top: 15px; border: none; 
+            border-radius: 15px; background: linear-gradient(135deg, #25d366 0%, #128c7e 100%); 
+            color: white; font-size: 18px; font-weight: 800; cursor: pointer; text-transform: uppercase; 
+            letter-spacing: 1px; display: flex; align-items: center; justify-content: center; gap: 12px; 
+            overflow: hidden; box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4); 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
         }
+        button#btn::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: rgba(255, 255, 255, 0.2); transform: rotate(45deg); transition: 0.6s; pointer-events: none; }
+        button#btn:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 12px 30px rgba(37, 211, 102, 0.6); }
+        button#btn:hover::before { left: 100%; }
 
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: #ef4444;
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        /* --- BOTTONE WHATSAPP ULTRAMODERNO --- */
-        button#btn {
-            position: relative;
-            width: 100%;
-            padding: 18px;
-            margin-top: 15px;
-            border: none;
-            border-radius: 15px;
-            background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
-            color: white;
-            font-size: 18px;
-            font-weight: 800;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            overflow: hidden;
-            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        /* Effetto Riflesso (Glow) */
-        button#btn::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: rgba(255, 255, 255, 0.2);
-            transform: rotate(45deg);
-            transition: 0.6s;
-            pointer-events: none;
-        }
-
-        button#btn:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 12px 30px rgba(37, 211, 102, 0.6);
-        }
-
-        button#btn:hover::before {
-            left: 100%;
-        }
-
-        button#btn:active {
-            transform: scale(0.98);
-        }
-
-        /* --- ANTEPRIMA DATI --- */
-        .preview-box {
-            margin-top: 25px;
-            padding: 15px;
-            background: rgba(0,0,0,0.3);
-            border-radius: 12px;
-            border: 1px dashed rgba(239, 68, 68, 0.5);
-            font-size: 13px;
-            line-height: 1.6;
-        }
-        .preview-title {
-            color: #ef4444;
-            font-size: 11px;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-            font-weight: bold;
-            display: block;
-        }
+        .preview-box { margin-top: 25px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 12px; border: 1px dashed rgba(239, 68, 68, 0.5); font-size: 13px; line-height: 1.6; }
+        .preview-title { color: #ef4444; font-size: 11px; text-transform: uppercase; margin-bottom: 8px; font-weight: bold; display: block; }
 
         .privacy-notice { font-size: 10px; color: #aaa; text-align: center; margin: 15px 0; }
         .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 9999; }
@@ -221,19 +95,18 @@
         .no { background: #444; color: white; border: none; padding: 12px; border-radius: 10px; flex: 1; }
     </style>
 </head>
-
 <body>
 
 <nav class="navbar">
     <div class="nav-content">
-        <img src="logo.PNG" alt="Mini Logo" class="mini-logo" onerror="this.src='logo.png';">
+        <img src="logo.PNG" alt="Logo" class="mini-logo" onerror="this.src='logo.png';">
         <span class="nav-title">C.A.T. Service</span>
     </div>
 </nav>
 
 <div class="container">
     <div class="logo-container">
-        <img src="logo.PNG?v=1" alt="C.A.T. Service" class="logo-img" onerror="this.src='logo.png';">
+        <img src="logo.PNG?v=1" alt="Logo" class="logo-img" onerror="this.src='logo.png';">
     </div>
 
     <div class="progress-container">
@@ -244,7 +117,9 @@
         <div class="input-icon"><span>👤</span><input type="text" id="nomeCognome" placeholder="Nome e Cognome" oninput="updateUI()"></div>
     </div>
 
-    <div class="input-group"><div class="input-icon"><span>📍</span><input type="text" id="indirizzo" placeholder="Indirizzo completo" oninput="updateUI()"></div></div>
+    <div class="input-group">
+        <div class="input-icon"><span>📍</span><input type="text" id="indirizzo" placeholder="Indirizzo completo" oninput="updateUI()"></div>
+    </div>
 
     <div class="input-row">
         <div class="input-icon"><span>📱</span><input type="tel" id="telefono" placeholder="Cellulare" oninput="updateUI()"></div>
@@ -254,7 +129,7 @@
     <div class="input-row">
         <div class="input-icon">
             <span>🔥</span>
-            <select id="marcaSelect" onchange="updateUI()">
+            <select id="marcaSelect" onchange="populateErrorList(); updateUI();">
                 <option value="">Marca</option>
                 <option value="MCZ">MCZ</option>
                 <option value="PALAZZETTI">PALAZZETTI</option>
@@ -310,32 +185,13 @@
             <div class="input-icon">
                 <span>📟</span>
                 <select id="listaErrori" onchange="updateUI()">
-                    <option value="">Seleziona l'allarme...</option>
-                    <option value="AL 1 - Blackout">AL 1 - Blackout / Mancanza Rete</option>
-                    <option value="AL 2 - Sonda Fumi">AL 2 - Sonda Fumi Guasta</option>
-                    <option value="AL 3 - Hot Fumi">AL 3 - Hot Fumi (Eccessivo Calore)</option>
-                    <option value="AL 4 - Aspiratore">AL 4 - Guasto Estrattore Fumi</option>
-                    <option value="AL 5 - No Accensione">AL 5 - Mancata Accensione</option>
-                    <option value="AL 6 - No Pellet">AL 6 - Mancanza Pellet / Fiamma</option>
-                    <option value="AL 7 - Termico">AL 7 - Sicurezza Termica (Reset)</option>
-                    <option value="AL 8 - No Depressione">AL 8 - Errore Depressione / Canna Fumaria</option>
-                    <option value="AL 9 - Coclea">AL 9 - Blocco Sistema Carico Pellet</option>
-                    <option value="SERVICE/PULIZIA">SERVICE/PULIZIA</option>
-                    <option value="Errore Triac Coclea">Errore Triac Coclea</option>
-                    <option value="Errore Sonda K">Errore Sonda K</option>
-                    <option value="Errore Pulizia braciere">Errore Pulizia braciere</option>
-                    <option value="Errore Pressione Alta">Errore Pressione Alta</option>
-                    <option value="Errore Pressione Bassa">Errore Pressione Bassa</option>
-                    <option value="Errore Debimetro/No flusso">Errore Debimetro/No flusso</option>
-                    <option value="Errore Porta Apert/sportello pellet">Errore Porta Aperta/sportello pellet</option>
-                    <option value="Errore NO SEGNALE">Errore NO SEGNALE</option>
-                    <option value="Altro">Altro errore non in lista</option>
+                    <option value="">Scegli Marca prima...</option>
                 </select>
             </div>
         </div>
 
         <div class="input-group" id="altroBox" style="display:none;">
-            <div class="input-icon"><span>📝</span><textarea id="problemaNote" placeholder="Descrivi il guasto" oninput="updateUI()"></textarea></div>
+            <div class="input-icon"><span>📝</span><textarea id="problemaNote" placeholder="Descrivi meglio il problema..." oninput="updateUI()"></textarea></div>
         </div>
     </div>
 
@@ -369,13 +225,75 @@
 </div>
 
 <script>
+    // LISTA ERRORI GENERICI (SOLO AL 1 - AL 9 + SERVICE)
+    const erroriGenerici = [
+        "AL 1 - Blackout / Mancanza Rete",
+        "AL 2 - Sonda Fumi Guasta",
+        "AL 3 - Hot Fumi (Eccessivo Calore)",
+        "AL 4 - Guasto Estrattore Fumi",
+        "AL 5 - Mancata Accensione",
+        "AL 6 - Mancanza Pellet / Fiamma",
+        "AL 7 - Sicurezza Termica (Reset)",
+        "AL 8 - Errore Depressione / Canna Fumaria",
+        "AL 9 - Blocco Sistema Carico Pellet",
+        "SERVICE"
+    ];
+
+    // LISTE SPECIFICHE RICHIESTE
+    const dbErrori = {
+        "MCZ": [
+            "A01 (MANCATA ACCENSIONE)", "A02 (Spegnimento anomalo fuoco)", "A03 (ALLARME SICUREZZA PELLET)", "A04 (ALLARME TEMP.FUMI)", 
+            "A05 (ALLARME PORTA APERTA/VENTO CANNA FUMARIA)", "A06 (ALLARME MANCANZA D'ARIA BRACIERE)", "A07 (PORTA APERTA)", 
+            "A08 (ALLARME MOTORE FUMI)", "A09 (ALLARME SONDA FUMI)", "A10 (ALLARME CANDELETTA GUASTA)", "A11 (ALLARME MOTORIDUTTORE PELLET)", 
+            "A12 (ALLARME RADIOCOMANDO)", "A13 (MANCATA COMUNICAZIONE COMPONENTE)", "A14 (ALLARME SENSORE ACTIVE)", "A17 (ALLARME TEMP.ACQUA)", 
+            "AL17 (ALLARME BLOCCO COCLEA)", "A18 (ALLARME CIRCOLATORE BLOCCATO)", "A19 (ALLARME SONDA ACQUA)", "A20 (ALLARME SONDA AUSILIARIA)", 
+            "A21 (ALLARME PRESSOSTATI SIC2)", "A22 (ALLARME SONDA AMBIENTE)", "A23 (MANCATA CHIUSURA BRACIERE)", "A24 (POMPA BLOCCATA)", 
+            "PELLET (ALLARME PELLET MANCANTE)", "SERVICE (MANUTENZIONE STRAORDINARIA)"
+        ],
+        "PALAZZETTI": [
+            "E001 PANNELLO COMANDI DIFETTOSO", "E002 ERRORE COMUNICAZIONE TELECOMANDO", "E004 ERRORE COMUNICAZIONE", "E101 MANCATA ACCENSIONE", 
+            "E105 ERRORE SONDA TEMP.ACQUA", "E106 ERRORE SONDA PUFFER", "E108 ERRORE SICUREZZA", "E109 ERRORE PRESSIONE", "E110 ERRORE SONDA TEMPERATURA", 
+            "E111 ERRORE SONDA FUMI", "A001 LIVELLO PELLET BASSO", "A002 AVVISO MANUTENZIONE PROGRAMMATA", "A007 MALFUNZIONAMENTO SENSORE PRESSIONE", 
+            "CHIAVE ROSSA LAMPEGGIANTE (ERRORE SCHEDA)", "SCOPINA GIALLA CAMERA COMBUSTIONE SPORCA", "SIMBOLO GIALLO PELLET (PELLET ESAURITO)"
+        ],
+        "MORETTI DESIGN": [
+            "ER 01 ALLARME TERMOSTATO SICUREZZA", "ER02 ALLARME OCCLUSIONE CANNA FUMARIA", "ER03 ALLARME TEMP. FUMI BASSA", "ER04 ALLARME TEMP. ACQUA ALTA", 
+            "ER05 ALLARME TEMP. FUMI ALTA", "ER07 ALLARME ENCODER", "ER08 ALLARME ENCODER", "ER09 ALLARME PRESSIONE ACQUA BASSA", "ER10 ALLARME PRESSIONE ACQUA ALTA", 
+            "ER11 ALLARME OROLOGIO INTERNO", "ER12 ALLARME ACCENSIONE FALLITA", "ER15 ALLARME BLACKOUT", "ER25 ANOMALIA PULIZIA BRACIERE", "ER39 ANOMALIA FLUSSIMETRO", 
+            "ER41 ANOMALIA FLUSSIMETRO", "ER44 PORTA/SPORTELLO PELLET APERTI", "PORT ALLARME PORTE O SPORTELLI APERTI", "SERV PULIZIA STRAORDINARIA", 
+            "NO SEGNALE ALLARME MANCATA COMUNICAZIONE SCHEDA/DISPLAY", "SOND CONTROLLO SONDE", "TRASFERIMENTO NON RIUSCITO ALLARME ASSENZA DI COMUNICAZIONE"
+        ],
+        "RAVELLI": [
+            "AL01 BLACK-OUT", "AL02 SONDA FUMI", "AL03 SOVRATEMPERATURA FUMI", "AL04 ASPIRATORE GUASTO", "AL05 MANCATA ACCENSIONE", 
+            "AL06 PELLET ESAURITI", "AL07 SICUREZZA TERMICA", "AL08 MANCA DEPRESSIONE", "AL09 DEBIMETRO", "AL11 ANOMALIA FIAMMA", 
+            "AL12 ANOMALIA GIRI ESTRATTORE", "AL13 ANOMALIA FLUSSO", "AL14 FASE COCLEA", "AL15 TRIAC COCLEA"
+        ]
+    };
+
     const ids = ["nomeCognome", "indirizzo", "telefono", "telefono_fisso", "marcaSelect", "marcaAltro", "modello", "tipoIntervento", "problemaSelect", "listaErrori", "problemaNote"];
 
     window.onload = function() {
         document.getElementById("data").value = new Date().toLocaleDateString('it-IT');
         loadLocalStorage();
+        populateErrorList();
         updateUI();
     };
+
+    function populateErrorList() {
+        const marca = document.getElementById("marcaSelect").value;
+        const listaErrori = document.getElementById("listaErrori");
+        const errori = dbErrori[marca] ? dbErrori[marca] : erroriGenerici;
+        const currentSaved = localStorage.getItem("listaErrori");
+
+        listaErrori.innerHTML = '<option value="">Seleziona l\'allarme...</option>';
+        errori.forEach(err => {
+            const opt = document.createElement("option");
+            opt.value = err;
+            opt.textContent = err;
+            listaErrori.appendChild(opt);
+        });
+        if(currentSaved) listaErrori.value = currentSaved;
+    }
 
     function saveLocalStorage() {
         ids.forEach(id => {
@@ -426,8 +344,8 @@
 
         const marcaFinale = fields.marca === "Altro" ? document.getElementById("marcaAltro").value : fields.marca;
         const modF = document.getElementById("modello").value;
-        const problemaFinale = probSel === "Errore sul display" ? "Errore: " + document.getElementById("listaErrori").value : probSel;
-        const note = document.getElementById("problemaNote").value;
+        const erroreScelto = document.getElementById("listaErrori").value;
+        const problemaFinale = probSel === "Errore sul display" ? "Errore: " + erroreScelto : probSel;
 
         document.getElementById("previewContent").innerHTML = `
             <b>Cliente:</b> ${fields.cliente || '-'}<br>
@@ -444,20 +362,19 @@
         const cliente = document.getElementById("nomeCognome").value.trim();
         const indirizzo = document.getElementById("indirizzo").value.trim();
         const telefono = document.getElementById("telefono").value.trim();
-        const telefono_fisso = document.getElementById("telefono_fisso").value.trim();
         const marca = document.getElementById("marcaSelect").value === "Altro" ? document.getElementById("marcaAltro").value : document.getElementById("marcaSelect").value;
-        const modello = document.getElementById("modello").value.trim();
         const tipo = document.getElementById("tipoIntervento").value;
 
         if(!cliente || !indirizzo || !telefono || !marca || !tipo) {
-            alert("Compila tutti i campi obbligatori (segnalati dalla barra di progresso)."); return;
+            alert("Compila i campi obbligatori!"); return;
         }
 
         let prob = document.getElementById("problemaSelect").value;
         if(prob === "Errore sul display") prob = "Errore: " + document.getElementById("listaErrori").value;
         const note = document.getElementById("problemaNote").value;
+        const mod = document.getElementById("modello").value;
 
-        messaggioGlobal = `*RICHIESTA INTERVENTO*\n*C.A.T. SERVICE*\n\n👤 *Cliente:* ${cliente}\n📍 *Indirizzo:* ${indirizzo}\n📱 *Cell:* ${telefono}\n${telefono_fisso ? "☎️ *Fisso:* "+telefono_fisso+"\n" : ""}🔥 *Stufa:* ${marca} ${modello ? "("+modello+")" : ""}\n🧰 *Intervento:* ${tipo}\n${tipo !== "Prima accensione" ? "🛠️ *Problema:* "+prob+(note ? " ("+note+")" : "")+"\n" : ""}📅 *Data:* ${document.getElementById("data").value}`;
+        messaggioGlobal = `*RICHIESTA INTERVENTO*\n*C.A.T. SERVICE*\n\n👤 *Cliente:* ${cliente}\n📍 *Indirizzo:* ${indirizzo}\n📱 *Cell:* ${telefono}\n🔥 *Stufa:* ${marca} ${mod ? "("+mod+")" : ""}\n🧰 *Intervento:* ${tipo}\n${tipo !== "Prima accensione" ? "🛠️ *Problema:* "+prob+(note ? " ("+note+")" : "")+"\n" : ""}📅 *Data:* ${document.getElementById("data").value}`;
         
         document.getElementById("modal").style.display = "flex";
     };
