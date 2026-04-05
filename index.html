@@ -210,9 +210,8 @@
         <div class="progress-bar" id="progressBar">0%</div>
     </div>
 
-    <div class="input-row">
-        <div class="input-icon"><span>👤</span><input type="text" id="nome" placeholder="Nome" oninput="updateUI()"></div>
-        <div class="input-icon"><span>👤</span><input type="text" id="cognome" placeholder="Cognome" oninput="updateUI()"></div>
+    <div class="input-group">
+        <div class="input-icon"><span>👤</span><input type="text" id="nomeCognome" placeholder="Nome e Cognome" oninput="updateUI()"></div>
     </div>
 
     <div class="input-group"><div class="input-icon"><span>📍</span><input type="text" id="indirizzo" placeholder="Indirizzo completo" oninput="updateUI()"></div></div>
@@ -278,8 +277,9 @@
         </div>
 
        <div class="input-group" id="erroriDisplayGroup" style="display:none;">
-            <div class="field-container">
-                <select id="listaErrori">
+            <div class="input-icon">
+                <span>📟</span>
+                <select id="listaErrori" onchange="updateUI()">
                     <option value="">Seleziona l'allarme...</option>
                     <option value="AL 1 - Blackout">AL 1 - Blackout / Mancanza Rete</option>
                     <option value="AL 2 - Sonda Fumi">AL 2 - Sonda Fumi Guasta</option>
@@ -297,11 +297,10 @@
                     <option value="Errore Pressione Alta">Errore Pressione Alta</option>
                     <option value="Errore Pressione Bassa">Errore Pressione Bassa</option>
                     <option value="Errore Debimetro/No flusso">Errore Debimetro/No flusso</option>
-                     <option value="Errore Porta Apert/sportello pellet">Errore Porta Aperta/sportello pellet</option>
+                    <option value="Errore Porta Apert/sportello pellet">Errore Porta Aperta/sportello pellet</option>
                     <option value="Errore NO SEGNALE">Errore NO SEGNALE</option>
                     <option value="Altro">Altro errore non in lista</option>
                 </select>
-                <span class="field-icon">📟</span>
             </div>
         </div>
 
@@ -322,7 +321,7 @@
 
     <div class="preview-box" id="previewBox">
         <span class="preview-title">Anteprima Messaggio:</span>
-        <div id="previewContent">Inizia a compilare per vedere l'anteprima...</div>
+        <div id="previewContent">Inizia a compilare...</div>
     </div>
 
     <div class="privacy-notice">L'invio acconsente al trattamento dei dati (GDPR).</div>
@@ -340,14 +339,33 @@
 </div>
 
 <script>
+    const ids = ["nomeCognome", "indirizzo", "telefono", "telefono_fisso", "marcaSelect", "marcaAltro", "modello", "tipoIntervento", "problemaSelect", "listaErrori", "problemaNote"];
+
     window.onload = function() {
         document.getElementById("data").value = new Date().toLocaleDateString('it-IT');
+        loadLocalStorage();
+        updateUI();
     };
 
+    function saveLocalStorage() {
+        ids.forEach(id => {
+            const el = document.getElementById(id);
+            if(el) localStorage.setItem(id, el.value);
+        });
+    }
+
+    function loadLocalStorage() {
+        ids.forEach(id => {
+            const savedValue = localStorage.getItem(id);
+            const el = document.getElementById(id);
+            if(savedValue !== null && el) el.value = savedValue;
+        });
+    }
+
     function updateUI() {
+        saveLocalStorage();
         const fields = {
-            nome: document.getElementById("nome").value,
-            cognome: document.getElementById("cognome").value,
+            cliente: document.getElementById("nomeCognome").value,
             indirizzo: document.getElementById("indirizzo").value,
             telefono: document.getElementById("telefono").value,
             marca: document.getElementById("marcaSelect").value,
@@ -361,21 +379,19 @@
         document.getElementById("altroBox").style.display = (probSel === "Altro" || probSel === "Errore sul display") ? "block" : "none";
         document.getElementById("sezioneProblemi").style.display = (fields.tipo === "Prima accensione") ? "none" : "block";
 
-        // Calcolo Percentuale (6 campi obbligatori)
+        // Calcolo Percentuale (5 campi obbligatori)
         let completed = 0;
-        if(fields.nome) completed++;
-        if(fields.cognome) completed++;
+        if(fields.cliente) completed++;
         if(fields.indirizzo) completed++;
         if(fields.telefono) completed++;
         if(fields.marca) completed++;
         if(fields.tipo) completed++;
 
-        const percent = Math.round((completed / 6) * 100);
+        const percent = Math.round((completed / 5) * 100);
         const bar = document.getElementById("progressBar");
         bar.style.width = percent + "%";
         bar.innerText = percent + "%";
         
-        // Colore barra dinamico
         if(percent < 50) bar.style.background = "#ef4444";
         else if(percent < 100) bar.style.background = "#f59e0b";
         else bar.style.background = "#22c55e";
@@ -385,28 +401,26 @@
         const problemaFinale = probSel === "Errore sul display" ? "Errore: " + document.getElementById("listaErrori").value : probSel;
         const note = document.getElementById("problemaNote").value;
 
-        let previewHTML = `
-            <b>Cliente:</b> ${fields.nome} ${fields.cognome}<br>
-            <b>Cell:</b> ${fields.telefono}<br>
+        document.getElementById("previewContent").innerHTML = `
+            <b>Cliente:</b> ${fields.cliente || '-'}<br>
+            <b>Cell:</b> ${fields.telefono || '-'}<br>
             <b>Marca:</b> ${marcaFinale || '-'}<br>
             <b>Intervento:</b> ${fields.tipo || '-'}<br>
             ${fields.tipo !== "Prima accensione" ? `<b>Problema:</b> ${problemaFinale || '-'}` : ''}
         `;
-        document.getElementById("previewContent").innerHTML = previewHTML;
     }
 
     let messaggioGlobal = "";
 
     document.getElementById("btn").onclick = function() {
-        const nome = document.getElementById("nome").value.trim();
-        const cognome = document.getElementById("cognome").value.trim();
+        const cliente = document.getElementById("nomeCognome").value.trim();
         const indirizzo = document.getElementById("indirizzo").value.trim();
         const telefono = document.getElementById("telefono").value.trim();
         const telefono_fisso = document.getElementById("telefono_fisso").value.trim();
         const marca = document.getElementById("marcaSelect").value === "Altro" ? document.getElementById("marcaAltro").value : document.getElementById("marcaSelect").value;
         const tipo = document.getElementById("tipoIntervento").value;
 
-        if(!nome || !cognome || !indirizzo || !telefono || !marca || !tipo) {
+        if(!cliente || !indirizzo || !telefono || !marca || !tipo) {
             alert("Compila tutti i campi obbligatori segnalati dalla barra di progresso."); return;
         }
 
@@ -414,15 +428,20 @@
         if(prob === "Errore sul display") prob = "Errore: " + document.getElementById("listaErrori").value;
         const note = document.getElementById("problemaNote").value;
 
-        messaggioGlobal = `*RICHIESTA INTERVENTO*\n*C.A.T. SERVICE*\n\n👤 *Cliente:* ${nome} ${cognome}\n📍 *Indirizzo:* ${indirizzo}\n📱 *Cell:* ${telefono}\n${telefono_fisso ? "☎️ *Fisso:* "+telefono_fisso+"\n" : ""}🔥 *Stufa:* ${marca}\n🧰 *Intervento:* ${tipo}\n${tipo !== "Prima accensione" ? "🛠️ *Problema:* "+prob+(note ? " ("+note+")" : "")+"\n" : ""}📅 *Data:* ${document.getElementById("data").value}`;
+        messaggioGlobal = `*RICHIESTA INTERVENTO*\n*C.A.T. SERVICE*\n\n👤 *Cliente:* ${cliente}\n📍 *Indirizzo:* ${indirizzo}\n📱 *Cell:* ${telefono}\n${telefono_fisso ? "☎️ *Fisso:* "+telefono_fisso+"\n" : ""}🔥 *Stufa:* ${marca}\n🧰 *Intervento:* ${tipo}\n${tipo !== "Prima accensione" ? "🛠️ *Problema:* "+prob+(note ? " ("+note+")" : "")+"\n" : ""}📅 *Data:* ${document.getElementById("data").value}`;
         
         document.getElementById("modal").style.display = "flex";
     };
 
     document.getElementById("annulla").onclick = function() { document.getElementById("modal").style.display = "none"; };
+    
     document.getElementById("conferma").onclick = function() {
         window.open("https://wa.me/393394245508?text=" + encodeURIComponent(messaggioGlobal), "_blank");
         document.getElementById("modal").style.display = "none";
+        // Pulisce tutto dopo l'invio
+        localStorage.clear();
+        ids.forEach(id => { if(document.getElementById(id)) document.getElementById(id).value = ""; });
+        updateUI();
     };
 </script>
 
