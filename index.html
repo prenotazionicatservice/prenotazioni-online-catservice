@@ -71,23 +71,50 @@
         select option { background-color: #1a1a1a; color: white; }
         input:focus, select:focus, textarea:focus { outline: none; border-color: #ef4444; background: rgba(255, 255, 255, 0.15); }
 
-        /* BOTTONE WHATSAPP */
+        /* BOTTONE WHATSAPP ANIMATO */
         button#btn { 
-            position: relative; width: 100%; padding: 18px; margin-top: 15px; border: none; 
+            position: relative; width: 100%; padding: 20px; margin-top: 15px; border: none; 
             border-radius: 15px; background: linear-gradient(135deg, #25d366 0%, #128c7e 100%); 
-            color: white; font-size: 18px; font-weight: 800; cursor: pointer; text-transform: uppercase; 
-            letter-spacing: 1px; display: flex; align-items: center; justify-content: center; gap: 12px; 
+            color: white; font-size: 15px; font-weight: 900; cursor: pointer; text-transform: uppercase; 
+            letter-spacing: 0.5px; display: flex; align-items: center; justify-content: center; gap: 10px; 
             overflow: hidden; box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4); 
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            transition: all 0.3s ease;
+            animation: pulse-green 2s infinite; /* Pulsazione continua */
         }
-        button#btn::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: rgba(255, 255, 255, 0.2); transform: rotate(45deg); transition: 0.6s; pointer-events: none; }
-        button#btn:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 12px 30px rgba(37, 211, 102, 0.6); }
-        button#btn:hover::before { left: 100%; }
 
-        .preview-box { margin-top: 25px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 12px; border: 1px dashed rgba(239, 68, 68, 0.5); font-size: 13px; line-height: 1.6; }
+        /* Effetto Riflesso Luce (Shimmer) */
+        button#btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 20%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.4);
+            transform: rotate(30deg);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -60%; }
+            20% { left: 120%; }
+            100% { left: 120%; }
+        }
+
+        @keyframes pulse-green {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { transform: scale(1.02); box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+
+        button#btn:active { transform: scale(0.95); }
+
+        .preview-box { margin-top: 10px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 12px; border: 1px dashed rgba(239, 68, 68, 0.5); font-size: 13px; line-height: 1.6; }
         .preview-title { color: #ef4444; font-size: 11px; text-transform: uppercase; margin-bottom: 8px; font-weight: bold; display: block; }
 
-        .privacy-notice { font-size: 10px; color: #aaa; text-align: center; margin: 15px 0; }
+        .privacy-notice { font-size: 10px; color: #aaa; text-align: center; margin: 25px 0 5px 0; font-style: italic; }
+        
+        /* MODAL */
         .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 9999; }
         .box { background: #111; padding: 25px; border-radius: 20px; text-align: center; border: 2px solid #ef4444; width: 100%; max-width: 320px; }
         .modal-btns { display: flex; gap: 10px; margin-top: 20px; }
@@ -201,16 +228,16 @@
     </div>
 
     <button id="btn">
-        <svg width="24" height="24" viewBox="0 0 448 512" fill="white"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.7 17.8 69.4 27.2 106.2 27.2 122.4 0 222-99.6 222-222 0-59.3-23-115.1-65.1-157.1zM223.9 446.7c-33.1 0-65.6-8.9-93.9-25.7l-6.7-4-69.8 18.3 18.7-68.1-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.5-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 54 81.2 54 130.4 0 101.7-82.8 184.5-184.5 184.5zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-5.5-2.8-23.2-8.5-44.2-27.2-16.4-14.6-27.4-32.7-30.6-38.1-3.2-5.5-.3-8.5 2.4-11.2 2.5-2.4 5.5-6.5 8.3-9.7 2.8-3.3 3.7-5.6 5.6-9.3 1.9-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 13.2 5.7 23.5 9.2 31.6 11.8 13.3 4.2 25.4 3.6 35 2.2 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
-        Invia Richiesta
+        <svg width="22" height="22" viewBox="0 0 448 512" fill="white"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.7 17.8 69.4 27.2 106.2 27.2 122.4 0 222-99.6 222-222 0-59.3-23-115.1-65.1-157.1zM223.9 446.7c-33.1 0-65.6-8.9-93.9-25.7l-6.7-4-69.8 18.3 18.7-68.1-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.5-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 54 81.2 54 130.4 0 101.7-82.8 184.5-184.5 184.5zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-5.5-2.8-23.2-8.5-44.2-27.2-16.4-14.6-27.4-32.7-30.6-38.1-3.2-5.5-.3-8.5 2.4-11.2 2.5-2.4 5.5-6.5 8.3-9.7 2.8-3.3 3.7-5.6 5.6-9.3 1.9-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 13.2 5.7 23.5 9.2 31.6 11.8 13.3 4.2 25.4 3.6 35 2.2 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+        INVIA PRENOTAZIONE SU WHATSAPP
     </button>
+
+    <div class="privacy-notice">L'invio acconsente al trattamento dei dati (GDPR).</div>
 
     <div class="preview-box" id="previewBox">
         <span class="preview-title">Anteprima Messaggio:</span>
         <div id="previewContent">Inizia a compilare...</div>
     </div>
-
-    <div class="privacy-notice">L'invio acconsente al trattamento dei dati (GDPR).</div>
 </div>
 
 <div class="modal" id="modal">
@@ -225,49 +252,13 @@
 </div>
 
 <script>
-    // LISTA ERRORI GENERICI (SOLO AL 1 - AL 9 + SERVICE)
-    const erroriGenerici = [
-        "AL 1 - Blackout / Mancanza Rete",
-        "AL 2 - Sonda Fumi Guasta",
-        "AL 3 - Hot Fumi (Eccessivo Calore)",
-        "AL 4 - Guasto Estrattore Fumi",
-        "AL 5 - Mancata Accensione",
-        "AL 6 - Mancanza Pellet / Fiamma",
-        "AL 7 - Sicurezza Termica (Reset)",
-        "AL 8 - Errore Depressione / Canna Fumaria",
-        "AL 9 - Blocco Sistema Carico Pellet",
-        "SERVICE"
-    ];
+    const erroriGenerici = ["AL 1 - Blackout / Mancanza Rete", "AL 2 - Sonda Fumi Guasta", "AL 3 - Hot Fumi (Eccessivo Calore)", "AL 4 - Guasto Estrattore Fumi", "AL 5 - Mancata Accensione", "AL 6 - Mancanza Pellet / Fiamma", "AL 7 - Sicurezza Termica (Reset)", "AL 8 - Errore Depressione / Canna Fumaria", "AL 9 - Blocco Sistema Carico Pellet", "SERVICE"];
 
-    // LISTE SPECIFICHE RICHIESTE
     const dbErrori = {
-        "MCZ": [
-            "A01 (MANCATA ACCENSIONE)", "A02 (Spegnimento anomalo fuoco)", "A03 (ALLARME SICUREZZA PELLET)", "A04 (ALLARME TEMP.FUMI)", 
-            "A05 (ALLARME PORTA APERTA/VENTO CANNA FUMARIA)", "A06 (ALLARME MANCANZA D'ARIA BRACIERE)", "A07 (PORTA APERTA)", 
-            "A08 (ALLARME MOTORE FUMI)", "A09 (ALLARME SONDA FUMI)", "A10 (ALLARME CANDELETTA GUASTA)", "A11 (ALLARME MOTORIDUTTORE PELLET)", 
-            "A12 (ALLARME RADIOCOMANDO)", "A13 (MANCATA COMUNICAZIONE COMPONENTE)", "A14 (ALLARME SENSORE ACTIVE)", "A17 (ALLARME TEMP.ACQUA)", 
-            "AL17 (ALLARME BLOCCO COCLEA)", "A18 (ALLARME CIRCOLATORE BLOCCATO)", "A19 (ALLARME SONDA ACQUA)", "A20 (ALLARME SONDA AUSILIARIA)", 
-            "A21 (ALLARME PRESSOSTATI SIC2)", "A22 (ALLARME SONDA AMBIENTE)", "A23 (MANCATA CHIUSURA BRACIERE)", "A24 (POMPA BLOCCATA)", 
-            "PELLET (ALLARME PELLET MANCANTE)", "SERVICE (MANUTENZIONE STRAORDINARIA)"
-        ],
-        "PALAZZETTI": [
-            "E001 PANNELLO COMANDI DIFETTOSO", "E002 ERRORE COMUNICAZIONE TELECOMANDO", "E004 ERRORE COMUNICAZIONE", "E101 MANCATA ACCENSIONE", 
-            "E105 ERRORE SONDA TEMP.ACQUA", "E106 ERRORE SONDA PUFFER", "E108 ERRORE SICUREZZA", "E109 ERRORE PRESSIONE", "E110 ERRORE SONDA TEMPERATURA", 
-            "E111 ERRORE SONDA FUMI", "A001 LIVELLO PELLET BASSO", "A002 AVVISO MANUTENZIONE PROGRAMMATA", "A007 MALFUNZIONAMENTO SENSORE PRESSIONE", 
-            "CHIAVE ROSSA LAMPEGGIANTE (ERRORE SCHEDA)", "SCOPINA GIALLA CAMERA COMBUSTIONE SPORCA", "SIMBOLO GIALLO PELLET (PELLET ESAURITO)"
-        ],
-        "MORETTI DESIGN": [
-            "ER 01 ALLARME TERMOSTATO SICUREZZA", "ER02 ALLARME OCCLUSIONE CANNA FUMARIA", "ER03 ALLARME TEMP. FUMI BASSA", "ER04 ALLARME TEMP. ACQUA ALTA", 
-            "ER05 ALLARME TEMP. FUMI ALTA", "ER07 ALLARME ENCODER", "ER08 ALLARME ENCODER", "ER09 ALLARME PRESSIONE ACQUA BASSA", "ER10 ALLARME PRESSIONE ACQUA ALTA", 
-            "ER11 ALLARME OROLOGIO INTERNO", "ER12 ALLARME ACCENSIONE FALLITA", "ER15 ALLARME BLACKOUT", "ER25 ANOMALIA PULIZIA BRACIERE", "ER39 ANOMALIA FLUSSIMETRO", 
-            "ER41 ANOMALIA FLUSSIMETRO", "ER44 PORTA/SPORTELLO PELLET APERTI", "PORT ALLARME PORTE O SPORTELLI APERTI", "SERV PULIZIA STRAORDINARIA", 
-            "NO SEGNALE ALLARME MANCATA COMUNICAZIONE SCHEDA/DISPLAY", "SOND CONTROLLO SONDE", "TRASFERIMENTO NON RIUSCITO ALLARME ASSENZA DI COMUNICAZIONE"
-        ],
-        "RAVELLI": [
-            "AL01 BLACK-OUT", "AL02 SONDA FUMI", "AL03 SOVRATEMPERATURA FUMI", "AL04 ASPIRATORE GUASTO", "AL05 MANCATA ACCENSIONE", 
-            "AL06 PELLET ESAURITI", "AL07 SICUREZZA TERMICA", "AL08 MANCA DEPRESSIONE", "AL09 DEBIMETRO", "AL11 ANOMALIA FIAMMA", 
-            "AL12 ANOMALIA GIRI ESTRATTORE", "AL13 ANOMALIA FLUSSO", "AL14 FASE COCLEA", "AL15 TRIAC COCLEA"
-        ]
+        "MCZ": ["A01 (MANCATA ACCENSIONE)", "A02 (Spegnimento anomalo fuoco)", "A03 (ALLARME SICUREZZA PELLET)", "A04 (ALLARME TEMP.FUMI)", "A05 (ALLARME PORTA APERTA/VENTO CANNA FUMARIA)", "A06 (ALLARME MANCANZA D'ARIA BRACIERE)", "A07 (PORTA APERTA)", "A08 (ALLARME MOTORE FUMI)", "A09 (ALLARME SONDA FUMI)", "A10 (ALLARME CANDELETTA GUASTA)", "A11 (ALLARME MOTORIDUTTORE PELLET)", "A12 (ALLARME RADIOCOMANDO)", "A13 (MANCATA COMUNICAZIONE COMPONENTE)", "A14 (ALLARME SENSORE ACTIVE)", "A17 (ALLARME TEMP.ACQUA)", "AL17 (ALLARME BLOCCO COCLEA)", "A18 (ALLARME CIRCOLATORE BLOCCATO)", "A19 (ALLARME SONDA ACQUA)", "A20 (ALLARME SONDA AUSILIARIA)", "A21 (ALLARME PRESSOSTATI SIC2)", "A22 (ALLARME SONDA AMBIENTE)", "A23 (MANCATA CHIUSURA BRACIERE)", "A24 (POMPA BLOCCATA)", "PELLET (ALLARME PELLET MANCANTE)", "SERVICE (MANUTENZIONE STRAORDINARIA)"],
+        "PALAZZETTI": ["E001 PANNELLO COMANDI DIFETTOSO", "E002 ERRORE COMUNICAZIONE TELECOMANDO", "E004 ERRORE COMUNICAZIONE", "E101 MANCATA ACCENSIONE", "E105 ERRORE SONDA TEMP.ACQUA", "E106 ERRORE SONDA PUFFER", "E108 ERRORE SICUREZZA", "E109 ERRORE PRESSIONE", "E110 ERRORE SONDA TEMPERATURA", "E111 ERRORE SONDA FUMI", "A001 LIVELLO PELLET BASSO", "A002 AVVISO MANUTENZIONE PROGRAMMATA", "A007 MALFUNZIONAMENTO SENSORE PRESSIONE", "CHIAVE ROSSA LAMPEGGIANTE (ERRORE SCHEDA)", "SCOPINA GIALLA CAMERA COMBUSTIONE SPORCA", "SIMBOLO GIALLO PELLET (PELLET ESAURITO)"],
+        "MORETTI DESIGN": ["ER 01 ALLARME TERMOSTATO SICUREZZA", "ER02 ALLARME OCCLUSIONE CANNA FUMARIA", "ER03 ALLARME TEMP. FUMI BASSA", "ER04 ALLARME TEMP. ACQUA ALTA", "ER05 ALLARME TEMP. FUMI ALTA", "ER07 ALLARME ENCODER", "ER08 ALLARME ENCODER", "ER09 ALLARME PRESSIONE ACQUA BASSA", "ER10 ALLARME PRESSIONE ACQUA ALTA", "ER11 ALLARME OROLOGIO INTERNO", "ER12 ALLARME ACCENSIONE FALLITA", "ER15 ALLARME BLACKOUT", "ER25 ANOMALIA PULIZIA BRACIERE", "ER39 ANOMALIA FLUSSIMETRO", "ER41 ANOMALIA FLUSSIMETRO", "ER44 PORTA/SPORTELLO PELLET APERTI", "PORT ALLARME PORTE O SPORTELLI APERTI", "SERV PULIZIA STRAORDINARIA", "NO SEGNALE ALLARME MANCATA COMUNICAZIONE SCHEDA/DISPLAY", "SOND CONTROLLO SONDE", "TRASFERIMENTO NON RIUSCITO ALLARME ASSENZA DI COMUNICAZIONE"],
+        "RAVELLI": ["AL01 BLACK-OUT", "AL02 SONDA FUMI", "AL03 SOVRATEMPERATURA FUMI", "AL04 ASPIRATORE GUASTO", "AL05 MANCATA ACCENSIONE", "AL06 PELLET ESAURITI", "AL07 SICUREZZA TERMICA", "AL08 MANCA DEPRESSIONE", "AL09 DEBIMETRO", "AL11 ANOMALIA FIAMMA", "AL12 ANOMALIA GIRI ESTRATTORE", "AL13 ANOMALIA FLUSSO", "AL14 FASE COCLEA", "AL15 TRIAC COCLEA"]
     };
 
     const ids = ["nomeCognome", "indirizzo", "telefono", "telefono_fisso", "marcaSelect", "marcaAltro", "modello", "tipoIntervento", "problemaSelect", "listaErrori", "problemaNote"];
