@@ -132,7 +132,6 @@
             transition: 0.3s;
         }
 
-        /* FIX VISIBILITÀ TENDINA PC */
         select option {
             background-color: #1a1a1a;
             color: white;
@@ -144,24 +143,55 @@
             background: rgba(255, 255, 255, 0.15);
         }
 
-        /* --- BOTTONE WHATSAPP --- */
+        /* --- BOTTONE WHATSAPP ULTRAMODERNO --- */
         button#btn {
+            position: relative;
             width: 100%;
-            padding: 16px;
-            margin-top: 10px;
+            padding: 18px;
+            margin-top: 15px;
             border: none;
-            border-radius: 12px;
-            background: linear-gradient(45deg, #128c7e, #25d366);
+            border-radius: 15px;
+            background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
             color: white;
-            font-size: 17px;
-            font-weight: bold;
+            font-size: 18px;
+            font-weight: 800;
             cursor: pointer;
             text-transform: uppercase;
+            letter-spacing: 1px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+            gap: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* Effetto Riflesso (Glow) */
+        button#btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(45deg);
+            transition: 0.6s;
+            pointer-events: none;
+        }
+
+        button#btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 30px rgba(37, 211, 102, 0.6);
+        }
+
+        button#btn:hover::before {
+            left: 100%;
+        }
+
+        button#btn:active {
+            transform: scale(0.98);
         }
 
         /* --- ANTEPRIMA DATI --- */
@@ -221,11 +251,11 @@
         <div class="input-icon"><span>☎️</span><input type="tel" id="telefono_fisso" placeholder="Fisso (opz)" oninput="updateUI()"></div>
     </div>
 
-    <div class="input-group">
+    <div class="input-row">
         <div class="input-icon">
             <span>🔥</span>
             <select id="marcaSelect" onchange="updateUI()">
-                <option value="">Marca Stufa</option>
+                <option value="">Marca</option>
                 <option value="MCZ">MCZ</option>
                 <option value="PALAZZETTI">PALAZZETTI</option>
                 <option value="RAVELLI">RAVELLI</option>
@@ -239,13 +269,13 @@
                 <option value="Elledì">Elledì</option>
                 <option value="Karmek One">Karmek One</option>
                 <option value="Lincar">Lincar</option>
-                <option value="Altro">Altro (specifica)</option>
+                <option value="Altro">Altro...</option>
             </select>
         </div>
+        <div class="input-icon"><span>⚙️</span><input type="text" id="modello" placeholder="Modello (opz)" oninput="updateUI()"></div>
     </div>
 
     <div class="input-group" id="marcaAltroGroup" style="display:none;"><div class="input-icon"><span>✍️</span><input type="text" id="marcaAltro" placeholder="Specifica marca" oninput="updateUI()"></div></div>
-    <div class="input-group"><div class="input-icon"><span>⚙️</span><input type="text" id="modello" placeholder="Modello stufa (facoltativo)" oninput="updateUI()"></div></div>
 
     <div class="input-group">
         <div class="input-icon">
@@ -316,7 +346,7 @@
 
     <button id="btn">
         <svg width="24" height="24" viewBox="0 0 448 512" fill="white"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.7 17.8 69.4 27.2 106.2 27.2 122.4 0 222-99.6 222-222 0-59.3-23-115.1-65.1-157.1zM223.9 446.7c-33.1 0-65.6-8.9-93.9-25.7l-6.7-4-69.8 18.3 18.7-68.1-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.5-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 54 81.2 54 130.4 0 101.7-82.8 184.5-184.5 184.5zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-5.5-2.8-23.2-8.5-44.2-27.2-16.4-14.6-27.4-32.7-30.6-38.1-3.2-5.5-.3-8.5 2.4-11.2 2.5-2.4 5.5-6.5 8.3-9.7 2.8-3.3 3.7-5.6 5.6-9.3 1.9-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 13.2 5.7 23.5 9.2 31.6 11.8 13.3 4.2 25.4 3.6 35 2.2 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
-        Prenota su WhatsApp
+        Invia Richiesta
     </button>
 
     <div class="preview-box" id="previewBox">
@@ -372,14 +402,12 @@
             tipo: document.getElementById("tipoIntervento").value
         };
 
-        // Gestione visibilità condizionale
         document.getElementById("marcaAltroGroup").style.display = (fields.marca === "Altro") ? "block" : "none";
         const probSel = document.getElementById("problemaSelect").value;
         document.getElementById("erroriDisplayGroup").style.display = (probSel === "Errore sul display") ? "block" : "none";
         document.getElementById("altroBox").style.display = (probSel === "Altro" || probSel === "Errore sul display") ? "block" : "none";
         document.getElementById("sezioneProblemi").style.display = (fields.tipo === "Prima accensione") ? "none" : "block";
 
-        // Calcolo Percentuale (5 campi obbligatori)
         let completed = 0;
         if(fields.cliente) completed++;
         if(fields.indirizzo) completed++;
@@ -396,15 +424,15 @@
         else if(percent < 100) bar.style.background = "#f59e0b";
         else bar.style.background = "#22c55e";
 
-        // Aggiorna Anteprima
         const marcaFinale = fields.marca === "Altro" ? document.getElementById("marcaAltro").value : fields.marca;
+        const modF = document.getElementById("modello").value;
         const problemaFinale = probSel === "Errore sul display" ? "Errore: " + document.getElementById("listaErrori").value : probSel;
         const note = document.getElementById("problemaNote").value;
 
         document.getElementById("previewContent").innerHTML = `
             <b>Cliente:</b> ${fields.cliente || '-'}<br>
             <b>Cell:</b> ${fields.telefono || '-'}<br>
-            <b>Marca:</b> ${marcaFinale || '-'}<br>
+            <b>Stufa:</b> ${marcaFinale || '-'} ${modF ? '('+modF+')' : ''}<br>
             <b>Intervento:</b> ${fields.tipo || '-'}<br>
             ${fields.tipo !== "Prima accensione" ? `<b>Problema:</b> ${problemaFinale || '-'}` : ''}
         `;
@@ -418,17 +446,18 @@
         const telefono = document.getElementById("telefono").value.trim();
         const telefono_fisso = document.getElementById("telefono_fisso").value.trim();
         const marca = document.getElementById("marcaSelect").value === "Altro" ? document.getElementById("marcaAltro").value : document.getElementById("marcaSelect").value;
+        const modello = document.getElementById("modello").value.trim();
         const tipo = document.getElementById("tipoIntervento").value;
 
         if(!cliente || !indirizzo || !telefono || !marca || !tipo) {
-            alert("Compila tutti i campi obbligatori segnalati dalla barra di progresso."); return;
+            alert("Compila tutti i campi obbligatori (segnalati dalla barra di progresso)."); return;
         }
 
         let prob = document.getElementById("problemaSelect").value;
         if(prob === "Errore sul display") prob = "Errore: " + document.getElementById("listaErrori").value;
         const note = document.getElementById("problemaNote").value;
 
-        messaggioGlobal = `*RICHIESTA INTERVENTO*\n*C.A.T. SERVICE*\n\n👤 *Cliente:* ${cliente}\n📍 *Indirizzo:* ${indirizzo}\n📱 *Cell:* ${telefono}\n${telefono_fisso ? "☎️ *Fisso:* "+telefono_fisso+"\n" : ""}🔥 *Stufa:* ${marca}\n🧰 *Intervento:* ${tipo}\n${tipo !== "Prima accensione" ? "🛠️ *Problema:* "+prob+(note ? " ("+note+")" : "")+"\n" : ""}📅 *Data:* ${document.getElementById("data").value}`;
+        messaggioGlobal = `*RICHIESTA INTERVENTO*\n*C.A.T. SERVICE*\n\n👤 *Cliente:* ${cliente}\n📍 *Indirizzo:* ${indirizzo}\n📱 *Cell:* ${telefono}\n${telefono_fisso ? "☎️ *Fisso:* "+telefono_fisso+"\n" : ""}🔥 *Stufa:* ${marca} ${modello ? "("+modello+")" : ""}\n🧰 *Intervento:* ${tipo}\n${tipo !== "Prima accensione" ? "🛠️ *Problema:* "+prob+(note ? " ("+note+")" : "")+"\n" : ""}📅 *Data:* ${document.getElementById("data").value}`;
         
         document.getElementById("modal").style.display = "flex";
     };
@@ -438,7 +467,6 @@
     document.getElementById("conferma").onclick = function() {
         window.open("https://wa.me/393394245508?text=" + encodeURIComponent(messaggioGlobal), "_blank");
         document.getElementById("modal").style.display = "none";
-        // Pulisce tutto dopo l'invio
         localStorage.clear();
         ids.forEach(id => { if(document.getElementById(id)) document.getElementById(id).value = ""; });
         updateUI();
