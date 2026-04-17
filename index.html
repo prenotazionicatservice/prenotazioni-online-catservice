@@ -4,32 +4,102 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>C.A.T. SERVICE - Prenotazione</title>
+
     <style>
-        /* RESET E STILE ORIGINALE INTEGRALE */
+        /* TUTTO IL TUO CSS ORIGINALE INVARIATO */
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-        body { background: #200505; background: radial-gradient(circle at 50% 50%, #450a0a, #000000); min-height: 100vh; display: flex; justify-content: center; align-items: flex-start; padding: 80px 15px 40px 15px; color: #fff; }
-        .navbar { position: fixed; top: 0; left: 0; width: 100%; height: 60px; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); display: flex; align-items: center; padding: 0 20px; border-bottom: 1px solid rgba(239, 68, 68, 0.4); z-index: 1000; }
+        
+        body { 
+            background: #200505; 
+            background: radial-gradient(circle at 50% 50%, #450a0a, #000000); 
+            min-height: 100vh; 
+            display: flex; 
+            justify-content: center; 
+            align-items: flex-start; 
+            padding: 80px 15px 40px 15px; 
+            color: #fff; 
+        }
+
+        .navbar { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 60px; 
+            background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px); 
+            -webkit-backdrop-filter: blur(10px); display: flex; align-items: center; 
+            padding: 0 20px; border-bottom: 1px solid rgba(239, 68, 68, 0.4); z-index: 1000; 
+        }
         .nav-content { display: flex; align-items: center; gap: 12px; }
         .mini-logo { height: 35px; width: auto; filter: drop-shadow(0 0 5px #ef4444); }
         .nav-title { font-weight: bold; font-size: 14px; letter-spacing: 1px; color: #ef4444; text-transform: uppercase; }
-        .container { width: 100%; max-width: 450px; background: rgba(255, 255, 255, 0.07); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-radius: 20px; padding: 25px; border: 1px solid rgba(239, 68, 68, 0.3); animation: openingGlow 1.2s ease-out forwards; }
-        @keyframes openingGlow { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); box-shadow: 0 15px 35px rgba(0,0,0,0.6); } }
+
+        .container { 
+            width: 100%; max-width: 450px; background: rgba(255, 255, 255, 0.07); 
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); 
+            border-radius: 20px; padding: 25px; border: 1px solid rgba(239, 68, 68, 0.3); 
+            animation: openingGlow 1.2s ease-out forwards; 
+        }
+        
+        @keyframes openingGlow { 
+            0% { opacity: 0; transform: translateY(20px); } 
+            100% { opacity: 1; transform: translateY(0); box-shadow: 0 15px 35px rgba(0,0,0,0.6); } 
+        }
+
         .logo-container { text-align: center; margin-bottom: 25px; }
-        .logo-img { width: 220px; max-width: 100%; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 12px rgba(239, 68, 68, 0.5)); animation: logoPulse 3s infinite ease-in-out; }
+        .logo-img { 
+            width: 220px; max-width: 100%; height: auto; margin-bottom: 20px; 
+            filter: drop-shadow(0 0 12px rgba(239, 68, 68, 0.5)); 
+            animation: logoPulse 3s infinite ease-in-out; 
+        }
         @keyframes logoPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+
         .progress-container { width: 100%; background: rgba(255,255,255,0.1); height: 20px; border-radius: 10px; margin-bottom: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); }
         .progress-bar { height: 100%; width: 0%; background: #ef4444; transition: width 0.5s ease; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; color: white; }
+
         .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
         .input-group { margin-bottom: 15px; width: 100%; }
+        label { display: block; font-size: 11px; color: #ef4444; text-transform: uppercase; margin-bottom: 5px; padding-left: 5px; font-weight: bold; }
         .input-icon { position: relative; display: flex; align-items: center; width: 100%; }
         .input-icon span { position: absolute; left: 12px; font-size: 18px; z-index: 5; pointer-events: none; }
-        input, select, textarea { width: 100%; padding: 12px 15px 12px 42px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; color: #fff; font-size: 16px; transition: 0.3s; }
+
+        input, select, textarea { 
+            width: 100%; padding: 12px 15px 12px 42px; background: rgba(255, 255, 255, 0.1); 
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; color: #fff; 
+            font-size: 16px; transition: 0.3s; 
+        }
+        select option { background-color: #1a1a1a; color: white; }
         input:focus, select:focus, textarea:focus { outline: none; border-color: #ef4444; background: rgba(255, 255, 255, 0.15); }
-        button#btn { position: relative; width: 100%; padding: 20px; margin-top: 15px; border: none; border-radius: 15px; background: linear-gradient(135deg, #25d366 0%, #128c7e 100%); color: white; font-size: 15px; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; justify-content: center; gap: 10px; overflow: hidden; box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4); animation: pulse-green 2s infinite; }
-        button#btn::after { content: ''; position: absolute; top: -50%; left: -60%; width: 20%; height: 200%; background: rgba(255, 255, 255, 0.4); transform: rotate(30deg); animation: shimmer 3s infinite; }
+
+        button#btn { 
+            position: relative; width: 100%; padding: 20px; margin-top: 15px; border: none; 
+            border-radius: 15px; background: linear-gradient(135deg, #25d366 0%, #128c7e 100%); 
+            color: white; font-size: 15px; font-weight: 900; cursor: pointer; text-transform: uppercase; 
+            letter-spacing: 0.5px; display: flex; align-items: center; justify-content: center; gap: 10px; 
+            overflow: hidden; box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4); 
+            transition: all 0.3s ease;
+            animation: pulse-green 2s infinite;
+        }
+
+        button#btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 20%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.4);
+            transform: rotate(30deg);
+            animation: shimmer 3s infinite;
+        }
+
         @keyframes shimmer { 0% { left: -60%; } 20% { left: 120%; } 100% { left: 120%; } }
-        @keyframes pulse-green { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); } 70% { transform: scale(1.02); box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
+        @keyframes pulse-green {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { transform: scale(1.02); box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+
+        button#btn:active { transform: scale(0.95); }
         .preview-box { margin-top: 10px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 12px; border: 1px dashed rgba(239, 68, 68, 0.5); font-size: 13px; line-height: 1.6; }
+        .preview-title { color: #ef4444; font-size: 11px; text-transform: uppercase; margin-bottom: 8px; font-weight: bold; display: block; }
+        .privacy-notice { font-size: 10px; color: #aaa; text-align: center; margin: 25px 0 5px 0; font-style: italic; }
         .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 9999; }
         .box { background: #111; padding: 25px; border-radius: 20px; text-align: center; border: 2px solid #ef4444; width: 100%; max-width: 320px; }
         .modal-btns { display: flex; gap: 10px; margin-top: 20px; }
@@ -41,14 +111,14 @@
 
 <nav class="navbar">
     <div class="nav-content">
-        <img src="logo.PNG" class="mini-logo" onerror="this.src='logo.png';">
+        <img src="logo.PNG" alt="Logo" class="mini-logo" onerror="this.src='logo.png';">
         <span class="nav-title">C.A.T. Service</span>
     </div>
 </nav>
 
 <div class="container">
     <div class="logo-container">
-        <img src="logo.PNG" class="logo-img" onerror="this.src='logo.png';">
+        <img src="logo.PNG?v=1" alt="Logo" class="logo-img" onerror="this.src='logo.png';">
     </div>
 
     <div class="progress-container">
@@ -60,7 +130,7 @@
     </div>
 
     <div class="input-group">
-        <div class="input-icon"><span>📍</span><input type="text" id="indirizzo" placeholder="Indirizzo completo" oninput="updateUI()"></div>
+        <div class="input-icon"><span>📍</span><input type="text" id="indirizzo" placeholder="Indirizzo" oninput="updateUI()"></div>
     </div>
 
     <div class="input-row">
@@ -106,10 +176,10 @@
                 <option value="Altro">Altro...</option>
             </select>
         </div>
-        <div class="input-icon"><span>⚙️</span><input type="text" id="modello" placeholder="Modello" oninput="updateUI()"></div>
+        <div class="input-icon"><span>⚙️</span><input type="text" id="modello" placeholder="Modello (opz)" oninput="updateUI()"></div>
     </div>
 
-    <div class="input-group" id="marcaAltroGroup" style="display:none;"><input type="text" id="marcaAltro" placeholder="Specifica marca" oninput="updateUI()"></div>
+    <div class="input-group" id="marcaAltroGroup" style="display:none;"><div class="input-icon"><span>✍️</span><input type="text" id="marcaAltro" placeholder="Specifica marca" oninput="updateUI()"></div></div>
 
     <div class="input-group">
         <div class="input-icon">
@@ -124,96 +194,222 @@
     </div>
 
     <div id="sezioneProblemi">
-        <div class="input-group"><div class="input-icon"><span>🛠️</span><select id="problemaSelect" onchange="updateUI()"><option value="">Problema...</option><option value="Errore sul display">Errore sul display ⚠️</option><option value="Stufa non si accende">Stufa non si accende</option><option value="Vetro subito nero">Vetro subito nero</option><option value="Altro">Altro (specifica sotto)</option></select></div></div>
-        <div class="input-group" id="erroriDisplayGroup" style="display:none;"><div class="input-icon"><span>📟</span><select id="listaErrori" onchange="updateUI()"></select></div></div>
-        <div class="input-group" id="altroBox" style="display:none;"><textarea id="problemaNote" placeholder="Dettagli..." oninput="updateUI()"></textarea></div>
+        <div class="input-group">
+            <div class="input-icon">
+                <span>🛠️</span>
+                <select id="problemaSelect" onchange="updateUI()">
+                    <option value="">Seleziona problema</option>
+                    <option value="Errore sul display">Errore sul display ⚠️</option>
+                    <option value="Stufa non si accende">Stufa non si accende</option>
+                    <option value="Vetro subito nero">Vetro subito nero</option>
+                    <option value="Rumore anomalo">Rumore anomalo</option>
+                    <option value="Si spegne da sola">Si spegne da sola</option>
+                    <option value="Non carica pellet">Non carica pellet</option>
+                    <option value="Altro">Altro (specifica sotto)</option>
+                </select>
+            </div>
+        </div>
+
+       <div class="input-group" id="erroriDisplayGroup" style="display:none;">
+            <div class="input-icon">
+                <span>📟</span>
+                <select id="listaErrori" onchange="updateUI()">
+                    <option value="">Scegli Marca prima...</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="input-group" id="altroBox" style="display:none;">
+            <div class="input-icon"><span>📝</span><textarea id="problemaNote" placeholder="Descrivi meglio il problema..." oninput="updateUI()"></textarea></div>
+        </div>
     </div>
 
-    <button id="btn">INVIA SU WHATSAPP</button>
+    <div class="input-group">
+        <label>Data di oggi</label>
+        <input type="text" id="data" readonly style="text-align:center; color:#ef4444; font-weight:bold; background:rgba(0,0,0,0.2);">
+    </div>
+
+    <button id="btn">
+        <svg width="22" height="22" viewBox="0 0 448 512" fill="white"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.7 17.8 69.4 27.2 106.2 27.2 122.4 0 222-99.6 222-222 0-59.3-23-115.1-65.1-157.1zM223.9 446.7c-33.1 0-65.6-8.9-93.9-25.7l-6.7-4-69.8 18.3 18.7-68.1-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.5-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 54 81.2 54 130.4 0 101.7-82.8 184.5-184.5 184.5zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-5.5-2.8-23.2-8.5-44.2-27.2-16.4-14.6-27.4-32.7-30.6-38.1-3.2-5.5-.3-8.5 2.4-11.2 2.5-2.4 5.5-6.5 8.3-9.7 2.8-3.3 3.7-5.6 5.6-9.3 1.9-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 13.2 5.7 23.5 9.2 31.6 11.8 13.3 4.2 25.4 3.6 35 2.2 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+        INVIA PRENOTAZIONE SU WHATSAPP
+    </button>
+
+    <div class="privacy-notice">L'invio acconsente al trattamento dei dati (GDPR).</div>
 
     <div class="preview-box" id="previewBox">
-        <div id="previewContent">Compila il modulo...</div>
+        <span class="preview-title">Anteprima Messaggio:</span>
+        <div id="previewContent">Inizia a compilare...</div>
     </div>
 </div>
 
-<div class="modal" id="modal"><div class="box"><h3>Conferma</h3><div class="modal-btns"><button class="no" id="annulla">Modifica</button><button class="ok" id="conferma">Invia</button></div></div></div>
+<div class="modal" id="modal">
+    <div class="box">
+        <h3>Conferma Invio</h3>
+        <p style="color:#ccc; margin:10px 0;">Procedere con l'invio su WhatsApp?</p>
+        <div class="modal-btns">
+            <button class="no" id="annulla">Modifica</button>
+            <button class="ok" id="conferma">Invia Ora</button>
+        </div>
+    </div>
+</div>
 
 <script>
-    // DATABASE COMUNI (Estratto principali Napoli, Salerno, Avellino)
+    // DATABASE CITTA (NAPOLI, SALERNO, AVELLINO)
     const comuniDB = {
-        "Napoli":"NA","Acerra":"NA","Afragola":"NA","Casoria":"NA","Pozzuoli":"NA","Giugliano":"NA","Pompei":"NA","Nola":"NA","Castellammare di Stabia":"NA","Ercolano":"NA","Torre del Greco":"NA",
-        "Salerno":"SA","Scafati":"SA","Angri":"SA","Pagani":"SA","Nocera Inferiore":"SA","Nocera Superiore":"SA","Battipaglia":"SA","Eboli":"SA","Cava de' Tirreni":"SA","Amalfi":"SA",
-        "Avellino":"AV","Atripalda":"AV","Ariano Irpino":"AV","Solofra":"AV","Mercogliano":"AV","Montoro":"AV"
+        "Napoli":"NA","Acerra":"NA","Afragola":"NA","Agerola":"NA","Anacapri":"NA","Arzano":"NA","Bacoli":"NA","Barano d'Ischia":"NA","Boscoreale":"NA","Boscotrecase":"NA","Brusciano":"NA","Caivano":"NA","Calvizzano":"NA","Camposano":"NA","Capri":"NA","Carbonara di Nola":"NA","Cardito":"NA","Casalnuovo di Napoli":"NA","Casamarciano":"NA","Casamicciola Terme":"NA","Casandrino":"NA","Casavatore":"NA","Casola di Napoli":"NA","Casoria":"NA","Castellammare di Stabia":"NA","Castello di Cisterna":"NA","Cercola":"NA","Cicciano":"NA","Cimitile":"NA","Comiziano":"NA","Crispano":"NA","Ercolano":"NA","Forio":"NA","Frattamaggiore":"NA","Frattaminore":"NA","Giugliano in Campania":"NA","Gragnano":"NA","Grumo Nevano":"NA","Ischia":"NA","Lacco Ameno":"NA","Lettere":"NA","Liveri":"NA","Marano di Napoli":"NA","Mariglianella":"NA","Marigliano":"NA","Massa Lubrense":"NA","Massa di Somma":"NA","Melito di Napoli":"NA","Meta":"NA","Monte di Procida":"NA","Mugnano di Napoli":"NA","Nola":"NA","Ottaviano":"NA","Palma Campania":"NA","Piano di Sorrento":"NA","Pimonte":"NA","Poggiomarino":"NA","Pollena Trocchia":"NA","Pomigliano d'Arco":"NA","Pompei":"NA","Portici":"NA","Pozzuoli":"NA","Procida":"NA","Qualiano":"NA","Quarto":"NA","Roccarainola":"NA","San Gennaro Vesuviano":"NA","San Giorgio a Cremano":"NA","San Giuseppe Vesuviano":"NA","San Paolo Bel Sito":"NA","San Sebastiano al Vesuvio":"NA","San Vitaliano":"NA","Sant'Agnello":"NA","Sant'Anastasia":"NA","Sant'Antimo":"NA","Sant'Antonio Abate":"NA","Santa Maria la Carità":"NA","Saviano":"NA","Scisciano":"NA","Serrara Fontana":"NA","Somma Vesuviana":"NA","Sorrento":"NA","Striano":"NA","Terzigno":"NA","Torre Annunziata":"NA","Torre del Greco":"NA","Trecase":"NA","Tufino":"NA","Vico Equense":"NA","Villaricca":"NA","Visciano":"NA","Volla":"NA",
+        "Salerno":"SA","Acerno":"SA","Agropoli":"SA","Albanella":"SA","Alfano":"SA","Altavilla Silentina":"SA","Amalfi":"SA","Angri":"SA","Aquara":"SA","Ascea":"SA","Atena Lucana":"SA","Atrani":"SA","Auletta":"SA","Baronissi":"SA","Battipaglia":"SA","Bellizzi":"SA","Bellosguardo":"SA","Bracigliano":"SA","Buccino":"SA","Buonabitacolo":"SA","Caggiano":"SA","Calvanico":"SA","Camerota":"SA","Campagna":"SA","Campora":"SA","Cannalonga":"SA","Capaccio Paestum":"SA","Casal Velino":"SA","Casalbuono":"SA","Casaletto Spartano":"SA","Caselle in Pittari":"SA","Castel San Giorgio":"SA","Castel San Lorenzo":"SA","Castelcivita":"SA","Castellabate":"SA","Castelnuovo Cilento":"SA","Castelnuovo di Conza":"SA","Castiglione del Genovesi":"SA","Cava de' Tirreni":"SA","Celle di Bulgheria":"SA","Centola":"SA","Ceraso":"SA","Cetara":"SA","Cicerale":"SA","Contursi Terme":"SA","Corbara":"SA","Corleto Monforte":"SA","Cuccaro Vetere":"SA","Eboli":"SA","Felitto":"SA","Fisciano":"SA","Furore":"SA","Futani":"SA","Giffoni Sei Casali":"SA","Giffoni Valle Piana":"SA","Gioi":"SA","Giungano":"SA","Ispani":"SA","Laureana Cilento":"SA","Laurino":"SA","Laurito":"SA","Laviano":"SA","Lustra":"SA","Magliano Vetere":"SA","Maiori":"SA","Mercato San Severino":"SA","Minori":"SA","Moio della Civitella":"SA","Montano Antilia":"SA","Monte San Giacomo":"SA","Montecorice":"SA","Montecorvino Pugliano":"SA","Montecorvino Rovella":"SA","Monteforte Cilento":"SA","Montesano sulla Marcellana":"SA","Morigerati":"SA","Nocera Inferiore":"SA","Nocera Superiore":"SA","Novi Velia":"SA","Ogliastro Cilento":"SA","Olevano sul Tusciano":"SA","Oliveto Citra":"SA","Omignano":"SA","Orria":"SA","Ottati":"SA","Padula":"SA","Pagani":"SA","Palomonte":"SA","Pellezzano":"SA","Perdifumo":"SA","Perito":"SA","Pertosa":"SA","Petina":"SA","Piaggine":"SA","Pisciotta":"SA","Polla":"SA","Pollica":"SA","Pontecagnano Faiano":"SA","Positano":"SA","Postiglione":"SA","Praiano":"SA","Prignano Cilento":"SA","Ravello":"SA","Ricigliano":"SA","Roccadaspide":"SA","Roccagloriosa":"SA","Roccapiemonte":"SA","Rofrano":"SA","Romagnano al Monte":"SA","Roscigno":"SA","Rutino":"SA","Sacco":"SA","Sala Consilina":"SA","Salento":"SA","San Cipriano Picentino":"SA","San Giovanni a Piro":"SA","San Gregorio Magno":"SA","San Mango Piemonte":"SA","San Marzano sul Sarno":"SA","San Mauro Cilento":"SA","San Mauro La Bruca":"SA","San Pietro al Tanagro":"SA","San Rufo":"SA","San Valentino Torio":"SA","Sant'Angelo a Fasanella":"SA","Sant'Arsenio":"SA","Sant'Egidio del Monte Albino":"SA","Santa Marina":"SA","Santomenna":"SA","Sanza":"SA","Sapri":"SA","Sarno":"SA","Sassano":"SA","Scafati":"SA","Scala":"SA","Serramezzana":"SA","Serre":"SA","Sessa Cilento":"SA","Siano":"SA","Sicignano degli Alburni":"SA","Stella Cilento":"SA","Stio":"SA","Teggiano":"SA","Torchiara":"SA","Torre Orsaia":"SA","Tortorella":"SA","Tramonti":"SA","Trentinara":"SA","Valle dell'Angelo":"SA","Vallo della Lucania":"SA","Valva":"SA","Vibonati":"SA","Vietri sul Mare":"SA",
+        "Avellino":"AV","Aiello del Sabato":"AV","Altavilla Irpina":"AV","Andretta":"AV","Aquilonia":"AV","Ariano Irpino":"AV","Atripalda":"AV","Avella":"AV","Bagnoli Irpino":"AV","Baiano":"AV","Bisaccia":"AV","Bonito":"AV","Cairano":"AV","Calabritto":"AV","Calitri":"AV","Candida":"AV","Caposele":"AV","Capriglia Irpina":"AV","Carife":"AV","Casalbore":"AV","Cassano Irpino":"AV","Castel Baronia":"AV","Castelfranci":"AV","Castelvetere sul Calore":"AV","Cervinara":"AV","Cesinali":"AV","Chianche":"AV","Chiusano di San Domenico":"AV","Contrada":"AV","Conza della Campania":"AV","Domicella":"AV","Flumeri":"AV","Fontanarosa":"AV","Forino":"AV","Frigento":"AV","Gesualdo":"AV","Greci":"AV","Grottaminarda":"AV","Grottolella":"AV","Guardia Lombardi":"AV","Lacedonia":"AV","Lapio":"AV","Lauro":"AV","Lioni":"AV","Luogosano":"AV","Manocalzati":"AV","Marzano di Nola":"AV","Melito Irpino":"AV","Mercogliano":"AV","Mirabella Eclano":"AV","Montaguto":"AV","Montecalvo Irpino":"AV","Montefalcione":"AV","Monteforte Irpino":"AV","Montefredane":"AV","Montefusco":"AV","Montella":"AV","Montemarano":"AV","Montemiletto":"AV","Monteverde":"AV","Montoro":"AV","Morra De Sanctis":"AV","Moschiano":"AV","Mugnano del Cardinale":"AV","Nusco":"AV","Ospedaletto d'Alpinolo":"AV","Pago del Vallo di Lauro":"AV","Parolise":"AV","Paternopoli":"AV","Petruuro Irpino":"AV","Pietradefusi":"AV","Pietrastornina":"AV","Prata di Principato Ultra":"AV","Pratola Serra":"AV","Quadrelle":"AV","Quindici":"AV","Rocca San Felice":"AV","Roccabascerana":"AV","Rotondi":"AV","Salza Irpina":"AV","San Mango sul Calore":"AV","San Martino Valle Caudina":"AV","San Michele di Serino":"AV","San Nicola Baronia":"AV","San Potito Ultra":"AV","San Sossio Baronia":"AV","Sant'Andrea di Conza":"AV","Sant'Angelo a Scala":"AV","Sant'Angelo all'Esca":"AV","Sant'Angelo dei Lombardi":"AV","Santa Lucia di Serino":"AV","Santa Paolina":"AV","Santo Stefano del Sole":"AV","Savignano Irpino":"AV","Scampitella":"AV","Senerchia":"AV","Serino":"AV","Sirignano":"AV","Solofra":"AV","Sorgibo":"AV","Sperone":"AV","Sturno":"AV","Summonte":"AV","Taurano":"AV","Taurasi":"AV","Teora":"AV","Torella dei Lombardi":"AV","Torre Le Nocelle":"AV","Torrioni":"AV","Trevico":"AV","Tufo":"AV","Vallata":"AV","Vallesaccarda":"AV","Venticano":"AV","Villamaina":"AV","Villanova del Battista":"AV","Volturara Irpina":"AV","Zungoli":"AV"
     };
 
+    const erroriGenerici = ["AL 1 - Blackout / Mancanza Rete", "AL 2 - Sonda Fumi Guasta", "AL 3 - Hot Fumi (Eccessivo Calore)", "AL 4 - Guasto Estrattore Fumi", "AL 5 - Mancata Accensione", "AL 6 - Mancanza Pellet / Fiamma", "AL 7 - Sicurezza Termica (Reset)", "AL 8 - Errore Depressione / Canna Fumaria", "AL 9 - Blocco Sistema Carico Pellet", "SERVICE"];
+
     const dbErrori = {
-        "MCZ": ["A01 (MANCATA ACCENSIONE)", "A02 (Spegnimento anomalo fuoco)", "A03 (ALLARME SICUREZZA PELLET)", "A04 (ALLARME TEMP.FUMI)", "A05 (ALLARME PORTA APERTA/VENTO CANNA FUMARIA)", "A08 (ALLARME MOTORE FUMI)", "A09 (ALLARME SONDA FUMI)", "A11 (ALLARME MOTORIDUTTORE PELLET)", "A17 (ALLARME TEMP.ACQUA)", "SERVICE (MANUTENZIONE)"],
-        "PALAZZETTI": ["E101 MANCATA ACCENSIONE", "E108 ERRORE SICUREZZA", "E109 ERRORE PRESSIONE", "E111 ERRORE SONDA FUMI", "A002 MANUTENZIONE", "SCOPINA GIALLA PULIZIA"],
-        "MORETTI DESIGN": ["ER 01 SICUREZZA", "ER02 CANNA FUMARIA", "ER05 TEMP. FUMI ALTA", "ER12 ACCENSIONE FALLITA", "SERV PULIZIA"],
-        "RAVELLI": ["AL01 BLACK-OUT", "AL02 SONDA FUMI", "AL05 MANCATA ACCENSIONE", "AL06 PELLET ESAURITI", "AL08 MANCA DEPRESSIONE"]
+        "MCZ": ["A01 (MANCATA ACCENSIONE)", "A02 (Spegnimento anomalo fuoco)", "A03 (ALLARME SICUREZZA PELLET)", "A04 (ALLARME TEMP.FUMI)", "A05 (ALLARME PORTA APERTA/VENTO CANNA FUMARIA)", "A06 (ALLARME MANCANZA D'ARIA BRACIERE)", "A07 (PORTA APERTA)", "A08 (ALLARME MOTORE FUMI)", "A09 (ALLARME SONDA FUMI)", "A10 (ALLARME CANDELETTA GUASTA)", "A11 (ALLARME MOTORIDUTTORE PELLET)", "A12 (ALLARME RADIOCOMANDO)", "A13 (MANCATA COMUNICAZIONE COMPONENTE)", "A14 (ALLARME SENSORE ACTIVE)", "A17 (ALLARME TEMP.ACQUA)", "AL17 (ALLARME BLOCCO COCLEA)", "A18 (ALLARME CIRCOLATORE BLOCCATO)", "A19 (ALLARME SONDA ACQUA)", "A20 (ALLARME SONDA AUSILIARIA)", "A21 (ALLARME PRESSOSTATI SIC2)", "A22 (ALLARME SONDA AMBIENTE)", "A23 (MANCATA CHIUSURA BRACIERE)", "A24 (POMPA BLOCCATA)", "PELLET (ALLARME PELLET MANCANTE)", "SERVICE (MANUTENZIONE STRAORDINARIA)"],
+        "PALAZZETTI": ["E001 PANNELLO COMANDI DIFETTOSO", "E002 ERRORE COMUNICAZIONE TELECOMANDO", "E004 ERRORE COMUNICAZIONE", "E101 MANCATA ACCENSIONE", "E105 ERRORE SONDA TEMP.ACQUA", "E106 ERRORE SONDA PUFFER", "E108 ERRORE SICUREZZA", "E109 ERRORE PRESSIONE", "E110 ERRORE SONDA TEMPERATURA", "E111 ERRORE SONDA FUMI", "A001 LIVELLO PELLET BASSO", "A002 AVVISO MANUTENZIONE PROGRAMMATA", "A007 MALFUNZIONAMENTO SENSORE PRESSIONE", "CHIAVE ROSSA LAMPEGGIANTE (ERRORE SCHEDA)", "SCOPINA GIALLA CAMERA COMBUSTIONE SPORCA", "SIMBOLO GIALLO PELLET (PELLET ESAURITO)"],
+        "MORETTI DESIGN": ["ER 01 ALLARME TERMOSTATO SICUREZZA", "ER02 ALLARME OCCLUSIONE CANNA FUMARIA", "ER03 ALLARME TEMP. FUMI BASSA", "ER04 ALLARME TEMP. ACQUA ALTA", "ER05 ALLARME TEMP. FUMI ALTA", "ER07 ALLARME ENCODER", "ER08 ALLARME ENCODER", "ER09 ALLARME PRESSIONE ACQUA BASSA", "ER10 ALLARME PRESSIONE ACQUA ALTA", "ER11 ALLARME OROLOGIO INTERNO", "ER12 ALLARME ACCENSIONE FALLITA", "ER15 ALLARME BLACKOUT", "ER25 ANOMALIA PULIZIA BRACIERE", "ER39 ANOMALIA FLUSSIMETRO", "ER41 ANOMALIA FLUSSIMETRO", "ER44 PORTA/SPORTELLO PELLET APERTI", "PORT ALLARME PORTE O SPORTELLI APERTI", "SERV PULIZIA STRAORDINARIA", "NO SEGNALE ALLARME MANCATA COMUNICAZIONE SCHEDA/DISPLAY", "SOND CONTROLLO SONDE", "TRASFERIMENTO NON RIUSCITO ALLARME ASSENZA DI COMUNICAZIONE"],
+        "RAVELLI": ["AL01 BLACK-OUT", "AL02 SONDA FUMI", "AL03 SOVRATEMPERATURA FUMI", "AL04 ASPIRATORE GUASTO", "AL05 MANCATA ACCENSIONE", "AL06 PELLET ESAURITI", "AL07 SICUREZZA TERMICA", "AL08 MANCA DEPRESSIONE", "AL09 DEBIMETRO", "AL11 ANOMALIA FIAMMA", "AL12 ANOMALIA GIRI ESTRATTORE", "AL13 ANOMALIA FLUSSO", "AL14 FASE COCLEA", "AL15 TRIAC COCLEA"]
     };
 
     const ids = ["nomeCognome", "indirizzo", "comune", "provincia", "telefono", "telefono_fisso", "marcaSelect", "marcaAltro", "modello", "tipoIntervento", "problemaSelect", "listaErrori", "problemaNote"];
 
     window.onload = function() {
+        document.getElementById("data").value = new Date().toLocaleDateString('it-IT');
+        
+        // POPOLA DATALIST COMUNI ALL'AVVIO
         const dl = document.getElementById("listaComuni");
-        Object.keys(comuniDB).sort().forEach(c => { let o = document.createElement("option"); o.value = c; dl.appendChild(o); });
+        Object.keys(comuniDB).sort().forEach(comune => {
+            let opt = document.createElement("option");
+            opt.value = comune;
+            dl.appendChild(opt);
+        });
+
         loadLocalStorage();
+        populateErrorList();
         updateUI();
     };
 
     function autoProvincia() {
-        const val = document.getElementById("comune").value;
-        if(comuniDB[val]) document.getElementById("provincia").value = comuniDB[val];
+        const valComune = document.getElementById("comune").value;
+        if(comuniDB[valComune]) {
+            document.getElementById("provincia").value = comuniDB[valComune];
+        }
     }
 
     function populateErrorList() {
         const marca = document.getElementById("marcaSelect").value;
-        const lista = document.getElementById("listaErrori");
-        const errori = dbErrori[marca] || ["AL 1-Blackout","AL 2-Sonda","AL 5-Accensione","AL 6-No Pellet","AL 8-Depressione","SERVICE"];
-        lista.innerHTML = '<option value="">Scegli l\'allarme...</option>';
-        errori.forEach(e => { let o = document.createElement("option"); o.value = e; o.textContent = e; lista.appendChild(o); });
+        const listaErrori = document.getElementById("listaErrori");
+        const errori = dbErrori[marca] ? dbErrori[marca] : erroriGenerici;
+        const currentSaved = localStorage.getItem("listaErrori");
+
+        listaErrori.innerHTML = '<option value="">Seleziona l\'allarme...</option>';
+        errori.forEach(err => {
+            const opt = document.createElement("option");
+            opt.value = err;
+            opt.textContent = err;
+            listaErrori.appendChild(opt);
+        });
+        if(currentSaved) listaErrori.value = currentSaved;
+    }
+
+    function saveLocalStorage() {
+        ids.forEach(id => {
+            const el = document.getElementById(id);
+            if(el) localStorage.setItem(id, el.value);
+        });
+    }
+
+    function loadLocalStorage() {
+        ids.forEach(id => {
+            const savedValue = localStorage.getItem(id);
+            const el = document.getElementById(id);
+            if(savedValue !== null && el) el.value = savedValue;
+        });
     }
 
     function updateUI() {
-        ids.forEach(id => { const el = document.getElementById(id); if(el) localStorage.setItem(id, el.value); });
-        const f = {
-            c: document.getElementById("nomeCognome").value,
-            com: document.getElementById("comune").value,
-            p: document.getElementById("provincia").value,
-            t: document.getElementById("telefono").value,
-            m: document.getElementById("marcaSelect").value,
-            ti: document.getElementById("tipoIntervento").value
+        saveLocalStorage();
+        const fields = {
+            cliente: document.getElementById("nomeCognome").value,
+            indirizzo: document.getElementById("indirizzo").value,
+            comune: document.getElementById("comune").value,
+            provincia: document.getElementById("provincia").value,
+            telefono: document.getElementById("telefono").value,
+            marca: document.getElementById("marcaSelect").value,
+            tipo: document.getElementById("tipoIntervento").value
         };
 
-        document.getElementById("marcaAltroGroup").style.display = (f.m === "Altro") ? "block" : "none";
-        const ps = document.getElementById("problemaSelect").value;
-        document.getElementById("erroriDisplayGroup").style.display = (ps === "Errore sul display") ? "block" : "none";
-        document.getElementById("altroBox").style.display = (ps === "Altro" || ps === "Errore sul display") ? "block" : "none";
-        document.getElementById("sezioneProblemi").style.display = (f.ti === "Prima accensione") ? "none" : "block";
+        document.getElementById("marcaAltroGroup").style.display = (fields.marca === "Altro") ? "block" : "none";
+        const probSel = document.getElementById("problemaSelect").value;
+        document.getElementById("erroriDisplayGroup").style.display = (probSel === "Errore sul display") ? "block" : "none";
+        document.getElementById("altroBox").style.display = (probSel === "Altro" || probSel === "Errore sul display") ? "block" : "none";
+        document.getElementById("sezioneProblemi").style.display = (fields.tipo === "Prima accensione") ? "none" : "block";
 
-        let done = 0; if(f.c) done++; if(f.com) done++; if(f.t) done++; if(f.m) done++; if(f.ti) done++;
-        document.getElementById("progressBar").style.width = (done/5*100) + "%";
-        document.getElementById("progressBar").innerText = (done/5*100) + "%";
+        let completed = 0;
+        if(fields.cliente) completed++;
+        if(fields.indirizzo) completed++;
+        if(fields.telefono) completed++;
+        if(fields.marca) completed++;
+        if(fields.tipo) completed++;
 
-        document.getElementById("previewContent").innerHTML = `<b>Cliente:</b> ${f.c || '-'}<br><b>Città:</b> ${f.com || '-'} (${f.p || '-'})<br><b>Stufa:</b> ${f.m || '-'}<br><b>Intervento:</b> ${f.ti || '-'}`;
+        const percent = Math.round((completed / 5) * 100);
+        const bar = document.getElementById("progressBar");
+        bar.style.width = percent + "%";
+        bar.innerText = percent + "%";
+        
+        if(percent < 50) bar.style.background = "#ef4444";
+        else if(percent < 100) bar.style.background = "#f59e0b";
+        else bar.style.background = "#22c55e";
+
+        const marcaFinale = fields.marca === "Altro" ? document.getElementById("marcaAltro").value : fields.marca;
+        const modF = document.getElementById("modello").value;
+        const erroreScelto = document.getElementById("listaErrori").value;
+        const problemaFinale = probSel === "Errore sul display" ? "Errore: " + erroreScelto : probSel;
+
+        document.getElementById("previewContent").innerHTML = `
+            <b>Cliente:</b> ${fields.cliente || '-'}<br>
+            <b>Città:</b> ${fields.comune || '-'} (${fields.provincia || '-'})<br>
+            <b>Cell:</b> ${fields.telefono || '-'}<br>
+            <b>Stufa:</b> ${marcaFinale || '-'} ${modF ? '('+modF+')' : ''}<br>
+            <b>Intervento:</b> ${fields.tipo || '-'}<br>
+            ${fields.tipo !== "Prima accensione" ? `<b>Problema:</b> ${problemaFinale || '-'}` : ''}
+        `;
     }
 
-    function loadLocalStorage() { ids.forEach(id => { const v = localStorage.getItem(id); if(v && document.getElementById(id)) document.getElementById(id).value = v; }); }
+    let messaggioGlobal = "";
 
-    document.getElementById("btn").onclick = function() { 
-        if(!document.getElementById("nomeCognome").value || !document.getElementById("comune").value) { alert("Mancano dati!"); return; }
-        document.getElementById("modal").style.display = "flex"; 
+    document.getElementById("btn").onclick = function() {
+        const cliente = document.getElementById("nomeCognome").value.trim();
+        const indirizzo = document.getElementById("indirizzo").value.trim();
+        const comune = document.getElementById("comune").value.trim();
+        const provincia = document.getElementById("provincia").value;
+        const telefono = document.getElementById("telefono").value.trim();
+        const marca = document.getElementById("marcaSelect").value === "Altro" ? document.getElementById("marcaAltro").value : document.getElementById("marcaSelect").value;
+        const tipo = document.getElementById("tipoIntervento").value;
+
+        if(!cliente || !comune || !telefono || !marca || !tipo) {
+            alert("Compila i campi obbligatori!"); return;
+        }
+
+        let prob = document.getElementById("problemaSelect").value;
+        if(prob === "Errore sul display") prob = "Errore: " + document.getElementById("listaErrori").value;
+        const note = document.getElementById("problemaNote").value;
+        const mod = document.getElementById("modello").value;
+
+        messaggioGlobal = `*RICHIESTA INTERVENTO*\n*C.A.T. SERVICE*\n\n👤 *Cliente:* ${cliente}\n📍 *Indirizzo:* ${indirizzo}\n🏙️ *Comune:* ${comune} (${provincia})\n📱 *Cell:* ${telefono}\n🔥 *Stufa:* ${marca} ${mod ? "("+mod+")" : ""}\n🧰 *Intervento:* ${tipo}\n${tipo !== "Prima accensione" ? "🛠️ *Problema:* "+prob+(note ? " ("+note+")" : "")+"\n" : ""}📅 *Data:* ${document.getElementById("data").value}`;
+        
+        document.getElementById("modal").style.display = "flex";
     };
 
     document.getElementById("annulla").onclick = function() { document.getElementById("modal").style.display = "none"; };
     
     document.getElementById("conferma").onclick = function() {
-        const v = {}; ids.forEach(id => v[id] = document.getElementById(id).value);
-        const msg = `*RICHIESTA ASSISTENZA*\n👤 *Cliente:* ${v.nomeCognome}\n📍 *Indirizzo:* ${v.indirizzo}\n🏙️ *Comune:* ${v.comune} (${v.provincia})\n📱 *Tel:* ${v.telefono}\n🔥 *Marca:* ${v.marcaSelect}\n🧰 *Intervento:* ${v.tipoIntervento}\n🛠️ *Problema:* ${v.problemaSelect === 'Errore sul display' ? v.listaErrori : v.problemaSelect}`;
-        window.open("https://wa.me/393394245508?text=" + encodeURIComponent(msg), "_blank");
-        localStorage.clear(); location.reload();
+        window.open("https://wa.me/393394245508?text=" + encodeURIComponent(messaggioGlobal), "_blank");
+        document.getElementById("modal").style.display = "none";
+        localStorage.clear();
+        ids.forEach(id => { if(document.getElementById(id)) document.getElementById(id).value = ""; });
+        updateUI();
     };
 </script>
+
 </body>
 </html>
