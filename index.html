@@ -36,21 +36,10 @@
             width: 100%; max-width: 450px; background: rgba(255, 255, 255, 0.07); 
             backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); 
             border-radius: 20px; padding: 25px; border: 1px solid rgba(239, 68, 68, 0.3); 
-            animation: openingGlow 1.2s ease-out forwards; 
-        }
-        
-        @keyframes openingGlow { 
-            0% { opacity: 0; transform: translateY(20px); } 
-            100% { opacity: 1; transform: translateY(0); box-shadow: 0 15px 35px rgba(0,0,0,0.6); } 
         }
 
         .logo-container { text-align: center; margin-bottom: 25px; }
-        .logo-img { 
-            width: 220px; max-width: 100%; height: auto; margin-bottom: 20px; 
-            filter: drop-shadow(0 0 12px rgba(239, 68, 68, 0.5)); 
-            animation: logoPulse 3s infinite ease-in-out; 
-        }
-        @keyframes logoPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        .logo-img { width: 220px; max-width: 100%; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 12px rgba(239, 68, 68, 0.5)); }
 
         /* PROGRESS BAR */
         .progress-container { width: 100%; background: rgba(255,255,255,0.1); height: 20px; border-radius: 10px; margin-bottom: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); }
@@ -71,21 +60,14 @@
         select option { background-color: #1a1a1a; color: white; }
         input:focus, select:focus, textarea:focus { outline: none; border-color: #ef4444; background: rgba(255, 255, 255, 0.15); }
 
-        /* BUTTON WHATSAPP */
+        /* BOTTONE WHATSAPP */
         button#btn { 
             position: relative; width: 100%; padding: 20px; margin-top: 15px; border: none; 
             border-radius: 15px; background: linear-gradient(135deg, #25d366 0%, #128c7e 100%); 
             color: white; font-size: 15px; font-weight: 900; cursor: pointer; text-transform: uppercase; 
             letter-spacing: 0.5px; display: flex; align-items: center; justify-content: center; gap: 10px; 
-            overflow: hidden; box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4); 
-            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4); 
             animation: pulse-green 2s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { left: -60%; }
-            20% { left: 120%; }
-            100% { left: 120%; }
         }
 
         @keyframes pulse-green {
@@ -94,19 +76,13 @@
             100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
         }
 
-        button#btn::after {
-            content: ''; position: absolute; top: -50%; left: -60%; width: 20%; height: 200%;
-            background: rgba(255, 255, 255, 0.4); transform: rotate(30deg); animation: shimmer 3s infinite;
-        }
-
         .preview-box { margin-top: 10px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 12px; border: 1px dashed rgba(239, 68, 68, 0.5); font-size: 13px; line-height: 1.6; }
         .preview-title { color: #ef4444; font-size: 11px; text-transform: uppercase; margin-bottom: 8px; font-weight: bold; display: block; }
-
-        .privacy-notice { font-size: 10px; color: #aaa; text-align: center; margin: 25px 0 5px 0; font-style: italic; }
+        .privacy-notice { font-size: 10px; color: #aaa; text-align: center; margin: 25px 0 5px 0; }
         
         /* MODAL */
         .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 9999; }
-        .box { background: #111; padding: 25px; border-radius: 20px; text-align: center; border: 2px solid #ef4444; width: 100%; max-width: 320px; }
+        .box { background: #111; padding: 25px; border-radius: 20px; text-align: center; border: 2px solid #ef4444; width: 90%; max-width: 320px; }
         .modal-btns { display: flex; gap: 10px; margin-top: 20px; }
         .ok { background: #ef4444; color: white; border: none; padding: 12px; border-radius: 10px; flex: 1; font-weight: bold; }
         .no { background: #444; color: white; border: none; padding: 12px; border-radius: 10px; flex: 1; }
@@ -219,8 +195,7 @@
             <div class="input-icon">
                 <span>📟</span>
                 <select id="listaErrori" onchange="updateUI()">
-                    <option value="">Scegli Marca prima...</option>
-                </select>
+                    </select>
             </div>
         </div>
 
@@ -236,10 +211,8 @@
 
     <button id="btn">
         <svg width="22" height="22" viewBox="0 0 448 512" fill="white"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.7 17.8 69.4 27.2 106.2 27.2 122.4 0 222-99.6 222-222 0-59.3-23-115.1-65.1-157.1zM223.9 446.7c-33.1 0-65.6-8.9-93.9-25.7l-6.7-4-69.8 18.3 18.7-68.1-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.5-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 54 81.2 54 130.4 0 101.7-82.8 184.5-184.5 184.5zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-5.5-2.8-23.2-8.5-44.2-27.2-16.4-14.6-27.4-32.7-30.6-38.1-3.2-5.5-.3-8.5 2.4-11.2 2.5-2.4 5.5-6.5 8.3-9.7 2.8-3.3 3.7-5.6 5.6-9.3 1.9-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 13.2 5.7 23.5 9.2 31.6 11.8 13.3 4.2 25.4 3.6 35 2.2 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
-        INVIA PRENOTAZIONE SU WHATSAPP
+        INVIA PRENOTAZIONE
     </button>
-
-    <div class="privacy-notice">L'invio acconsente al trattamento dei dati (GDPR).</div>
 
     <div class="preview-box" id="previewBox">
         <span class="preview-title">Anteprima Messaggio:</span>
@@ -259,21 +232,25 @@
 </div>
 
 <script>
-    // Database Comuni principali e province
     const databaseComuni = {
-        "Napoli": "NA", "Acerra": "NA", "Afragola": "NA", "Arzano": "NA", "Bacoli": "NA", "Caivano": "NA", "Cardito": "NA", "Casalnuovo di Napoli": "NA", "Casavatore": "NA", "Casoria": "NA", "Castellammare di Stabia": "NA", "Ercolano": "NA", "Frattamaggiore": "NA", "Giugliano in Campania": "NA", "Marano di Napoli": "NA", "Melito di Napoli": "NA", "Mugnano di Napoli": "NA", "Nola": "NA", "Ottaviano": "NA", "Pomigliano d'Arco": "NA", "Pompei": "NA", "Portici": "NA", "Pozzuoli": "NA", "Quarto": "NA", "San Giorgio a Cremano": "NA", "San Giuseppe Vesuviano": "NA", "Sant'Antimo": "NA", "Somma Vesuviana": "NA", "Torre Annunziata": "NA", "Torre del Greco": "NA", "Villaricca": "NA", "Volla": "NA",
-        "Salerno": "SA", "Angri": "SA", "Battipaglia": "SA", "Cava de' Tirreni": "SA", "Eboli": "SA", "Nocera Inferiore": "SA", "Nocera Superiore": "SA", "Pagani": "SA", "Pontecagnano Faiano": "SA", "Scafati": "SA", "Sarno": "SA", "Santomango Piemonte": "SA", "Baronissi": "SA", "Fisciano": "SA", "Mercato San Severino": "SA", "Castel San Giorgio": "SA", "Roccapiemonte": "SA", "Vietri sul Mare": "SA", "Amalfi": "SA", "Maiori": "SA", "Minori": "SA", "Positano": "SA",
+        "Napoli": "NA", "Acerra": "NA", "Afragola": "NA", "Casoria": "NA", "Pozzuoli": "NA", "Giugliano": "NA", "Torre del Greco": "NA", "Castellammare": "NA", "Nola": "NA", "Somma Vesuviana": "NA", "Marano": "NA", "Bacoli": "NA", "Pompei": "NA", "Arzano": "NA", "Cardito": "NA", "Caivano": "NA", "Casalnuovo": "NA", "Casavatore": "NA", "Frattamaggiore": "NA", "Melito": "NA", "Mugnano": "NA", "Ottaviano": "NA", "Pomigliano": "NA", "Portici": "NA", "Quarto": "NA", "San Giorgio a Cremano": "NA", "San Giuseppe Vesuviano": "NA", "Sant'Antimo": "NA", "Torre Annunziata": "NA", "Villaricca": "NA", "Volla": "NA",
+        "Salerno": "SA", "Angri": "SA", "Battipaglia": "SA", "Cava de' Tirreni": "SA", "Eboli": "SA", "Nocera Inferiore": "SA", "Nocera Superiore": "SA", "Pagani": "SA", "Pontecagnano": "SA", "Scafati": "SA", "Sarno": "SA", "Vietri": "SA", "Amalfi": "SA", "Baronissi": "SA", "Fisciano": "SA", "Mercato San Severino": "SA", "Castel San Giorgio": "SA", "Roccapiemonte": "SA", "Maiori": "SA", "Minori": "SA", "Positano": "SA",
         "Avellino": "AV", "Ariano Irpino": "AV", "Atripalda": "AV", "Mercogliano": "AV", "Solofra": "AV", "Monteforte Irpino": "AV", "Montoro": "AV", "Grottaminarda": "AV", "Mirabella Eclano": "AV", "Montella": "AV", "Mugnano del Cardinale": "AV", "Baiano": "AV", "Avella": "AV", "Forino": "AV", "Serino": "AV"
     };
 
-    const erroriGenerici = ["AL 1 - Blackout", "AL 2 - Sonda Fumi", "AL 3 - Hot Fumi", "AL 4 - Guasto Estrattore", "AL 5 - Mancata Accensione", "AL 6 - Mancanza Pellet", "AL 7 - Sicurezza Termica", "AL 8 - Depressione", "AL 9 - Blocco Coaugulo", "SERVICE"];
-
     const dbErrori = {
-        "MCZ": ["A01 (ACCENSIONE)", "A02 (FUOCO)", "A03 (SICUREZZA)", "A04 (TEMP FUMI)", "A05 (PRESSIONE)", "A10 (CANDELETTA)", "SERVICE"],
-        "PALAZZETTI": ["E101 ACCENSIONE", "E108 SICUREZZA", "E109 PRESSIONE", "A002 MANUTENZIONE", "SCOPINA GIALLA"],
-        "MORETTI DESIGN": ["ER01 TERMOSTATO", "ER12 ACCENSIONE", "ER15 BLACKOUT", "SERV PULIZIA"],
-        "RAVELLI": ["AL01 BLACKOUT", "AL05 ACCENSIONE", "AL06 NO PELLET", "AL07 TERMICA", "AL08 DEPRESSIONE"]
+        "MCZ": ["A01 (Mancata Accensione)", "A02 (Anomalia Fuoco)", "A03 (Sicurezza Pellet)", "A04 (Alta Temp Fumi)", "A05 (Pressione/Canna)", "A08 (Motore Fumi)", "A09 (Sonda Fumi)", "A11 (Motoriduttore)", "PELLET (Finito)", "SERVICE (Manutenzione)"],
+        "PALAZZETTI": ["E001 (Scheda)", "E101 (Accensione)", "E108 (Sicurezza)", "E109 (Pressione Acqua)", "E110 (Sonda Amb)", "A001 (Livello Pellet)", "A002 (Manutenzione)", "SCOPINA GIALLA"],
+        "RAVELLI": ["AL01 (Blackout)", "AL02 (Sonda Fumi)", "AL03 (Sovratemp Fumi)", "AL05 (Accensione)", "AL06 (No Pellet)", "AL07 (Termica)", "AL08 (Depressione)", "AL12 (Encoder)", "AL13 (Flusso Aria)"],
+        "MORETTI DESIGN": ["ER01 (Termostato)", "ER02 (Canna Fumaria)", "ER03 (Temp Bassa)", "ER05 (Temp Fumi Alta)", "ER12 (Accensione)", "ER15 (Blackout)", "SERV (Manutenzione)"],
+        "CADEL": ["AL 1 (Blackout)", "AL 2 (Sonda Fumi)", "AL 4 (Estrattore)", "AL 5 (Accensione)", "AL 6 (No Pellet)", "AL 8 (Pressione)"],
+        "FREEPOINT": ["AL 1 (Blackout)", "AL 2 (Sonda Fumi)", "AL 5 (Accensione)", "AL 6 (No Pellet)", "AL 8 (Depressione)"],
+        "RED": ["A01 (Mancata Accensione)", "A02 (Anomalia Fuoco)", "A05 (Pressione)", "A09 (Sonda Fumi)"],
+        "PEGASO": ["AL 1 (Blackout)", "AL 5 (Accensione)", "AL 6 (No Pellet)", "AL 8 (Pressione)"],
+        "ROYAL": ["E101 (Accensione)", "E108 (Sicurezza)", "A002 (Manutenzione)"]
     };
+
+    const erroriGenerici = ["AL 1 - Blackout", "AL 2 - Sonda Fumi", "AL 3 - Hot Fumi", "AL 4 - Estrattore", "AL 5 - Mancata Accensione", "AL 6 - Mancanza Pellet", "AL 8 - Errore Depressione", "SERVICE / MANUTENZIONE"];
 
     const ids = ["nomeCognome", "indirizzo", "comune", "provincia", "telefono", "telefono_fisso", "marcaSelect", "marcaAltro", "modello", "tipoIntervento", "problemaSelect", "listaErrori", "problemaNote"];
 
@@ -281,7 +258,7 @@
         document.getElementById("data").value = new Date().toLocaleDateString('it-IT');
         setupComuniList();
         loadLocalStorage();
-        populateErrorList();
+        populateErrorList(); // Popola la lista errori all'inizio basandosi sulla marca caricata
         updateUI();
     };
 
@@ -305,13 +282,26 @@
     function populateErrorList() {
         const marca = document.getElementById("marcaSelect").value;
         const listaErrori = document.getElementById("listaErrori");
+        
+        const currentSelected = listaErrori.value; // Salva la selezione attuale
+        listaErrori.innerHTML = ''; // Pulisce tutto
+        
+        const defaultOpt = document.createElement("option");
+        defaultOpt.value = "";
+        defaultOpt.textContent = "Scegli l'allarme...";
+        listaErrori.appendChild(defaultOpt);
+
         const errori = dbErrori[marca] ? dbErrori[marca] : erroriGenerici;
-        listaErrori.innerHTML = '<option value="">Seleziona l\'allarme...</option>';
+        
         errori.forEach(err => {
             const opt = document.createElement("option");
-            opt.value = err; opt.textContent = err;
+            opt.value = err;
+            opt.textContent = err;
             listaErrori.appendChild(opt);
         });
+
+        // Tenta di ripristinare la selezione se esiste ancora
+        if(currentSelected) listaErrori.value = currentSelected;
     }
 
     function saveLocalStorage() {
@@ -347,16 +337,16 @@
         document.getElementById("altroBox").style.display = (ps === "Altro" || ps === "Errore sul display") ? "block" : "none";
         document.getElementById("sezioneProblemi").style.display = (f.tipo === "Prima accensione") ? "none" : "block";
 
-        // Progress bar (7 campi chiave ora)
         let comp = 0;
         if(f.cliente) comp++; if(f.indirizzo) comp++; if(f.comune) comp++; if(f.prov) comp++; if(f.tel) comp++; if(f.marca) comp++; if(f.tipo) comp++;
         const percent = Math.round((comp / 7) * 100);
         const bar = document.getElementById("progressBar");
-        bar.style.width = percent + "%"; bar.innerText = percent + "%";
-        bar.style.background = percent < 50 ? "#ef4444" : (percent < 100 ? "#f59e0b" : "#22c55e");
+        bar.style.width = percent + "%";
+        bar.innerText = percent + "%";
 
         const mFinale = f.marca === "Altro" ? document.getElementById("marcaAltro").value : f.marca;
-        const pFinale = ps === "Errore sul display" ? "Err: " + document.getElementById("listaErrori").value : ps;
+        const errScelto = document.getElementById("listaErrori").value;
+        const pFinale = ps === "Errore sul display" ? "Err: " + errScelto : ps;
 
         document.getElementById("previewContent").innerHTML = `
             <b>Cliente:</b> ${f.cliente || '-'}<br>
@@ -371,23 +361,22 @@
 
     document.getElementById("btn").onclick = function() {
         const c = document.getElementById("nomeCognome").value.trim();
-        const i = document.getElementById("indirizzo").value.trim();
         const com = document.getElementById("comune").value.trim();
         const prv = document.getElementById("provincia").value;
-        const t = document.getElementById("telefono").value.trim();
-        const m = document.getElementById("marcaSelect").value === "Altro" ? document.getElementById("marcaAltro").value : document.getElementById("marcaSelect").value;
+        const m = document.getElementById("marcaSelect").value;
         const ti = document.getElementById("tipoIntervento").value;
 
-        if(!c || !i || !com || !prv || !t || !m || !ti) {
-            alert("Per favore, compila tutti i campi obbligatori (incluso Comune e Provincia)!"); return;
+        if(!c || !com || !prv || !m || !ti) {
+            alert("Compila tutti i campi obbligatori!"); return;
         }
 
         let prob = document.getElementById("problemaSelect").value;
         if(prob === "Errore sul display") prob = "Errore: " + document.getElementById("listaErrori").value;
         const note = document.getElementById("problemaNote").value;
         const mod = document.getElementById("modello").value;
+        const marcaF = m === "Altro" ? document.getElementById("marcaAltro").value : m;
 
-        messaggioGlobal = `*RICHIESTA INTERVENTO*\n*C.A.T. SERVICE*\n\n👤 *Cliente:* ${c}\n📍 *Indirizzo:* ${i}\n🏙️ *Comune:* ${com} (${prv})\n📱 *Cell:* ${t}\n🔥 *Stufa:* ${m} ${mod ? "("+mod+")" : ""}\n🧰 *Intervento:* ${ti}\n${ti !== "Prima accensione" ? "🛠️ *Problema:* "+prob+(note ? " ("+note+")" : "")+"\n" : ""}📅 *Data:* ${document.getElementById("data").value}`;
+        messaggioGlobal = `*RICHIESTA INTERVENTO*\n👤 *Cliente:* ${c}\n📍 *Indirizzo:* ${document.getElementById("indirizzo").value}\n🏙️ *Comune:* ${com} (${prv})\n📱 *Cell:* ${document.getElementById("telefono").value}\n🔥 *Stufa:* ${marcaF} ${mod ? "("+mod+")" : ""}\n🧰 *Intervento:* ${ti}\n${ti !== "Prima accensione" ? "🛠️ *Problema:* "+prob+(note ? " ("+note+")" : "")+"\n" : ""}📅 *Data:* ${document.getElementById("data").value}`;
         
         document.getElementById("modal").style.display = "flex";
     };
