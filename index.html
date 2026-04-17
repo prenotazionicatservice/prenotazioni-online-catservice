@@ -3,103 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>C.A.T. SERVICE - Prenotazione</title>
+    <title>C.A.T. SERVICE - Prenotazione Assistenza</title>
 
     <style>
-        /* RESET GENERALE */
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, sans-serif; }
         
         body { 
-            background: #200505; 
             background: radial-gradient(circle at 50% 50%, #450a0a, #000000); 
             min-height: 100vh; 
             display: flex; 
             justify-content: center; 
-            align-items: flex-start; 
             padding: 80px 15px 40px 15px; 
             color: #fff; 
         }
 
-        /* NAVBAR */
         .navbar { 
             position: fixed; top: 0; left: 0; width: 100%; height: 60px; 
-            background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px); 
-            -webkit-backdrop-filter: blur(10px); display: flex; align-items: center; 
-            padding: 0 20px; border-bottom: 1px solid rgba(239, 68, 68, 0.4); z-index: 1000; 
+            background: rgba(0, 0, 0, 0.9); backdrop-filter: blur(10px); 
+            display: flex; align-items: center; padding: 0 20px; 
+            border-bottom: 1px solid rgba(239, 68, 68, 0.4); z-index: 1000; 
         }
-        .nav-content { display: flex; align-items: center; gap: 12px; }
-        .mini-logo { height: 35px; width: auto; filter: drop-shadow(0 0 5px #ef4444); }
-        .nav-title { font-weight: bold; font-size: 14px; letter-spacing: 1px; color: #ef4444; text-transform: uppercase; }
+        .nav-title { font-weight: bold; font-size: 14px; color: #ef4444; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* CONTAINER */
         .container { 
             width: 100%; max-width: 450px; background: rgba(255, 255, 255, 0.07); 
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); 
-            border-radius: 20px; padding: 25px; border: 1px solid rgba(239, 68, 68, 0.3); 
+            backdrop-filter: blur(15px); border-radius: 20px; padding: 25px; 
+            border: 1px solid rgba(239, 68, 68, 0.3); 
         }
 
         .logo-container { text-align: center; margin-bottom: 25px; }
-        .logo-img { width: 220px; max-width: 100%; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 12px rgba(239, 68, 68, 0.5)); }
+        .logo-img { width: 220px; filter: drop-shadow(0 0 12px rgba(239, 68, 68, 0.5)); }
 
-        /* PROGRESS BAR */
-        .progress-container { width: 100%; background: rgba(255,255,255,0.1); height: 20px; border-radius: 10px; margin-bottom: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); }
-        .progress-bar { height: 100%; width: 0%; background: #ef4444; transition: width 0.5s ease; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; color: white; }
+        .progress-container { width: 100%; background: rgba(255,255,255,0.1); height: 18px; border-radius: 10px; margin-bottom: 20px; overflow: hidden; }
+        .progress-bar { height: 100%; width: 0%; background: #ef4444; transition: width 0.4s; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; }
 
-        /* INPUTS */
+        .input-group { margin-bottom: 15px; }
         .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
-        .input-group { margin-bottom: 15px; width: 100%; }
-        label { display: block; font-size: 11px; color: #ef4444; text-transform: uppercase; margin-bottom: 5px; padding-left: 5px; font-weight: bold; }
-        .input-icon { position: relative; display: flex; align-items: center; width: 100%; }
-        .input-icon span { position: absolute; left: 12px; font-size: 18px; z-index: 5; pointer-events: none; }
+        
+        label { display: block; font-size: 11px; color: #ef4444; text-transform: uppercase; margin-bottom: 5px; font-weight: bold; }
+        
+        .input-icon { position: relative; width: 100%; }
+        .input-icon span { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 18px; z-index: 5; }
 
         input, select, textarea { 
-            width: 100%; padding: 12px 15px 12px 42px; background: rgba(255, 255, 255, 0.1); 
-            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; color: #fff; 
-            font-size: 16px; transition: 0.3s; 
+            width: 100%; padding: 12px 10px 12px 42px; background: rgba(255, 255, 255, 0.1); 
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; color: #fff; font-size: 16px; 
         }
-        select option { background-color: #1a1a1a; color: white; }
-        input:focus, select:focus, textarea:focus { outline: none; border-color: #ef4444; background: rgba(255, 255, 255, 0.15); }
-
-        /* BOTTONE WHATSAPP */
-        button#btn { 
-            position: relative; width: 100%; padding: 20px; margin-top: 15px; border: none; 
-            border-radius: 15px; background: linear-gradient(135deg, #25d366 0%, #128c7e 100%); 
-            color: white; font-size: 15px; font-weight: 900; cursor: pointer; text-transform: uppercase; 
-            letter-spacing: 0.5px; display: flex; align-items: center; justify-content: center; gap: 10px; 
-            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4); 
-            animation: pulse-green 2s infinite;
-        }
-
-        @keyframes pulse-green {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
-            70% { transform: scale(1.02); box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
-        }
-
-        .preview-box { margin-top: 10px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 12px; border: 1px dashed rgba(239, 68, 68, 0.5); font-size: 13px; line-height: 1.6; }
-        .preview-title { color: #ef4444; font-size: 11px; text-transform: uppercase; margin-bottom: 8px; font-weight: bold; display: block; }
-        .privacy-notice { font-size: 10px; color: #aaa; text-align: center; margin: 25px 0 5px 0; }
+        input:focus, select:focus { border-color: #ef4444; outline: none; background: rgba(255, 255, 255, 0.15); }
         
-        /* MODAL */
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 9999; }
-        .box { background: #111; padding: 25px; border-radius: 20px; text-align: center; border: 2px solid #ef4444; width: 90%; max-width: 320px; }
+        select option { background: #1a1a1a; color: #fff; }
+
+        button#btn { 
+            width: 100%; padding: 18px; margin-top: 15px; border: none; border-radius: 15px; 
+            background: linear-gradient(135deg, #25d366 0%, #128c7e 100%); 
+            color: white; font-weight: 900; text-transform: uppercase; cursor: pointer; 
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3); animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
+
+        .preview-box { margin-top: 20px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 12px; border: 1px dashed #ef4444; font-size: 13px; }
+        
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center; z-index: 9999; }
+        .box { background: #111; padding: 25px; border-radius: 20px; text-align: center; border: 1px solid #ef4444; width: 90%; max-width: 320px; }
         .modal-btns { display: flex; gap: 10px; margin-top: 20px; }
-        .ok { background: #ef4444; color: white; border: none; padding: 12px; border-radius: 10px; flex: 1; font-weight: bold; }
-        .no { background: #444; color: white; border: none; padding: 12px; border-radius: 10px; flex: 1; }
+        .ok { background: #ef4444; color: #fff; border: none; padding: 12px; border-radius: 10px; flex: 1; font-weight: bold; }
+        .no { background: #444; color: #fff; border: none; padding: 12px; border-radius: 10px; flex: 1; }
     </style>
 </head>
 <body>
 
 <nav class="navbar">
-    <div class="nav-content">
-        <img src="logo.PNG" alt="Logo" class="mini-logo" onerror="this.src='logo.png';">
-        <span class="nav-title">C.A.T. Service</span>
-    </div>
+    <span class="nav-title">C.A.T. Service - Assistenza Tecnica</span>
 </nav>
 
 <div class="container">
     <div class="logo-container">
-        <img src="logo.PNG?v=1" alt="Logo" class="logo-img" onerror="this.src='logo.png';">
+        <img src="logo.PNG" alt="Logo" class="logo-img" onerror="this.src='logo.png';">
     </div>
 
     <div class="progress-container">
@@ -107,22 +87,22 @@
     </div>
 
     <div class="input-group">
-        <div class="input-icon"><span>👤</span><input type="text" id="nomeCognome" placeholder="Nome e Cognome" oninput="updateUI()"></div>
+        <div class="input-icon"><span>👤</span><input type="text" id="nomeCognome" placeholder="Nome e Cognome"></div>
     </div>
 
     <div class="input-group">
-        <div class="input-icon"><span>📍</span><input type="text" id="indirizzo" placeholder="Indirizzo e n. civico" oninput="updateUI()"></div>
+        <div class="input-icon"><span>📍</span><input type="text" id="indirizzo" placeholder="Indirizzo e n. civico"></div>
     </div>
 
     <div class="input-row">
         <div class="input-icon">
             <span>🏙️</span>
-            <input type="text" id="comune" list="listaComuni" placeholder="Comune" oninput="autoCompleteProvincia(); updateUI();">
+            <input type="text" id="comune" list="listaComuni" placeholder="Comune" oninput="autoCompleteProvincia()">
             <datalist id="listaComuni"></datalist>
         </div>
         <div class="input-icon">
             <span>🌍</span>
-            <select id="provincia" onchange="updateUI()">
+            <select id="provincia">
                 <option value="">Prov.</option>
                 <option value="NA">NA</option>
                 <option value="SA">SA</option>
@@ -132,14 +112,14 @@
     </div>
 
     <div class="input-row">
-        <div class="input-icon"><span>📱</span><input type="tel" id="telefono" placeholder="Cellulare" oninput="updateUI()"></div>
-        <div class="input-icon"><span>☎️</span><input type="tel" id="telefono_fisso" placeholder="Fisso (opz)" oninput="updateUI()"></div>
+        <div class="input-icon"><span>📱</span><input type="tel" id="telefono" placeholder="Cellulare"></div>
+        <div class="input-icon"><span>☎️</span><input type="tel" id="telefono_fisso" placeholder="Fisso (opz)"></div>
     </div>
 
     <div class="input-row">
         <div class="input-icon">
             <span>🔥</span>
-            <select id="marcaSelect" onchange="populateErrorList(); updateUI();">
+            <select id="marcaSelect" onchange="resetErrori(); populateErrorList();">
                 <option value="">Marca</option>
                 <option value="MCZ">MCZ</option>
                 <option value="PALAZZETTI">PALAZZETTI</option>
@@ -157,18 +137,18 @@
                 <option value="Altro">Altro...</option>
             </select>
         </div>
-        <div class="input-icon"><span>⚙️</span><input type="text" id="modello" placeholder="Modello (opz)" oninput="updateUI()"></div>
+        <div class="input-icon"><span>⚙️</span><input type="text" id="modello" placeholder="Modello"></div>
     </div>
 
-    <div class="input-group" id="marcaAltroGroup" style="display:none;"><div class="input-icon"><span>✍️</span><input type="text" id="marcaAltro" placeholder="Specifica marca" oninput="updateUI()"></div></div>
+    <div class="input-group" id="marcaAltroGroup" style="display:none;"><input type="text" id="marcaAltro" placeholder="Specifica marca"></div>
 
     <div class="input-group">
         <div class="input-icon">
             <span>🧰</span>
-            <select id="tipoIntervento" onchange="updateUI()">
+            <select id="tipoIntervento">
                 <option value="">Tipologia intervento</option>
-                <option value="Manutenzione">Manutenzione</option>
-                <option value="Riparazione">Riparazione</option>
+                <option value="Manutenzione">Manutenzione Ordinaria</option>
+                <option value="Riparazione">Riparazione Guasto</option>
                 <option value="Prima accensione">Prima accensione</option>
             </select>
         </div>
@@ -178,7 +158,7 @@
         <div class="input-group">
             <div class="input-icon">
                 <span>🛠️</span>
-                <select id="problemaSelect" onchange="updateUI()">
+                <select id="problemaSelect">
                     <option value="">Seleziona problema</option>
                     <option value="Errore sul display">Errore sul display ⚠️</option>
                     <option value="Stufa non si accende">Stufa non si accende</option>
@@ -186,44 +166,35 @@
                     <option value="Rumore anomalo">Rumore anomalo</option>
                     <option value="Si spegne da sola">Si spegne da sola</option>
                     <option value="Non carica pellet">Non carica pellet</option>
-                    <option value="Altro">Altro (specifica sotto)</option>
+                    <option value="Altro">Altro (specifica nelle note)</option>
                 </select>
             </div>
         </div>
 
-       <div class="input-group" id="erroriDisplayGroup" style="display:none;">
+        <div class="input-group" id="erroriDisplayGroup" style="display:none;">
             <div class="input-icon">
                 <span>📟</span>
-                <select id="listaErrori" onchange="updateUI()">
+                <select id="listaErrori">
                     </select>
             </div>
         </div>
 
         <div class="input-group" id="altroBox" style="display:none;">
-            <div class="input-icon"><span>📝</span><textarea id="problemaNote" placeholder="Descrivi meglio il problema..." oninput="updateUI()"></textarea></div>
+            <textarea id="problemaNote" placeholder="Aggiungi dettagli qui..."></textarea>
         </div>
     </div>
 
-    <div class="input-group">
-        <label>Data di oggi</label>
-        <input type="text" id="data" readonly style="text-align:center; color:#ef4444; font-weight:bold; background:rgba(0,0,0,0.2);">
-    </div>
-
-    <button id="btn">
-        <svg width="22" height="22" viewBox="0 0 448 512" fill="white"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.7 17.8 69.4 27.2 106.2 27.2 122.4 0 222-99.6 222-222 0-59.3-23-115.1-65.1-157.1zM223.9 446.7c-33.1 0-65.6-8.9-93.9-25.7l-6.7-4-69.8 18.3 18.7-68.1-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.5-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 54 81.2 54 130.4 0 101.7-82.8 184.5-184.5 184.5zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-5.5-2.8-23.2-8.5-44.2-27.2-16.4-14.6-27.4-32.7-30.6-38.1-3.2-5.5-.3-8.5 2.4-11.2 2.5-2.4 5.5-6.5 8.3-9.7 2.8-3.3 3.7-5.6 5.6-9.3 1.9-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 13.2 5.7 23.5 9.2 31.6 11.8 13.3 4.2 25.4 3.6 35 2.2 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
-        INVIA PRENOTAZIONE
-    </button>
+    <button id="btn">INVIA SU WHATSAPP</button>
 
     <div class="preview-box" id="previewBox">
-        <span class="preview-title">Anteprima Messaggio:</span>
-        <div id="previewContent">Inizia a compilare...</div>
+        <div id="previewContent">Compila il modulo per vedere l'anteprima...</div>
     </div>
 </div>
 
 <div class="modal" id="modal">
     <div class="box">
         <h3>Conferma Invio</h3>
-        <p style="color:#ccc; margin:10px 0;">Procedere con l'invio su WhatsApp?</p>
+        <p style="margin:15px 0; color:#aaa;">Vuoi inviare la richiesta?</p>
         <div class="modal-btns">
             <button class="no" id="annulla">Modifica</button>
             <button class="ok" id="conferma">Invia Ora</button>
@@ -232,162 +203,119 @@
 </div>
 
 <script>
-    const databaseComuni = {
-        "Napoli": "NA", "Acerra": "NA", "Afragola": "NA", "Casoria": "NA", "Pozzuoli": "NA", "Giugliano": "NA", "Torre del Greco": "NA", "Castellammare": "NA", "Nola": "NA", "Somma Vesuviana": "NA", "Marano": "NA", "Bacoli": "NA", "Pompei": "NA", "Arzano": "NA", "Cardito": "NA", "Caivano": "NA", "Casalnuovo": "NA", "Casavatore": "NA", "Frattamaggiore": "NA", "Melito": "NA", "Mugnano": "NA", "Ottaviano": "NA", "Pomigliano": "NA", "Portici": "NA", "Quarto": "NA", "San Giorgio a Cremano": "NA", "San Giuseppe Vesuviano": "NA", "Sant'Antimo": "NA", "Torre Annunziata": "NA", "Villaricca": "NA", "Volla": "NA",
-        "Salerno": "SA", "Angri": "SA", "Battipaglia": "SA", "Cava de' Tirreni": "SA", "Eboli": "SA", "Nocera Inferiore": "SA", "Nocera Superiore": "SA", "Pagani": "SA", "Pontecagnano": "SA", "Scafati": "SA", "Sarno": "SA", "Vietri": "SA", "Amalfi": "SA", "Baronissi": "SA", "Fisciano": "SA", "Mercato San Severino": "SA", "Castel San Giorgio": "SA", "Roccapiemonte": "SA", "Maiori": "SA", "Minori": "SA", "Positano": "SA",
-        "Avellino": "AV", "Ariano Irpino": "AV", "Atripalda": "AV", "Mercogliano": "AV", "Solofra": "AV", "Monteforte Irpino": "AV", "Montoro": "AV", "Grottaminarda": "AV", "Mirabella Eclano": "AV", "Montella": "AV", "Mugnano del Cardinale": "AV", "Baiano": "AV", "Avella": "AV", "Forino": "AV", "Serino": "AV"
-    };
+    const databaseComuni = {"Napoli":"NA","Acerra":"NA","Afragola":"NA","Casoria":"NA","Pozzuoli":"NA","Giugliano":"NA","Salerno":"SA","Angri":"SA","Battipaglia":"SA","Scafati":"SA","Nocera Inferiore":"SA","Avellino":"AV","Ariano Irpino":"AV","Solofra":"AV"};
 
     const dbErrori = {
-        "MCZ": ["A01 (Mancata Accensione)", "A02 (Anomalia Fuoco)", "A03 (Sicurezza Pellet)", "A04 (Alta Temp Fumi)", "A05 (Pressione/Canna)", "A08 (Motore Fumi)", "A09 (Sonda Fumi)", "A11 (Motoriduttore)", "PELLET (Finito)", "SERVICE (Manutenzione)"],
-        "PALAZZETTI": ["E001 (Scheda)", "E101 (Accensione)", "E108 (Sicurezza)", "E109 (Pressione Acqua)", "E110 (Sonda Amb)", "A001 (Livello Pellet)", "A002 (Manutenzione)", "SCOPINA GIALLA"],
-        "RAVELLI": ["AL01 (Blackout)", "AL02 (Sonda Fumi)", "AL03 (Sovratemp Fumi)", "AL05 (Accensione)", "AL06 (No Pellet)", "AL07 (Termica)", "AL08 (Depressione)", "AL12 (Encoder)", "AL13 (Flusso Aria)"],
-        "MORETTI DESIGN": ["ER01 (Termostato)", "ER02 (Canna Fumaria)", "ER03 (Temp Bassa)", "ER05 (Temp Fumi Alta)", "ER12 (Accensione)", "ER15 (Blackout)", "SERV (Manutenzione)"],
-        "CADEL": ["AL 1 (Blackout)", "AL 2 (Sonda Fumi)", "AL 4 (Estrattore)", "AL 5 (Accensione)", "AL 6 (No Pellet)", "AL 8 (Pressione)"],
-        "FREEPOINT": ["AL 1 (Blackout)", "AL 2 (Sonda Fumi)", "AL 5 (Accensione)", "AL 6 (No Pellet)", "AL 8 (Depressione)"],
-        "RED": ["A01 (Mancata Accensione)", "A02 (Anomalia Fuoco)", "A05 (Pressione)", "A09 (Sonda Fumi)"],
-        "PEGASO": ["AL 1 (Blackout)", "AL 5 (Accensione)", "AL 6 (No Pellet)", "AL 8 (Pressione)"],
-        "ROYAL": ["E101 (Accensione)", "E108 (Sicurezza)", "A002 (Manutenzione)"]
+        "MCZ": ["A01-Mancata Accensione","A02-Anomalia Fuoco","A03-Sicurezza Serbatoio","A04-Alta Temp Fumi","A05-Ostruzione/Press","A08-Ventilatore Fumi","A09-Sonda Fumi","A11-Motoriduttore","PELLET-Finito","SERVICE-Manutenzione"],
+        "PALAZZETTI": ["E101-Accensione","E104-Sonda Fumi","E108-Sicurezza","E109-Pressione","E110-Sonda Amb","A001-Fine Pellet","A002-Manutenzione","SCOPINA-Pulizia"],
+        "RAVELLI": ["AL01-Blackout","AL02-Sonda Fumi","AL03-Sovratemp Fumi","AL05-Accensione","AL06-No Pellet","AL07-Termostato","AL08-Depressione","AL12-Encoder","AL13-Flusso Aria","SERVICE-Manutenzione"],
+        "MORETTI DESIGN": ["ER01-Termostato","ER02-Pressostato","ER05-Alta Temp Fumi","ER12-Accensione","ER15-Blackout","SERV-Manutenzione"],
+        "CADEL": ["AL1-Blackout","AL2-Sonda Fumi","AL5-Accensione","AL6-No Pellet","AL8-Pressione","SERVICE-Manutenzione"],
+        "FREEPOINT": ["AL1-Blackout","AL2-Sonda Fumi","AL5-Accensione","AL6-No Pellet","AL8-Depressione"],
+        "RED": ["A01-Accensione","A02-Fuoco","A05-Pressione","A09-Sonda Fumi"],
+        "ROYAL": ["E101-Accensione","E108-Sicurezza","E109-Pressione","A002-Manutenzione"]
     };
 
-    const erroriGenerici = ["AL 1 - Blackout", "AL 2 - Sonda Fumi", "AL 3 - Hot Fumi", "AL 4 - Estrattore", "AL 5 - Mancata Accensione", "AL 6 - Mancanza Pellet", "AL 8 - Errore Depressione", "SERVICE / MANUTENZIONE"];
+    const erroriGenerici = ["AL 1-Blackout","AL 2-Sonda Fumi","AL 5-Accensione","AL 6-No Pellet","AL 8-Depressione","SERVICE-Manutenzione"];
 
-    const ids = ["nomeCognome", "indirizzo", "comune", "provincia", "telefono", "telefono_fisso", "marcaSelect", "marcaAltro", "modello", "tipoIntervento", "problemaSelect", "listaErrori", "problemaNote"];
+    const inputIds = ["nomeCognome","indirizzo","comune","provincia","telefono","telefono_fisso","marcaSelect","marcaAltro","modello","tipoIntervento","problemaSelect","listaErrori","problemaNote"];
 
-    window.onload = function() {
-        document.getElementById("data").value = new Date().toLocaleDateString('it-IT');
-        setupComuniList();
-        loadLocalStorage();
-        populateErrorList(); // Popola la lista errori all'inizio basandosi sulla marca caricata
+    window.onload = () => {
+        setupComuni();
+        loadData();
+        populateErrorList();
         updateUI();
+        inputIds.forEach(id => {
+            document.getElementById(id).addEventListener('input', updateUI);
+            document.getElementById(id).addEventListener('change', updateUI);
+        });
     };
 
-    function setupComuniList() {
+    function setupComuni() {
         const dl = document.getElementById("listaComuni");
-        Object.keys(databaseComuni).sort().forEach(comune => {
-            const opt = document.createElement("option");
-            opt.value = comune;
-            dl.appendChild(opt);
+        Object.keys(databaseComuni).forEach(c => {
+            let o = document.createElement("option"); o.value = c; dl.appendChild(o);
         });
     }
 
     function autoCompleteProvincia() {
-        const comuneInput = document.getElementById("comune").value;
-        const provinciaSelect = document.getElementById("provincia");
-        if(databaseComuni[comuneInput]) {
-            provinciaSelect.value = databaseComuni[comuneInput];
-        }
+        const c = document.getElementById("comune").value;
+        if(databaseComuni[c]) document.getElementById("provincia").value = databaseComuni[c];
+    }
+
+    function resetErrori() {
+        document.getElementById("listaErrori").value = "";
+        document.getElementById("problemaSelect").value = "";
     }
 
     function populateErrorList() {
         const marca = document.getElementById("marcaSelect").value;
-        const listaErrori = document.getElementById("listaErrori");
-        
-        const currentSelected = listaErrori.value; // Salva la selezione attuale
-        listaErrori.innerHTML = ''; // Pulisce tutto
-        
-        const defaultOpt = document.createElement("option");
-        defaultOpt.value = "";
-        defaultOpt.textContent = "Scegli l'allarme...";
-        listaErrori.appendChild(defaultOpt);
-
-        const errori = dbErrori[marca] ? dbErrori[marca] : erroriGenerici;
-        
-        errori.forEach(err => {
-            const opt = document.createElement("option");
-            opt.value = err;
-            opt.textContent = err;
-            listaErrori.appendChild(opt);
-        });
-
-        // Tenta di ripristinare la selezione se esiste ancora
-        if(currentSelected) listaErrori.value = currentSelected;
-    }
-
-    function saveLocalStorage() {
-        ids.forEach(id => {
-            const el = document.getElementById(id);
-            if(el) localStorage.setItem(id, el.value);
-        });
-    }
-
-    function loadLocalStorage() {
-        ids.forEach(id => {
-            const savedValue = localStorage.getItem(id);
-            const el = document.getElementById(id);
-            if(savedValue !== null && el) el.value = savedValue;
+        const lista = document.getElementById("listaErrori");
+        lista.innerHTML = '<option value="">Scegli l\'allarme...</option>';
+        const err = dbErrori[marca] || erroriGenerici;
+        err.forEach(e => {
+            let o = document.createElement("option"); o.value = e; o.textContent = e; lista.appendChild(o);
         });
     }
 
     function updateUI() {
-        saveLocalStorage();
-        const f = {
-            cliente: document.getElementById("nomeCognome").value,
-            indirizzo: document.getElementById("indirizzo").value,
-            comune: document.getElementById("comune").value,
-            prov: document.getElementById("provincia").value,
-            tel: document.getElementById("telefono").value,
-            marca: document.getElementById("marcaSelect").value,
-            tipo: document.getElementById("tipoIntervento").value
-        };
+        const vals = {};
+        inputIds.forEach(id => {
+            const el = document.getElementById(id);
+            vals[id] = el.value;
+            localStorage.setItem(id, el.value);
+        });
 
-        document.getElementById("marcaAltroGroup").style.display = (f.marca === "Altro") ? "block" : "none";
-        const ps = document.getElementById("problemaSelect").value;
-        document.getElementById("erroriDisplayGroup").style.display = (ps === "Errore sul display") ? "block" : "none";
-        document.getElementById("altroBox").style.display = (ps === "Altro" || ps === "Errore sul display") ? "block" : "none";
-        document.getElementById("sezioneProblemi").style.display = (f.tipo === "Prima accensione") ? "none" : "block";
+        document.getElementById("marcaAltroGroup").style.display = (vals.marcaSelect === "Altro") ? "block" : "none";
+        document.getElementById("erroriDisplayGroup").style.display = (vals.problemaSelect === "Errore sul display") ? "block" : "none";
+        document.getElementById("altroBox").style.display = (vals.problemaSelect === "Altro" || vals.problemaSelect === "Errore sul display") ? "block" : "none";
+        document.getElementById("sezioneProblemi").style.display = (vals.tipoIntervento === "Prima accensione") ? "none" : "block";
 
-        let comp = 0;
-        if(f.cliente) comp++; if(f.indirizzo) comp++; if(f.comune) comp++; if(f.prov) comp++; if(f.tel) comp++; if(f.marca) comp++; if(f.tipo) comp++;
-        const percent = Math.round((comp / 7) * 100);
-        const bar = document.getElementById("progressBar");
-        bar.style.width = percent + "%";
-        bar.innerText = percent + "%";
+        let filled = 0;
+        const req = ["nomeCognome","comune","provincia","telefono","marcaSelect","tipoIntervento"];
+        req.forEach(r => { if(document.getElementById(r).value) filled++; });
+        const p = Math.round((filled / req.length) * 100);
+        document.getElementById("progressBar").style.width = p + "%";
+        document.getElementById("progressBar").innerText = p + "%";
 
-        const mFinale = f.marca === "Altro" ? document.getElementById("marcaAltro").value : f.marca;
-        const errScelto = document.getElementById("listaErrori").value;
-        const pFinale = ps === "Errore sul display" ? "Err: " + errScelto : ps;
+        const mFinal = vals.marcaSelect === "Altro" ? vals.marcaAltro : vals.marcaSelect;
+        const pFinal = vals.problemaSelect === "Errore sul display" ? "Err: " + vals.listaErrori : vals.problemaSelect;
 
         document.getElementById("previewContent").innerHTML = `
-            <b>Cliente:</b> ${f.cliente || '-'}<br>
-            <b>Località:</b> ${f.comune || '-'} (${f.prov || '-'})<br>
-            <b>Stufa:</b> ${mFinale || '-'} ${document.getElementById("modello").value ? '('+document.getElementById("modello").value+')' : ''}<br>
-            <b>Intervento:</b> ${f.tipo || '-'}<br>
-            ${f.tipo !== "Prima accensione" ? `<b>Problema:</b> ${pFinale || '-'}` : ''}
+            <b>Cliente:</b> ${vals.nomeCognome || '-'}<br>
+            <b>Città:</b> ${vals.comune || '-'} (${vals.provincia || '-'})<br>
+            <b>Stufa:</b> ${mFinal || '-'} ${vals.modello ? '('+vals.modello+')' : ''}<br>
+            <b>Intervento:</b> ${vals.tipoIntervento || '-'}<br>
+            ${vals.tipoIntervento !== "Prima accensione" ? `<b>Problema:</b> ${pFinal || '-'}` : ''}
         `;
     }
 
-    let messaggioGlobal = "";
+    function loadData() {
+        inputIds.forEach(id => {
+            const v = localStorage.getItem(id);
+            if(v) document.getElementById(id).value = v;
+        });
+    }
 
-    document.getElementById("btn").onclick = function() {
-        const c = document.getElementById("nomeCognome").value.trim();
-        const com = document.getElementById("comune").value.trim();
-        const prv = document.getElementById("provincia").value;
-        const m = document.getElementById("marcaSelect").value;
-        const ti = document.getElementById("tipoIntervento").value;
-
-        if(!c || !com || !prv || !m || !ti) {
-            alert("Compila tutti i campi obbligatori!"); return;
+    document.getElementById("btn").onclick = () => {
+        if(!document.getElementById("nomeCognome").value || !document.getElementById("marcaSelect").value) {
+            alert("Compila i campi principali!"); return;
         }
-
-        let prob = document.getElementById("problemaSelect").value;
-        if(prob === "Errore sul display") prob = "Errore: " + document.getElementById("listaErrori").value;
-        const note = document.getElementById("problemaNote").value;
-        const mod = document.getElementById("modello").value;
-        const marcaF = m === "Altro" ? document.getElementById("marcaAltro").value : m;
-
-        messaggioGlobal = `*RICHIESTA INTERVENTO*\n👤 *Cliente:* ${c}\n📍 *Indirizzo:* ${document.getElementById("indirizzo").value}\n🏙️ *Comune:* ${com} (${prv})\n📱 *Cell:* ${document.getElementById("telefono").value}\n🔥 *Stufa:* ${marcaF} ${mod ? "("+mod+")" : ""}\n🧰 *Intervento:* ${ti}\n${ti !== "Prima accensione" ? "🛠️ *Problema:* "+prob+(note ? " ("+note+")" : "")+"\n" : ""}📅 *Data:* ${document.getElementById("data").value}`;
-        
         document.getElementById("modal").style.display = "flex";
     };
 
-    document.getElementById("annulla").onclick = function() { document.getElementById("modal").style.display = "none"; };
-    
-    document.getElementById("conferma").onclick = function() {
-        window.open("https://wa.me/393394245508?text=" + encodeURIComponent(messaggioGlobal), "_blank");
+    document.getElementById("annulla").onclick = () => { document.getElementById("modal").style.display = "none"; };
+
+    document.getElementById("conferma").onclick = () => {
+        const v = {}; inputIds.forEach(id => v[id] = document.getElementById(id).value);
+        const mFinal = v.marcaSelect === "Altro" ? v.marcaAltro : v.marcaSelect;
+        let prob = v.problemaSelect;
+        if(prob === "Errore sul display") prob = "Errore: " + v.listaErrori;
+        
+        const msg = `*RICHIESTA ASSISTENZA*\n👤 *Cliente:* ${v.nomeCognome}\n📍 *Indirizzo:* ${v.indirizzo}\n🏙️ *Comune:* ${v.comune} (${v.provincia})\n📱 *Tel:* ${v.telefono}\n🔥 *Stufa:* ${mFinal} ${v.modello ? '('+v.modello+')' : ''}\n🧰 *Intervento:* ${v.tipoIntervento}\n${v.tipoIntervento !== 'Prima accensione' ? '🛠️ *Problema:* '+prob : ''}\n📝 *Note:* ${v.problemaNote}\n📅 *Data:* ${new Date().toLocaleDateString()}`;
+        
+        window.open("https://wa.me/393394245508?text=" + encodeURIComponent(msg), "_blank");
         document.getElementById("modal").style.display = "none";
-        localStorage.clear();
-        location.reload(); 
     };
 </script>
 
