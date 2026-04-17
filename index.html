@@ -71,7 +71,7 @@
         select option { background-color: #1a1a1a; color: white; }
         input:focus, select:focus, textarea:focus { outline: none; border-color: #ef4444; background: rgba(255, 255, 255, 0.15); }
 
-        /* BOTTONE WHATSAPP ANIMATO */
+        /* BUTTON WHATSAPP */
         button#btn { 
             position: relative; width: 100%; padding: 20px; margin-top: 15px; border: none; 
             border-radius: 15px; background: linear-gradient(135deg, #25d366 0%, #128c7e 100%); 
@@ -79,20 +79,7 @@
             letter-spacing: 0.5px; display: flex; align-items: center; justify-content: center; gap: 10px; 
             overflow: hidden; box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4); 
             transition: all 0.3s ease;
-            animation: pulse-green 2s infinite; /* Pulsazione continua */
-        }
-
-        /* Effetto Riflesso Luce (Shimmer) */
-        button#btn::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -60%;
-            width: 20%;
-            height: 200%;
-            background: rgba(255, 255, 255, 0.4);
-            transform: rotate(30deg);
-            animation: shimmer 3s infinite;
+            animation: pulse-green 2s infinite;
         }
 
         @keyframes shimmer {
@@ -107,7 +94,10 @@
             100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
         }
 
-        button#btn:active { transform: scale(0.95); }
+        button#btn::after {
+            content: ''; position: absolute; top: -50%; left: -60%; width: 20%; height: 200%;
+            background: rgba(255, 255, 255, 0.4); transform: rotate(30deg); animation: shimmer 3s infinite;
+        }
 
         .preview-box { margin-top: 10px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 12px; border: 1px dashed rgba(239, 68, 68, 0.5); font-size: 13px; line-height: 1.6; }
         .preview-title { color: #ef4444; font-size: 11px; text-transform: uppercase; margin-bottom: 8px; font-weight: bold; display: block; }
@@ -145,7 +135,24 @@
     </div>
 
     <div class="input-group">
-        <div class="input-icon"><span>📍</span><input type="text" id="indirizzo" placeholder="Indirizzo completo" oninput="updateUI()"></div>
+        <div class="input-icon"><span>📍</span><input type="text" id="indirizzo" placeholder="Indirizzo e n. civico" oninput="updateUI()"></div>
+    </div>
+
+    <div class="input-row">
+        <div class="input-icon">
+            <span>🏙️</span>
+            <input type="text" id="comune" list="listaComuni" placeholder="Comune" oninput="autoCompleteProvincia(); updateUI();">
+            <datalist id="listaComuni"></datalist>
+        </div>
+        <div class="input-icon">
+            <span>🌍</span>
+            <select id="provincia" onchange="updateUI()">
+                <option value="">Prov.</option>
+                <option value="NA">NA</option>
+                <option value="SA">SA</option>
+                <option value="AV">AV</option>
+            </select>
+        </div>
     </div>
 
     <div class="input-row">
@@ -252,38 +259,59 @@
 </div>
 
 <script>
-    const erroriGenerici = ["AL 1 - Blackout / Mancanza Rete", "AL 2 - Sonda Fumi Guasta", "AL 3 - Hot Fumi (Eccessivo Calore)", "AL 4 - Guasto Estrattore Fumi", "AL 5 - Mancata Accensione", "AL 6 - Mancanza Pellet / Fiamma", "AL 7 - Sicurezza Termica (Reset)", "AL 8 - Errore Depressione / Canna Fumaria", "AL 9 - Blocco Sistema Carico Pellet", "SERVICE"];
-
-    const dbErrori = {
-        "MCZ": ["A01 (MANCATA ACCENSIONE)", "A02 (Spegnimento anomalo fuoco)", "A03 (ALLARME SICUREZZA PELLET)", "A04 (ALLARME TEMP.FUMI)", "A05 (ALLARME PORTA APERTA/VENTO CANNA FUMARIA)", "A06 (ALLARME MANCANZA D'ARIA BRACIERE)", "A07 (PORTA APERTA)", "A08 (ALLARME MOTORE FUMI)", "A09 (ALLARME SONDA FUMI)", "A10 (ALLARME CANDELETTA GUASTA)", "A11 (ALLARME MOTORIDUTTORE PELLET)", "A12 (ALLARME RADIOCOMANDO)", "A13 (MANCATA COMUNICAZIONE COMPONENTE)", "A14 (ALLARME SENSORE ACTIVE)", "A17 (ALLARME TEMP.ACQUA)", "AL17 (ALLARME BLOCCO COCLEA)", "A18 (ALLARME CIRCOLATORE BLOCCATO)", "A19 (ALLARME SONDA ACQUA)", "A20 (ALLARME SONDA AUSILIARIA)", "A21 (ALLARME PRESSOSTATI SIC2)", "A22 (ALLARME SONDA AMBIENTE)", "A23 (MANCATA CHIUSURA BRACIERE)", "A24 (POMPA BLOCCATA)", "PELLET (ALLARME PELLET MANCANTE)", "SERVICE (MANUTENZIONE STRAORDINARIA)"],
-        "PALAZZETTI": ["E001 PANNELLO COMANDI DIFETTOSO", "E002 ERRORE COMUNICAZIONE TELECOMANDO", "E004 ERRORE COMUNICAZIONE", "E101 MANCATA ACCENSIONE", "E105 ERRORE SONDA TEMP.ACQUA", "E106 ERRORE SONDA PUFFER", "E108 ERRORE SICUREZZA", "E109 ERRORE PRESSIONE", "E110 ERRORE SONDA TEMPERATURA", "E111 ERRORE SONDA FUMI", "A001 LIVELLO PELLET BASSO", "A002 AVVISO MANUTENZIONE PROGRAMMATA", "A007 MALFUNZIONAMENTO SENSORE PRESSIONE", "CHIAVE ROSSA LAMPEGGIANTE (ERRORE SCHEDA)", "SCOPINA GIALLA CAMERA COMBUSTIONE SPORCA", "SIMBOLO GIALLO PELLET (PELLET ESAURITO)"],
-        "MORETTI DESIGN": ["ER 01 ALLARME TERMOSTATO SICUREZZA", "ER02 ALLARME OCCLUSIONE CANNA FUMARIA", "ER03 ALLARME TEMP. FUMI BASSA", "ER04 ALLARME TEMP. ACQUA ALTA", "ER05 ALLARME TEMP. FUMI ALTA", "ER07 ALLARME ENCODER", "ER08 ALLARME ENCODER", "ER09 ALLARME PRESSIONE ACQUA BASSA", "ER10 ALLARME PRESSIONE ACQUA ALTA", "ER11 ALLARME OROLOGIO INTERNO", "ER12 ALLARME ACCENSIONE FALLITA", "ER15 ALLARME BLACKOUT", "ER25 ANOMALIA PULIZIA BRACIERE", "ER39 ANOMALIA FLUSSIMETRO", "ER41 ANOMALIA FLUSSIMETRO", "ER44 PORTA/SPORTELLO PELLET APERTI", "PORT ALLARME PORTE O SPORTELLI APERTI", "SERV PULIZIA STRAORDINARIA", "NO SEGNALE ALLARME MANCATA COMUNICAZIONE SCHEDA/DISPLAY", "SOND CONTROLLO SONDE", "TRASFERIMENTO NON RIUSCITO ALLARME ASSENZA DI COMUNICAZIONE"],
-        "RAVELLI": ["AL01 BLACK-OUT", "AL02 SONDA FUMI", "AL03 SOVRATEMPERATURA FUMI", "AL04 ASPIRATORE GUASTO", "AL05 MANCATA ACCENSIONE", "AL06 PELLET ESAURITI", "AL07 SICUREZZA TERMICA", "AL08 MANCA DEPRESSIONE", "AL09 DEBIMETRO", "AL11 ANOMALIA FIAMMA", "AL12 ANOMALIA GIRI ESTRATTORE", "AL13 ANOMALIA FLUSSO", "AL14 FASE COCLEA", "AL15 TRIAC COCLEA"]
+    // Database Comuni principali e province
+    const databaseComuni = {
+        "Napoli": "NA", "Acerra": "NA", "Afragola": "NA", "Arzano": "NA", "Bacoli": "NA", "Caivano": "NA", "Cardito": "NA", "Casalnuovo di Napoli": "NA", "Casavatore": "NA", "Casoria": "NA", "Castellammare di Stabia": "NA", "Ercolano": "NA", "Frattamaggiore": "NA", "Giugliano in Campania": "NA", "Marano di Napoli": "NA", "Melito di Napoli": "NA", "Mugnano di Napoli": "NA", "Nola": "NA", "Ottaviano": "NA", "Pomigliano d'Arco": "NA", "Pompei": "NA", "Portici": "NA", "Pozzuoli": "NA", "Quarto": "NA", "San Giorgio a Cremano": "NA", "San Giuseppe Vesuviano": "NA", "Sant'Antimo": "NA", "Somma Vesuviana": "NA", "Torre Annunziata": "NA", "Torre del Greco": "NA", "Villaricca": "NA", "Volla": "NA",
+        "Salerno": "SA", "Angri": "SA", "Battipaglia": "SA", "Cava de' Tirreni": "SA", "Eboli": "SA", "Nocera Inferiore": "SA", "Nocera Superiore": "SA", "Pagani": "SA", "Pontecagnano Faiano": "SA", "Scafati": "SA", "Sarno": "SA", "Santomango Piemonte": "SA", "Baronissi": "SA", "Fisciano": "SA", "Mercato San Severino": "SA", "Castel San Giorgio": "SA", "Roccapiemonte": "SA", "Vietri sul Mare": "SA", "Amalfi": "SA", "Maiori": "SA", "Minori": "SA", "Positano": "SA",
+        "Avellino": "AV", "Ariano Irpino": "AV", "Atripalda": "AV", "Mercogliano": "AV", "Solofra": "AV", "Monteforte Irpino": "AV", "Montoro": "AV", "Grottaminarda": "AV", "Mirabella Eclano": "AV", "Montella": "AV", "Mugnano del Cardinale": "AV", "Baiano": "AV", "Avella": "AV", "Forino": "AV", "Serino": "AV"
     };
 
-    const ids = ["nomeCognome", "indirizzo", "telefono", "telefono_fisso", "marcaSelect", "marcaAltro", "modello", "tipoIntervento", "problemaSelect", "listaErrori", "problemaNote"];
+    const erroriGenerici = ["AL 1 - Blackout", "AL 2 - Sonda Fumi", "AL 3 - Hot Fumi", "AL 4 - Guasto Estrattore", "AL 5 - Mancata Accensione", "AL 6 - Mancanza Pellet", "AL 7 - Sicurezza Termica", "AL 8 - Depressione", "AL 9 - Blocco Coaugulo", "SERVICE"];
+
+    const dbErrori = {
+        "MCZ": ["A01 (ACCENSIONE)", "A02 (FUOCO)", "A03 (SICUREZZA)", "A04 (TEMP FUMI)", "A05 (PRESSIONE)", "A10 (CANDELETTA)", "SERVICE"],
+        "PALAZZETTI": ["E101 ACCENSIONE", "E108 SICUREZZA", "E109 PRESSIONE", "A002 MANUTENZIONE", "SCOPINA GIALLA"],
+        "MORETTI DESIGN": ["ER01 TERMOSTATO", "ER12 ACCENSIONE", "ER15 BLACKOUT", "SERV PULIZIA"],
+        "RAVELLI": ["AL01 BLACKOUT", "AL05 ACCENSIONE", "AL06 NO PELLET", "AL07 TERMICA", "AL08 DEPRESSIONE"]
+    };
+
+    const ids = ["nomeCognome", "indirizzo", "comune", "provincia", "telefono", "telefono_fisso", "marcaSelect", "marcaAltro", "modello", "tipoIntervento", "problemaSelect", "listaErrori", "problemaNote"];
 
     window.onload = function() {
         document.getElementById("data").value = new Date().toLocaleDateString('it-IT');
+        setupComuniList();
         loadLocalStorage();
         populateErrorList();
         updateUI();
     };
 
+    function setupComuniList() {
+        const dl = document.getElementById("listaComuni");
+        Object.keys(databaseComuni).sort().forEach(comune => {
+            const opt = document.createElement("option");
+            opt.value = comune;
+            dl.appendChild(opt);
+        });
+    }
+
+    function autoCompleteProvincia() {
+        const comuneInput = document.getElementById("comune").value;
+        const provinciaSelect = document.getElementById("provincia");
+        if(databaseComuni[comuneInput]) {
+            provinciaSelect.value = databaseComuni[comuneInput];
+        }
+    }
+
     function populateErrorList() {
         const marca = document.getElementById("marcaSelect").value;
         const listaErrori = document.getElementById("listaErrori");
         const errori = dbErrori[marca] ? dbErrori[marca] : erroriGenerici;
-        const currentSaved = localStorage.getItem("listaErrori");
-
         listaErrori.innerHTML = '<option value="">Seleziona l\'allarme...</option>';
         errori.forEach(err => {
             const opt = document.createElement("option");
-            opt.value = err;
-            opt.textContent = err;
+            opt.value = err; opt.textContent = err;
             listaErrori.appendChild(opt);
         });
-        if(currentSaved) listaErrori.value = currentSaved;
     }
 
     function saveLocalStorage() {
@@ -303,61 +331,55 @@
 
     function updateUI() {
         saveLocalStorage();
-        const fields = {
+        const f = {
             cliente: document.getElementById("nomeCognome").value,
             indirizzo: document.getElementById("indirizzo").value,
-            telefono: document.getElementById("telefono").value,
+            comune: document.getElementById("comune").value,
+            prov: document.getElementById("provincia").value,
+            tel: document.getElementById("telefono").value,
             marca: document.getElementById("marcaSelect").value,
             tipo: document.getElementById("tipoIntervento").value
         };
 
-        document.getElementById("marcaAltroGroup").style.display = (fields.marca === "Altro") ? "block" : "none";
-        const probSel = document.getElementById("problemaSelect").value;
-        document.getElementById("erroriDisplayGroup").style.display = (probSel === "Errore sul display") ? "block" : "none";
-        document.getElementById("altroBox").style.display = (probSel === "Altro" || probSel === "Errore sul display") ? "block" : "none";
-        document.getElementById("sezioneProblemi").style.display = (fields.tipo === "Prima accensione") ? "none" : "block";
+        document.getElementById("marcaAltroGroup").style.display = (f.marca === "Altro") ? "block" : "none";
+        const ps = document.getElementById("problemaSelect").value;
+        document.getElementById("erroriDisplayGroup").style.display = (ps === "Errore sul display") ? "block" : "none";
+        document.getElementById("altroBox").style.display = (ps === "Altro" || ps === "Errore sul display") ? "block" : "none";
+        document.getElementById("sezioneProblemi").style.display = (f.tipo === "Prima accensione") ? "none" : "block";
 
-        let completed = 0;
-        if(fields.cliente) completed++;
-        if(fields.indirizzo) completed++;
-        if(fields.telefono) completed++;
-        if(fields.marca) completed++;
-        if(fields.tipo) completed++;
-
-        const percent = Math.round((completed / 5) * 100);
+        // Progress bar (7 campi chiave ora)
+        let comp = 0;
+        if(f.cliente) comp++; if(f.indirizzo) comp++; if(f.comune) comp++; if(f.prov) comp++; if(f.tel) comp++; if(f.marca) comp++; if(f.tipo) comp++;
+        const percent = Math.round((comp / 7) * 100);
         const bar = document.getElementById("progressBar");
-        bar.style.width = percent + "%";
-        bar.innerText = percent + "%";
-        
-        if(percent < 50) bar.style.background = "#ef4444";
-        else if(percent < 100) bar.style.background = "#f59e0b";
-        else bar.style.background = "#22c55e";
+        bar.style.width = percent + "%"; bar.innerText = percent + "%";
+        bar.style.background = percent < 50 ? "#ef4444" : (percent < 100 ? "#f59e0b" : "#22c55e");
 
-        const marcaFinale = fields.marca === "Altro" ? document.getElementById("marcaAltro").value : fields.marca;
-        const modF = document.getElementById("modello").value;
-        const erroreScelto = document.getElementById("listaErrori").value;
-        const problemaFinale = probSel === "Errore sul display" ? "Errore: " + erroreScelto : probSel;
+        const mFinale = f.marca === "Altro" ? document.getElementById("marcaAltro").value : f.marca;
+        const pFinale = ps === "Errore sul display" ? "Err: " + document.getElementById("listaErrori").value : ps;
 
         document.getElementById("previewContent").innerHTML = `
-            <b>Cliente:</b> ${fields.cliente || '-'}<br>
-            <b>Cell:</b> ${fields.telefono || '-'}<br>
-            <b>Stufa:</b> ${marcaFinale || '-'} ${modF ? '('+modF+')' : ''}<br>
-            <b>Intervento:</b> ${fields.tipo || '-'}<br>
-            ${fields.tipo !== "Prima accensione" ? `<b>Problema:</b> ${problemaFinale || '-'}` : ''}
+            <b>Cliente:</b> ${f.cliente || '-'}<br>
+            <b>Località:</b> ${f.comune || '-'} (${f.prov || '-'})<br>
+            <b>Stufa:</b> ${mFinale || '-'} ${document.getElementById("modello").value ? '('+document.getElementById("modello").value+')' : ''}<br>
+            <b>Intervento:</b> ${f.tipo || '-'}<br>
+            ${f.tipo !== "Prima accensione" ? `<b>Problema:</b> ${pFinale || '-'}` : ''}
         `;
     }
 
     let messaggioGlobal = "";
 
     document.getElementById("btn").onclick = function() {
-        const cliente = document.getElementById("nomeCognome").value.trim();
-        const indirizzo = document.getElementById("indirizzo").value.trim();
-        const telefono = document.getElementById("telefono").value.trim();
-        const marca = document.getElementById("marcaSelect").value === "Altro" ? document.getElementById("marcaAltro").value : document.getElementById("marcaSelect").value;
-        const tipo = document.getElementById("tipoIntervento").value;
+        const c = document.getElementById("nomeCognome").value.trim();
+        const i = document.getElementById("indirizzo").value.trim();
+        const com = document.getElementById("comune").value.trim();
+        const prv = document.getElementById("provincia").value;
+        const t = document.getElementById("telefono").value.trim();
+        const m = document.getElementById("marcaSelect").value === "Altro" ? document.getElementById("marcaAltro").value : document.getElementById("marcaSelect").value;
+        const ti = document.getElementById("tipoIntervento").value;
 
-        if(!cliente || !indirizzo || !telefono || !marca || !tipo) {
-            alert("Compila i campi obbligatori!"); return;
+        if(!c || !i || !com || !prv || !t || !m || !ti) {
+            alert("Per favore, compila tutti i campi obbligatori (incluso Comune e Provincia)!"); return;
         }
 
         let prob = document.getElementById("problemaSelect").value;
@@ -365,7 +387,7 @@
         const note = document.getElementById("problemaNote").value;
         const mod = document.getElementById("modello").value;
 
-        messaggioGlobal = `*RICHIESTA INTERVENTO*\n*C.A.T. SERVICE*\n\n👤 *Cliente:* ${cliente}\n📍 *Indirizzo:* ${indirizzo}\n📱 *Cell:* ${telefono}\n🔥 *Stufa:* ${marca} ${mod ? "("+mod+")" : ""}\n🧰 *Intervento:* ${tipo}\n${tipo !== "Prima accensione" ? "🛠️ *Problema:* "+prob+(note ? " ("+note+")" : "")+"\n" : ""}📅 *Data:* ${document.getElementById("data").value}`;
+        messaggioGlobal = `*RICHIESTA INTERVENTO*\n*C.A.T. SERVICE*\n\n👤 *Cliente:* ${c}\n📍 *Indirizzo:* ${i}\n🏙️ *Comune:* ${com} (${prv})\n📱 *Cell:* ${t}\n🔥 *Stufa:* ${m} ${mod ? "("+mod+")" : ""}\n🧰 *Intervento:* ${ti}\n${ti !== "Prima accensione" ? "🛠️ *Problema:* "+prob+(note ? " ("+note+")" : "")+"\n" : ""}📅 *Data:* ${document.getElementById("data").value}`;
         
         document.getElementById("modal").style.display = "flex";
     };
@@ -376,8 +398,7 @@
         window.open("https://wa.me/393394245508?text=" + encodeURIComponent(messaggioGlobal), "_blank");
         document.getElementById("modal").style.display = "none";
         localStorage.clear();
-        ids.forEach(id => { if(document.getElementById(id)) document.getElementById(id).value = ""; });
-        updateUI();
+        location.reload(); 
     };
 </script>
 
