@@ -6,9 +6,51 @@
     <title>C.A.T. SERVICE - Prenotazione</title>
 
     <style>
-        /* TUTTO IL TUO CSS ORIGINALE INVARIATO */
+        /* --- SPLASH SCREEN STILE NETFLIX (AGGIUNTO) --- */
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.8s ease, visibility 0.8s;
+        }
+        .splash-content { text-align: center; width: 280px; }
+        .splash-logo {
+            width: 100%;
+            height: auto;
+            animation: netflixIntro 2s ease-out forwards;
+            filter: drop-shadow(0 0 15px rgba(239, 68, 68, 0.4));
+        }
+        @keyframes netflixIntro {
+            0% { transform: scale(0.7); opacity: 0; filter: brightness(0.5); }
+            50% { opacity: 1; filter: brightness(1.2); }
+            100% { transform: scale(1.1); opacity: 1; filter: brightness(1); }
+        }
+        .splash-bar-container {
+            width: 60%;
+            height: 3px;
+            background: rgba(255,255,255,0.1);
+            margin: 20px auto 0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .splash-bar-progress {
+            width: 0;
+            height: 100%;
+            background: #ef4444;
+            animation: loadingBar 2s linear forwards;
+        }
+        @keyframes loadingBar { 0% { width: 0%; } 100% { width: 100%; } }
+        .splash-hidden { opacity: 0 !important; visibility: hidden !important; }
+
+        /* --- CSS ORIGINALE (VERIFICATO) --- */
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-        
         body { 
             background: #200505; 
             background: radial-gradient(circle at 50% 50%, #450a0a, #000000); 
@@ -19,7 +61,6 @@
             padding: 80px 15px 40px 15px; 
             color: #fff; 
         }
-
         .navbar { 
             position: fixed; top: 0; left: 0; width: 100%; height: 60px; 
             background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px); 
@@ -29,73 +70,30 @@
         .nav-content { display: flex; align-items: center; gap: 12px; }
         .mini-logo { height: 35px; width: auto; filter: drop-shadow(0 0 5px #ef4444); }
         .nav-title { font-weight: bold; font-size: 14px; letter-spacing: 1px; color: #ef4444; text-transform: uppercase; }
-
         .container { 
             width: 100%; max-width: 450px; background: rgba(255, 255, 255, 0.07); 
             backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); 
             border-radius: 20px; padding: 25px; border: 1px solid rgba(239, 68, 68, 0.3); 
             animation: openingGlow 1.2s ease-out forwards; 
         }
-        
-        @keyframes openingGlow { 
-            0% { opacity: 0; transform: translateY(20px); } 
-            100% { opacity: 1; transform: translateY(0); box-shadow: 0 15px 35px rgba(0,0,0,0.6); } 
-        }
-
+        @keyframes openingGlow { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); box-shadow: 0 15px 35px rgba(0,0,0,0.6); } }
         .logo-container { text-align: center; margin-bottom: 25px; }
-        .logo-img { 
-            width: 220px; max-width: 100%; height: auto; margin-bottom: 20px; 
-            filter: drop-shadow(0 0 12px rgba(239, 68, 68, 0.5)); 
-            animation: logoPulse 3s infinite ease-in-out; 
-        }
+        .logo-img { width: 220px; max-width: 100%; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 12px rgba(239, 68, 68, 0.5)); animation: logoPulse 3s infinite ease-in-out; }
         @keyframes logoPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
-
         .progress-container { width: 100%; background: rgba(255,255,255,0.1); height: 20px; border-radius: 10px; margin-bottom: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); }
         .progress-bar { height: 100%; width: 0%; background: #ef4444; transition: width 0.5s ease; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; color: white; }
-
         .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
         .input-group { margin-bottom: 15px; width: 100%; }
         label { display: block; font-size: 11px; color: #ef4444; text-transform: uppercase; margin-bottom: 5px; padding-left: 5px; font-weight: bold; }
         .input-icon { position: relative; display: flex; align-items: center; width: 100%; }
         .input-icon span { position: absolute; left: 12px; font-size: 18px; z-index: 5; pointer-events: none; }
-
-        input, select, textarea { 
-            width: 100%; padding: 12px 15px 12px 42px; background: rgba(255, 255, 255, 0.1); 
-            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; color: #fff; 
-            font-size: 16px; transition: 0.3s; 
-        }
+        input, select, textarea { width: 100%; padding: 12px 15px 12px 42px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; color: #fff; font-size: 16px; transition: 0.3s; }
         select option { background-color: #1a1a1a; color: white; }
         input:focus, select:focus, textarea:focus { outline: none; border-color: #ef4444; background: rgba(255, 255, 255, 0.15); }
-
-        button#btn { 
-            position: relative; width: 100%; padding: 20px; margin-top: 15px; border: none; 
-            border-radius: 15px; background: linear-gradient(135deg, #25d366 0%, #128c7e 100%); 
-            color: white; font-size: 15px; font-weight: 900; cursor: pointer; text-transform: uppercase; 
-            letter-spacing: 0.5px; display: flex; align-items: center; justify-content: center; gap: 10px; 
-            overflow: hidden; box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4); 
-            transition: all 0.3s ease;
-            animation: pulse-green 2s infinite;
-        }
-
-        button#btn::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -60%;
-            width: 20%;
-            height: 200%;
-            background: rgba(255, 255, 255, 0.4);
-            transform: rotate(30deg);
-            animation: shimmer 3s infinite;
-        }
-
+        button#btn { position: relative; width: 100%; padding: 20px; margin-top: 15px; border: none; border-radius: 15px; background: linear-gradient(135deg, #25d366 0%, #128c7e 100%); color: white; font-size: 15px; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; justify-content: center; gap: 10px; overflow: hidden; box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4); transition: all 0.3s ease; animation: pulse-green 2s infinite; }
+        button#btn::after { content: ''; position: absolute; top: -50%; left: -60%; width: 20%; height: 200%; background: rgba(255, 255, 255, 0.4); transform: rotate(30deg); animation: shimmer 3s infinite; }
         @keyframes shimmer { 0% { left: -60%; } 20% { left: 120%; } 100% { left: 120%; } }
-        @keyframes pulse-green {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
-            70% { transform: scale(1.02); box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
-        }
-
+        @keyframes pulse-green { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); } 70% { transform: scale(1.02); box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
         button#btn:active { transform: scale(0.95); }
         .preview-box { margin-top: 10px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 12px; border: 1px dashed rgba(239, 68, 68, 0.5); font-size: 13px; line-height: 1.6; }
         .preview-title { color: #ef4444; font-size: 11px; text-transform: uppercase; margin-bottom: 8px; font-weight: bold; display: block; }
@@ -108,6 +106,15 @@
     </style>
 </head>
 <body>
+
+<div id="splash-screen">
+    <div class="splash-content">
+        <img src="logo.PNG" alt="CAT Service" class="splash-logo" onerror="this.src='logo.png';">
+        <div class="splash-bar-container">
+            <div class="splash-bar-progress"></div>
+        </div>
+    </div>
+</div>
 
 <nav class="navbar">
     <div class="nav-content">
@@ -254,12 +261,14 @@
 </div>
 
 <script>
-    // DATABASE CITTA (NAPOLI, SALERNO, AVELLINO)
-    const comuniDB = {
-        "Napoli":"NA","Acerra":"NA","Afragola":"NA","Agerola":"NA","Anacapri":"NA","Arzano":"NA","Bacoli":"NA","Barano d'Ischia":"NA","Boscoreale":"NA","Boscotrecase":"NA","Brusciano":"NA","Caivano":"NA","Calvizzano":"NA","Camposano":"NA","Capri":"NA","Carbonara di Nola":"NA","Cardito":"NA","Casalnuovo di Napoli":"NA","Casamarciano":"NA","Casamicciola Terme":"NA","Casandrino":"NA","Casavatore":"NA","Casola di Napoli":"NA","Casoria":"NA","Castellammare di Stabia":"NA","Castello di Cisterna":"NA","Cercola":"NA","Cicciano":"NA","Cimitile":"NA","Comiziano":"NA","Crispano":"NA","Ercolano":"NA","Forio":"NA","Frattamaggiore":"NA","Frattaminore":"NA","Giugliano in Campania":"NA","Gragnano":"NA","Grumo Nevano":"NA","Ischia":"NA","Lacco Ameno":"NA","Lettere":"NA","Liveri":"NA","Marano di Napoli":"NA","Mariglianella":"NA","Marigliano":"NA","Massa Lubrense":"NA","Massa di Somma":"NA","Melito di Napoli":"NA","Meta":"NA","Monte di Procida":"NA","Mugnano di Napoli":"NA","Nola":"NA","Ottaviano":"NA","Palma Campania":"NA","Piano di Sorrento":"NA","Pimonte":"NA","Poggiomarino":"NA","Pollena Trocchia":"NA","Pomigliano d'Arco":"NA","Pompei":"NA","Portici":"NA","Pozzuoli":"NA","Procida":"NA","Qualiano":"NA","Quarto":"NA","Roccarainola":"NA","San Gennaro Vesuviano":"NA","San Giorgio a Cremano":"NA","San Giuseppe Vesuviano":"NA","San Paolo Bel Sito":"NA","San Sebastiano al Vesuvio":"NA","San Vitaliano":"NA","Sant'Agnello":"NA","Sant'Anastasia":"NA","Sant'Antimo":"NA","Sant'Antonio Abate":"NA","Santa Maria la Carità":"NA","Saviano":"NA","Scisciano":"NA","Serrara Fontana":"NA","Somma Vesuviana":"NA","Sorrento":"NA","Striano":"NA","Terzigno":"NA","Torre Annunziata":"NA","Torre del Greco":"NA","Trecase":"NA","Tufino":"NA","Vico Equense":"NA","Villaricca":"NA","Visciano":"NA","Volla":"NA",
-        "Salerno":"SA","Acerno":"SA","Agropoli":"SA","Albanella":"SA","Alfano":"SA","Altavilla Silentina":"SA","Amalfi":"SA","Angri":"SA","Aquara":"SA","Ascea":"SA","Atena Lucana":"SA","Atrani":"SA","Auletta":"SA","Baronissi":"SA","Battipaglia":"SA","Bellizzi":"SA","Bellosguardo":"SA","Bracigliano":"SA","Buccino":"SA","Buonabitacolo":"SA","Caggiano":"SA","Calvanico":"SA","Camerota":"SA","Campagna":"SA","Campora":"SA","Cannalonga":"SA","Capaccio Paestum":"SA","Casal Velino":"SA","Casalbuono":"SA","Casaletto Spartano":"SA","Caselle in Pittari":"SA","Castel San Giorgio":"SA","Castel San Lorenzo":"SA","Castelcivita":"SA","Castellabate":"SA","Castelnuovo Cilento":"SA","Castelnuovo di Conza":"SA","Castiglione del Genovesi":"SA","Cava de' Tirreni":"SA","Celle di Bulgheria":"SA","Centola":"SA","Ceraso":"SA","Cetara":"SA","Cicerale":"SA","Contursi Terme":"SA","Corbara":"SA","Corleto Monforte":"SA","Cuccaro Vetere":"SA","Eboli":"SA","Felitto":"SA","Fisciano":"SA","Furore":"SA","Futani":"SA","Giffoni Sei Casali":"SA","Giffoni Valle Piana":"SA","Gioi":"SA","Giungano":"SA","Ispani":"SA","Laureana Cilento":"SA","Laurino":"SA","Laurito":"SA","Laviano":"SA","Lustra":"SA","Magliano Vetere":"SA","Maiori":"SA","Mercato San Severino":"SA","Minori":"SA","Moio della Civitella":"SA","Montano Antilia":"SA","Monte San Giacomo":"SA","Montecorice":"SA","Montecorvino Pugliano":"SA","Montecorvino Rovella":"SA","Monteforte Cilento":"SA","Montesano sulla Marcellana":"SA","Morigerati":"SA","Nocera Inferiore":"SA","Nocera Superiore":"SA","Novi Velia":"SA","Ogliastro Cilento":"SA","Olevano sul Tusciano":"SA","Oliveto Citra":"SA","Omignano":"SA","Orria":"SA","Ottati":"SA","Padula":"SA","Pagani":"SA","Palomonte":"SA","Pellezzano":"SA","Perdifumo":"SA","Perito":"SA","Pertosa":"SA","Petina":"SA","Piaggine":"SA","Pisciotta":"SA","Polla":"SA","Pollica":"SA","Pontecagnano Faiano":"SA","Positano":"SA","Postiglione":"SA","Praiano":"SA","Prignano Cilento":"SA","Ravello":"SA","Ricigliano":"SA","Roccadaspide":"SA","Roccagloriosa":"SA","Roccapiemonte":"SA","Rofrano":"SA","Romagnano al Monte":"SA","Roscigno":"SA","Rutino":"SA","Sacco":"SA","Sala Consilina":"SA","Salento":"SA","San Cipriano Picentino":"SA","San Giovanni a Piro":"SA","San Gregorio Magno":"SA","San Mango Piemonte":"SA","San Marzano sul Sarno":"SA","San Mauro Cilento":"SA","San Mauro La Bruca":"SA","San Pietro al Tanagro":"SA","San Rufo":"SA","San Valentino Torio":"SA","Sant'Angelo a Fasanella":"SA","Sant'Arsenio":"SA","Sant'Egidio del Monte Albino":"SA","Santa Marina":"SA","Santomenna":"SA","Sanza":"SA","Sapri":"SA","Sarno":"SA","Sassano":"SA","Scafati":"SA","Scala":"SA","Serramezzana":"SA","Serre":"SA","Sessa Cilento":"SA","Siano":"SA","Sicignano degli Alburni":"SA","Stella Cilento":"SA","Stio":"SA","Teggiano":"SA","Torchiara":"SA","Torre Orsaia":"SA","Tortorella":"SA","Tramonti":"SA","Trentinara":"SA","Valle dell'Angelo":"SA","Vallo della Lucania":"SA","Valva":"SA","Vibonati":"SA","Vietri sul Mare":"SA",
-        "Avellino":"AV","Aiello del Sabato":"AV","Altavilla Irpina":"AV","Andretta":"AV","Aquilonia":"AV","Ariano Irpino":"AV","Atripalda":"AV","Avella":"AV","Bagnoli Irpino":"AV","Baiano":"AV","Bisaccia":"AV","Bonito":"AV","Cairano":"AV","Calabritto":"AV","Calitri":"AV","Candida":"AV","Caposele":"AV","Capriglia Irpina":"AV","Carife":"AV","Casalbore":"AV","Cassano Irpino":"AV","Castel Baronia":"AV","Castelfranci":"AV","Castelvetere sul Calore":"AV","Cervinara":"AV","Cesinali":"AV","Chianche":"AV","Chiusano di San Domenico":"AV","Contrada":"AV","Conza della Campania":"AV","Domicella":"AV","Flumeri":"AV","Fontanarosa":"AV","Forino":"AV","Frigento":"AV","Gesualdo":"AV","Greci":"AV","Grottaminarda":"AV","Grottolella":"AV","Guardia Lombardi":"AV","Lacedonia":"AV","Lapio":"AV","Lauro":"AV","Lioni":"AV","Luogosano":"AV","Manocalzati":"AV","Marzano di Nola":"AV","Melito Irpino":"AV","Mercogliano":"AV","Mirabella Eclano":"AV","Montaguto":"AV","Montecalvo Irpino":"AV","Montefalcione":"AV","Monteforte Irpino":"AV","Montefredane":"AV","Montefusco":"AV","Montella":"AV","Montemarano":"AV","Montemiletto":"AV","Monteverde":"AV","Montoro":"AV","Morra De Sanctis":"AV","Moschiano":"AV","Mugnano del Cardinale":"AV","Nusco":"AV","Ospedaletto d'Alpinolo":"AV","Pago del Vallo di Lauro":"AV","Parolise":"AV","Paternopoli":"AV","Petruuro Irpino":"AV","Pietradefusi":"AV","Pietrastornina":"AV","Prata di Principato Ultra":"AV","Pratola Serra":"AV","Quadrelle":"AV","Quindici":"AV","Rocca San Felice":"AV","Roccabascerana":"AV","Rotondi":"AV","Salza Irpina":"AV","San Mango sul Calore":"AV","San Martino Valle Caudina":"AV","San Michele di Serino":"AV","San Nicola Baronia":"AV","San Potito Ultra":"AV","San Sossio Baronia":"AV","Sant'Andrea di Conza":"AV","Sant'Angelo a Scala":"AV","Sant'Angelo all'Esca":"AV","Sant'Angelo dei Lombardi":"AV","Santa Lucia di Serino":"AV","Santa Paolina":"AV","Santo Stefano del Sole":"AV","Savignano Irpino":"AV","Scampitella":"AV","Senerchia":"AV","Serino":"AV","Sirignano":"AV","Solofra":"AV","Sorgibo":"AV","Sperone":"AV","Sturno":"AV","Summonte":"AV","Taurano":"AV","Taurasi":"AV","Teora":"AV","Torella dei Lombardi":"AV","Torre Le Nocelle":"AV","Torrioni":"AV","Trevico":"AV","Tufo":"AV","Vallata":"AV","Vallesaccarda":"AV","Venticano":"AV","Villamaina":"AV","Villanova del Battista":"AV","Volturara Irpina":"AV","Zungoli":"AV"
-    };
+    // GESTIONE SPLASH SCREEN
+    window.addEventListener('load', function() {
+        const splash = document.getElementById('splash-screen');
+        setTimeout(() => { splash.classList.add('splash-hidden'); }, 2500);
+    });
+
+    // DATABASE E LOGICA ORIGINALE
+    const comuniDB = {"Napoli":"NA","Acerra":"NA","Afragola":"NA","Agerola":"NA","Anacapri":"NA","Arzano":"NA","Bacoli":"NA","Barano d'Ischia":"NA","Boscoreale":"NA","Boscotrecase":"NA","Brusciano":"NA","Caivano":"NA","Calvizzano":"NA","Camposano":"NA","Capri":"NA","Carbonara di Nola":"NA","Cardito":"NA","Casalnuovo di Napoli":"NA","Casamarciano":"NA","Casamicciola Terme":"NA","Casandrino":"NA","Casavatore":"NA","Casola di Napoli":"NA","Casoria":"NA","Castellammare di Stabia":"NA","Castello di Cisterna":"NA","Cercola":"NA","Cicciano":"NA","Cimitile":"NA","Comiziano":"NA","Crispano":"NA","Ercolano":"NA","Forio":"NA","Frattamaggiore":"NA","Frattaminore":"NA","Giugliano in Campania":"NA","Gragnano":"NA","Grumo Nevano":"NA","Ischia":"NA","Lacco Ameno":"NA","Lettere":"NA","Liveri":"NA","Marano di Napoli":"NA","Mariglianella":"NA","Marigliano":"NA","Massa Lubrense":"NA","Massa di Somma":"NA","Melito di Napoli":"NA","Meta":"NA","Monte di Procida":"NA","Mugnano di Napoli":"NA","Nola":"NA","Ottaviano":"NA","Palma Campania":"NA","Piano di Sorrento":"NA","Pimonte":"NA","Poggiomarino":"NA","Pollena Trocchia":"NA","Pomigliano d'Arco":"NA","Pompei":"NA","Portici":"NA","Pozzuoli":"NA","Procida":"NA","Qualiano":"NA","Quarto":"NA","Roccarainola":"NA","San Gennaro Vesuviano":"NA","San Giorgio a Cremano":"NA","San Giuseppe Vesuviano":"NA","San Paolo Bel Sito":"NA","San Sebastiano al Vesuvio":"NA","San Vitaliano":"NA","Sant'Agnello":"NA","Sant'Anastasia":"NA","Sant'Antimo":"NA","Sant'Antonio Abate":"NA","Santa Maria la Carità":"NA","Saviano":"NA","Scisciano":"NA","Serrara Fontana":"NA","Somma Vesuviana":"NA","Sorrento":"NA","Striano":"NA","Terzigno":"NA","Torre Annunziata":"NA","Torre del Greco":"NA","Trecase":"NA","Tufino":"NA","Vico Equense":"NA","Villaricca":"NA","Visciano":"NA","Volla":"NA","Salerno":"SA","Acerno":"SA","Agropoli":"SA","Albanella":"SA","Alfano":"SA","Altavilla Silentina":"SA","Amalfi":"SA","Angri":"SA","Aquara":"SA","Ascea":"SA","Atena Lucana":"SA","Atrani":"SA","Auletta":"SA","Baronissi":"SA","Battipaglia":"SA","Bellizzi":"SA","Bellosguardo":"SA","Bracigliano":"SA","Buccino":"SA","Buonabitacolo":"SA","Caggiano":"SA","Calvanico":"SA","Camerota":"SA","Campagna":"SA","Campora":"SA","Cannalonga":"SA","Capaccio Paestum":"SA","Casal Velino":"SA","Casalbuono":"SA","Casaletto Spartano":"SA","Caselle in Pittari":"SA","Castel San Giorgio":"SA","Castel San Lorenzo":"SA","Castelcivita":"SA","Castellabate":"SA","Castelnuovo Cilento":"SA","Castelnuovo di Conza":"SA","Castiglione del Genovesi":"SA","Cava de' Tirreni":"SA","Celle di Bulgheria":"SA","Centola":"SA","Ceraso":"SA","Cetara":"SA","Cicerale":"SA","Contursi Terme":"SA","Corbara":"SA","Corleto Monforte":"SA","Cuccaro Vetere":"SA","Eboli":"SA","Felitto":"SA","Fisciano":"SA","Furore":"SA","Futani":"SA","Giffoni Sei Casali":"SA","Giffoni Valle Piana":"SA","Gioi":"SA","Giungano":"SA","Ispani":"SA","Laureana Cilento":"SA","Laurino":"SA","Laurito":"SA","Laviano":"SA","Lustra":"SA","Magliano Vetere":"SA","Maiori":"SA","Mercato San Severino":"SA","Minori":"SA","Moio della Civitella":"SA","Montano Antilia":"SA","Monte San Giacomo":"SA","Montecorice":"SA","Montecorvino Pugliano":"SA","Montecorvino Rovella":"SA","Monteforte Cilento":"SA","Montesano sulla Marcellana":"SA","Morigerati":"SA","Nocera Inferiore":"SA","Nocera Superiore":"SA","Novi Velia":"SA","Ogliastro Cilento":"SA","Olevano sul Tusciano":"SA","Oliveto Citra":"SA","Omignano":"SA","Orria":"SA","Ottati":"SA","Padula":"SA","Pagani":"SA","Palomonte":"SA","Pellezzano":"SA","Perdifumo":"SA","Perito":"SA","Pertosa":"SA","Petina":"SA","Piaggine":"SA","Pisciotta":"SA","Polla":"SA","Pollica":"SA","Pontecagnano Faiano":"SA","Positano":"SA","Postiglione":"SA","Praiano":"SA","Prignano Cilento":"SA","Ravello":"SA","Ricigliano":"SA","Roccadaspide":"SA","Roccagloriosa":"SA","Roccapiemonte":"SA","Rofrano":"SA","Romagnano al Monte":"SA","Roscigno":"SA","Rutino":"SA","Sacco":"SA","Sala Consilina":"SA","Salento":"SA","San Cipriano Picentino":"SA","San Giovanni a Piro":"SA","San Gregorio Magno":"SA","San Mango Piemonte":"SA","San Marzano sul Sarno":"SA","San Mauro Cilento":"SA","San Mauro La Bruca":"SA","San Pietro al Tanagro":"SA","San Rufo":"SA","San Valentino Torio":"SA","Sant'Angelo a Fasanella":"SA","Sant'Arsenio":"SA","Sant'Egidio del Monte Albino":"SA","Santa Marina":"SA","Santomenna":"SA","Sanza":"SA","Sapri":"SA","Sarno":"SA","Sassano":"SA","Scafati":"SA","Scala":"SA","Serramezzana":"SA","Serre":"SA","Sessa Cilento":"SA","Siano":"SA","Sicignano degli Alburni":"SA","Stella Cilento":"SA","Stio":"SA","Teggiano":"SA","Torchiara":"SA","Torre Orsaia":"SA","Tortorella":"SA","Tramonti":"SA","Trentinara":"SA","Valle dell'Angelo":"SA","Vallo della Lucania":"SA","Valva":"SA","Vibonati":"SA","Vietri sul Mare":"SA","Avellino":"AV","Aiello del Sabato":"AV","Altavilla Irpina":"AV","Andretta":"AV","Aquilonia":"AV","Ariano Irpino":"AV","Atripalda":"AV","Avella":"AV","Bagnoli Irpino":"AV","Baiano":"AV","Bisaccia":"AV","Bonito":"AV","Cairano":"AV","Calabritto":"AV","Calitri":"AV","Candida":"AV","Caposele":"AV","Capriglia Irpina":"AV","Carife":"AV","Casalbore":"AV","Cassano Irpino":"AV","Castel Baronia":"AV","Castelfranci":"AV","Castelvetere sul Calore":"AV","Cervinara":"AV","Cesinali":"AV","Chianche":"AV","Chiusano di San Domenico":"AV","Contrada":"AV","Conza della Campania":"AV","Domicella":"AV","Flumeri":"AV","Fontanarosa":"AV","Forino":"AV","Frigento":"AV","Gesualdo":"AV","Greci":"AV","Grottaminarda":"AV","Grottolella":"AV","Guardia Lombardi":"AV","Lacedonia":"AV","Lapio":"AV","Lauro":"AV","Lioni":"AV","Luogosano":"AV","Manocalzati":"AV","Marzano di Nola":"AV","Melito Irpino":"AV","Mercogliano":"AV","Mirabella Eclano":"AV","Montaguto":"AV","Montecalvo Irpino":"AV","Montefalcione":"AV","Monteforte Irpino":"AV","Montefredane":"AV","Montefusco":"AV","Montella":"AV","Montemarano":"AV","Montemiletto":"AV","Monteverde":"AV","Montoro":"AV","Morra De Sanctis":"AV","Moschiano":"AV","Mugnano del Cardinale":"AV","Nusco":"AV","Ospedaletto d'Alpinolo":"AV","Pago del Vallo di Lauro":"AV","Parolise":"AV","Paternopoli":"AV","Petruuro Irpino":"AV","Pietradefusi":"AV","Pietrastornina":"AV","Prata di Principato Ultra":"AV","Pratola Serra":"AV","Quadrelle":"AV","Quindici":"AV","Rocca San Felice":"AV","Roccabascerana":"AV","Rotondi":"AV","Salza Irpina":"AV","San Mango sul Calore":"AV","San Martino Valle Caudina":"AV","San Michele di Serino":"AV","San Nicola Baronia":"AV","San Potito Ultra":"AV","San Sossio Baronia":"AV","Sant'Andrea di Conza":"AV","Sant'Angelo a Scala":"AV","Sant'Angelo all'Esca":"AV","Sant'Angelo dei Lombardi":"AV","Santa Lucia di Serino":"AV","Santa Paolina":"AV","Santo Stefano del Sole":"AV","Savignano Irpino":"AV","Scampitella":"AV","Senerchia":"AV","Serino":"AV","Sirignano":"AV","Solofra":"AV","Sorgibo":"AV","Sperone":"AV","Sturno":"AV","Summonte":"AV","Taurano":"AV","Taurasi":"AV","Teora":"AV","Torella dei Lombardi":"AV","Torre Le Nocelle":"AV","Torrioni":"AV","Trevico":"AV","Tufo":"AV","Vallata":"AV","Vallesaccarda":"AV","Venticano":"AV","Villamaina":"AV","Villanova del Battista":"AV","Volturara Irpina":"AV","Zungoli":"AV"};
 
     const erroriGenerici = ["AL 1 - Blackout / Mancanza Rete", "AL 2 - Sonda Fumi Guasta", "AL 3 - Hot Fumi (Eccessivo Calore)", "AL 4 - Guasto Estrattore Fumi", "AL 5 - Mancata Accensione", "AL 6 - Mancanza Pellet / Fiamma", "AL 7 - Sicurezza Termica (Reset)", "AL 8 - Errore Depressione / Canna Fumaria", "AL 9 - Blocco Sistema Carico Pellet", "SERVICE"];
 
@@ -267,32 +276,23 @@
         "MCZ": ["A01 (MANCATA ACCENSIONE)", "A02 (Spegnimento anomalo fuoco)", "A03 (ALLARME SICUREZZA PELLET)", "A04 (ALLARME TEMP.FUMI)", "A05 (ALLARME PORTA APERTA/VENTO CANNA FUMARIA)", "A06 (ALLARME MANCANZA D'ARIA BRACIERE)", "A07 (PORTA APERTA)", "A08 (ALLARME MOTORE FUMI)", "A09 (ALLARME SONDA FUMI)", "A10 (ALLARME CANDELETTA GUASTA)", "A11 (ALLARME MOTORIDUTTORE PELLET)", "A12 (ALLARME RADIOCOMANDO)", "A13 (MANCATA COMUNICAZIONE COMPONENTE)", "A14 (ALLARME SENSORE ACTIVE)", "A17 (ALLARME TEMP.ACQUA)", "AL17 (ALLARME BLOCCO COCLEA)", "A18 (ALLARME CIRCOLATORE BLOCCATO)", "A19 (ALLARME SONDA ACQUA)", "A20 (ALLARME SONDA AUSILIARIA)", "A21 (ALLARME PRESSOSTATI SIC2)", "A22 (ALLARME SONDA AMBIENTE)", "A23 (MANCATA CHIUSURA BRACIERE)", "A24 (POMPA BLOCCATA)", "PELLET (ALLARME PELLET MANCANTE)", "SERVICE (MANUTENZIONE STRAORDINARIA)"],
         "PALAZZETTI": ["E001 PANNELLO COMANDI DIFETTOSO", "E002 ERRORE COMUNICAZIONE TELECOMANDO", "E004 ERRORE COMUNICAZIONE", "E101 MANCATA ACCENSIONE", "E105 ERRORE SONDA TEMP.ACQUA", "E106 ERRORE SONDA PUFFER", "E108 ERRORE SICUREZZA", "E109 ERRORE PRESSIONE", "E110 ERRORE SONDA TEMPERATURA", "E111 ERRORE SONDA FUMI", "A001 LIVELLO PELLET BASSO", "A002 AVVISO MANUTENZIONE PROGRAMMATA", "A007 MALFUNZIONAMENTO SENSORE PRESSIONE", "CHIAVE ROSSA LAMPEGGIANTE (ERRORE SCHEDA)", "SCOPINA GIALLA CAMERA COMBUSTIONE SPORCA", "SIMBOLO GIALLO PELLET (PELLET ESAURITO)"],
         "MORETTI DESIGN": ["ER 01 ALLARME TERMOSTATO SICUREZZA", "ER02 ALLARME OCCLUSIONE CANNA FUMARIA", "ER03 ALLARME TEMP. FUMI BASSA", "ER04 ALLARME TEMP. ACQUA ALTA", "ER05 ALLARME TEMP. FUMI ALTA", "ER07 ALLARME ENCODER", "ER08 ALLARME ENCODER", "ER09 ALLARME PRESSIONE ACQUA BASSA", "ER10 ALLARME PRESSIONE ACQUA ALTA", "ER11 ALLARME OROLOGIO INTERNO", "ER12 ALLARME ACCENSIONE FALLITA", "ER15 ALLARME BLACKOUT", "ER25 ANOMALIA PULIZIA BRACIERE", "ER39 ANOMALIA FLUSSIMETRO", "ER41 ANOMALIA FLUSSIMETRO", "ER44 PORTA/SPORTELLO PELLET APERTI", "PORT ALLARME PORTE O SPORTELLI APERTI", "SERV PULIZIA STRAORDINARIA", "NO SEGNALE ALLARME MANCATA COMUNICAZIONE SCHEDA/DISPLAY", "SOND CONTROLLO SONDE", "TRASFERIMENTO NON RIUSCITO ALLARME ASSENZA DI COMUNICAZIONE"],
-        "RAVELLI": ["AL01 BLACK-OUT", "AL02 SONDA FUMI", "AL03 SOVRATEMPERATURA FUMI", "AL04 ASPIRATORE GUASTO", "AL05 MANCATA ACCENSIONE", "AL06 PELLET ESAURITI", "AL07 SICUREZZA TERMICA", "AL08 MANCA DEPRESSIONE", "AL09 DEBIMETRO", "AL11 ANOMALIA FIAMMA", "AL12 ANOMALIA GIRI ESTRATTORE", "AL13 ANOMALIA FLUSSO", "AL14 FASE COCLEA", "AL15 TRIAC COCLEA"]
+        "RAVELLI": ["AL01 BLACK-OUT", "AL02 SONDA FUMI", "AL03 SOVRATEMPERATURA FUMI", "AL04 ASPIRATORE GUASTO", "AL05 MANCATA ACCENSIONE", "AL06 PELLET ESAURITI", "AL07 SICUREZZA TERMICA", "AL08 MANCA DEPRESSIONE", "AL09 DEBIMETRO", "AL11 ANOMALIA FIAMMA", "AL12 ANOMALIA GIRI ESTRATTORE", "AL13 ANOMALIA FLUSSU", "AL14 FASE COCLEA", "AL15 TRIAC COCLEA"]
     };
 
     const ids = ["nomeCognome", "indirizzo", "comune", "provincia", "telefono", "telefono_fisso", "marcaSelect", "marcaAltro", "modello", "tipoIntervento", "problemaSelect", "listaErrori", "problemaNote"];
 
     window.onload = function() {
         document.getElementById("data").value = new Date().toLocaleDateString('it-IT');
-        
-        // POPOLA DATALIST COMUNI ALL'AVVIO
         const dl = document.getElementById("listaComuni");
         Object.keys(comuniDB).sort().forEach(comune => {
-            let opt = document.createElement("option");
-            opt.value = comune;
-            dl.appendChild(opt);
+            let opt = document.createElement("option"); opt.value = comune; dl.appendChild(opt);
         });
-
-        loadLocalStorage();
-        populateErrorList();
-        updateUI();
+        loadLocalStorage(); populateErrorList(); updateUI();
     };
 
     function autoProvincia() {
         const valComune = document.getElementById("comune").value;
-        if(comuniDB[valComune]) {
-            document.getElementById("provincia").value = comuniDB[valComune];
-        }
+        if(comuniDB[valComune]) { document.getElementById("provincia").value = comuniDB[valComune]; }
     }
 
     function populateErrorList() {
@@ -300,31 +300,15 @@
         const listaErrori = document.getElementById("listaErrori");
         const errori = dbErrori[marca] ? dbErrori[marca] : erroriGenerici;
         const currentSaved = localStorage.getItem("listaErrori");
-
         listaErrori.innerHTML = '<option value="">Seleziona l\'allarme...</option>';
         errori.forEach(err => {
-            const opt = document.createElement("option");
-            opt.value = err;
-            opt.textContent = err;
-            listaErrori.appendChild(opt);
+            const opt = document.createElement("option"); opt.value = err; opt.textContent = err; listaErrori.appendChild(opt);
         });
         if(currentSaved) listaErrori.value = currentSaved;
     }
 
-    function saveLocalStorage() {
-        ids.forEach(id => {
-            const el = document.getElementById(id);
-            if(el) localStorage.setItem(id, el.value);
-        });
-    }
-
-    function loadLocalStorage() {
-        ids.forEach(id => {
-            const savedValue = localStorage.getItem(id);
-            const el = document.getElementById(id);
-            if(savedValue !== null && el) el.value = savedValue;
-        });
-    }
+    function saveLocalStorage() { ids.forEach(id => { const el = document.getElementById(id); if(el) localStorage.setItem(id, el.value); }); }
+    function loadLocalStorage() { ids.forEach(id => { const savedValue = localStorage.getItem(id); const el = document.getElementById(id); if(savedValue !== null && el) el.value = savedValue; }); }
 
     function updateUI() {
         saveLocalStorage();
@@ -345,38 +329,22 @@
         document.getElementById("sezioneProblemi").style.display = (fields.tipo === "Prima accensione") ? "none" : "block";
 
         let completed = 0;
-        if(fields.cliente) completed++;
-        if(fields.indirizzo) completed++;
-        if(fields.telefono) completed++;
-        if(fields.marca) completed++;
-        if(fields.tipo) completed++;
+        if(fields.cliente) completed++; if(fields.indirizzo) completed++; if(fields.telefono) completed++; if(fields.marca) completed++; if(fields.tipo) completed++;
 
         const percent = Math.round((completed / 5) * 100);
         const bar = document.getElementById("progressBar");
-        bar.style.width = percent + "%";
-        bar.innerText = percent + "%";
-        
-        if(percent < 50) bar.style.background = "#ef4444";
-        else if(percent < 100) bar.style.background = "#f59e0b";
-        else bar.style.background = "#22c55e";
+        bar.style.width = percent + "%"; bar.innerText = percent + "%";
+        if(percent < 50) bar.style.background = "#ef4444"; else if(percent < 100) bar.style.background = "#f59e0b"; else bar.style.background = "#22c55e";
 
         const marcaFinale = fields.marca === "Altro" ? document.getElementById("marcaAltro").value : fields.marca;
         const modF = document.getElementById("modello").value;
         const erroreScelto = document.getElementById("listaErrori").value;
         const problemaFinale = probSel === "Errore sul display" ? "Errore: " + erroreScelto : probSel;
 
-        document.getElementById("previewContent").innerHTML = `
-            <b>Cliente:</b> ${fields.cliente || '-'}<br>
-            <b>Città:</b> ${fields.comune || '-'} (${fields.provincia || '-'})<br>
-            <b>Cell:</b> ${fields.telefono || '-'}<br>
-            <b>Stufa:</b> ${marcaFinale || '-'} ${modF ? '('+modF+')' : ''}<br>
-            <b>Intervento:</b> ${fields.tipo || '-'}<br>
-            ${fields.tipo !== "Prima accensione" ? `<b>Problema:</b> ${problemaFinale || '-'}` : ''}
-        `;
+        document.getElementById("previewContent").innerHTML = `<b>Cliente:</b> ${fields.cliente || '-'}<br><b>Città:</b> ${fields.comune || '-'} (${fields.provincia || '-'})<br><b>Cell:</b> ${fields.telefono || '-'}<br><b>Stufa:</b> ${marcaFinale || '-'} ${modF ? '('+modF+')' : ''}<br><b>Intervento:</b> ${fields.tipo || '-'}<br>${fields.tipo !== "Prima accensione" ? `<b>Problema:</b> ${problemaFinale || '-'}` : ''}`;
     }
 
     let messaggioGlobal = "";
-
     document.getElementById("btn").onclick = function() {
         const cliente = document.getElementById("nomeCognome").value.trim();
         const indirizzo = document.getElementById("indirizzo").value.trim();
@@ -385,23 +353,16 @@
         const telefono = document.getElementById("telefono").value.trim();
         const marca = document.getElementById("marcaSelect").value === "Altro" ? document.getElementById("marcaAltro").value : document.getElementById("marcaSelect").value;
         const tipo = document.getElementById("tipoIntervento").value;
-
-        if(!cliente || !comune || !telefono || !marca || !tipo) {
-            alert("Compila i campi obbligatori!"); return;
-        }
-
+        if(!cliente || !comune || !telefono || !marca || !tipo) { alert("Compila i campi obbligatori!"); return; }
         let prob = document.getElementById("problemaSelect").value;
         if(prob === "Errore sul display") prob = "Errore: " + document.getElementById("listaErrori").value;
         const note = document.getElementById("problemaNote").value;
         const mod = document.getElementById("modello").value;
-
         messaggioGlobal = `*RICHIESTA INTERVENTO*\n*C.A.T. SERVICE*\n\n👤 *Cliente:* ${cliente}\n📍 *Indirizzo:* ${indirizzo}\n🏙️ *Comune:* ${comune} (${provincia})\n📱 *Cell:* ${telefono}\n🔥 *Stufa:* ${marca} ${mod ? "("+mod+")" : ""}\n🧰 *Intervento:* ${tipo}\n${tipo !== "Prima accensione" ? "🛠️ *Problema:* "+prob+(note ? " ("+note+")" : "")+"\n" : ""}📅 *Data:* ${document.getElementById("data").value}`;
-        
         document.getElementById("modal").style.display = "flex";
     };
 
     document.getElementById("annulla").onclick = function() { document.getElementById("modal").style.display = "none"; };
-    
     document.getElementById("conferma").onclick = function() {
         window.open("https://wa.me/393394245508?text=" + encodeURIComponent(messaggioGlobal), "_blank");
         document.getElementById("modal").style.display = "none";
@@ -410,6 +371,5 @@
         updateUI();
     };
 </script>
-
 </body>
 </html>
