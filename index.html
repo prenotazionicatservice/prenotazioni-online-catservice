@@ -5,23 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>C.A.T. SERVICE - Prenotazione</title>
 
-<link rel="apple-touch-icon" href="icon-180.png">
+    <link rel="apple-touch-icon" href="icon-180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
 
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="CAT Service">
 
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="CAT Service">
-
-<meta property="og:title" content="C.A.T. SERVICE - Prenotazioni Online">
-<meta property="og:description" content="Prenota il tuo intervento tecnico in pochi click.">
-<meta property="og:image" content="Icon-512.png">
-<meta property="og:type" content="website">
-
+    <meta property="og:title" content="C.A.T. SERVICE - Prenotazioni Online">
+    <meta property="og:description" content="Prenota il tuo intervento tecnico in pochi click.">
+    <meta property="og:image" content="Icon-512.png">
+    <meta property="og:type" content="website">
 
     <style>
-        /* --- SPLASH SCREEN STILE NETFLIX (AGGIUNTO) --- */
+        /* --- SPLASH SCREEN STILE NETFLIX --- */
         #splash-screen {
             position: fixed;
             top: 0;
@@ -64,7 +62,7 @@
         @keyframes loadingBar { 0% { width: 0%; } 100% { width: 100%; } }
         .splash-hidden { opacity: 0 !important; visibility: hidden !important; }
 
-        /* --- CSS ORIGINALE (VERIFICATO) --- */
+        /* --- CSS CORE --- */
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
         body { 
             background: #200505; 
@@ -97,19 +95,35 @@
         @keyframes logoPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
         .progress-container { width: 100%; background: rgba(255,255,255,0.1); height: 20px; border-radius: 10px; margin-bottom: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); }
         .progress-bar { height: 100%; width: 0%; background: #ef4444; transition: width 0.5s ease; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; color: white; }
+        
+        /* --- STILI INPUT E VALIDAZIONE --- */
         .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
         .input-group { margin-bottom: 15px; width: 100%; }
         label { display: block; font-size: 11px; color: #ef4444; text-transform: uppercase; margin-bottom: 5px; padding-left: 5px; font-weight: bold; }
         .input-icon { position: relative; display: flex; align-items: center; width: 100%; }
         .input-icon span { position: absolute; left: 12px; font-size: 18px; z-index: 5; pointer-events: none; }
+        
         input, select, textarea { width: 100%; padding: 12px 15px 12px 42px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; color: #fff; font-size: 16px; transition: 0.3s; }
         select option { background-color: #1a1a1a; color: white; }
         input:focus, select:focus, textarea:focus { outline: none; border-color: #ef4444; background: rgba(255, 255, 255, 0.15); }
+
+        /* Effetti Spunta Verde */
+        .input-icon.is-valid::after {
+            content: '✅';
+            position: absolute;
+            right: 12px;
+            font-size: 14px;
+            animation: fadeInCheck 0.3s ease-in;
+        }
+        @keyframes fadeInCheck { from { opacity: 0; transform: scale(0.5); } to { opacity: 1; transform: scale(1); } }
+        .valid-field { border-color: #22c55e !important; background: rgba(34, 197, 94, 0.08) !important; }
+
+        /* Bottoni */
         button#btn { position: relative; width: 100%; padding: 20px; margin-top: 15px; border: none; border-radius: 15px; background: linear-gradient(135deg, #25d366 0%, #128c7e 100%); color: white; font-size: 15px; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; justify-content: center; gap: 10px; overflow: hidden; box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4); transition: all 0.3s ease; animation: pulse-green 2s infinite; }
         button#btn::after { content: ''; position: absolute; top: -50%; left: -60%; width: 20%; height: 200%; background: rgba(255, 255, 255, 0.4); transform: rotate(30deg); animation: shimmer 3s infinite; }
         @keyframes shimmer { 0% { left: -60%; } 20% { left: 120%; } 100% { left: 120%; } }
         @keyframes pulse-green { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); } 70% { transform: scale(1.02); box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
-        button#btn:active { transform: scale(0.95); }
+        
         .preview-box { margin-top: 10px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 12px; border: 1px dashed rgba(239, 68, 68, 0.5); font-size: 13px; line-height: 1.6; }
         .preview-title { color: #ef4444; font-size: 11px; text-transform: uppercase; margin-bottom: 8px; font-weight: bold; display: block; }
         .privacy-notice { font-size: 10px; color: #aaa; text-align: center; margin: 25px 0 5px 0; font-style: italic; }
@@ -148,17 +162,17 @@
     </div>
 
     <div class="input-group">
-        <div class="input-icon"><span>👤</span><input type="text" id="nomeCognome" placeholder="Nome e Cognome" oninput="updateUI()"></div>
+        <div class="input-icon"><span>👤</span><input type="text" id="nomeCognome" placeholder="Nome e Cognome" oninput="updateUI()" autocomplete="name"></div>
     </div>
 
     <div class="input-group">
-        <div class="input-icon"><span>📍</span><input type="text" id="indirizzo" placeholder="Indirizzo" oninput="updateUI()"></div>
+        <div class="input-icon"><span>📍</span><input type="text" id="indirizzo" placeholder="Indirizzo" oninput="updateUI()" autocomplete="street-address"></div>
     </div>
 
     <div class="input-row">
         <div class="input-icon">
             <span>🏙️</span>
-            <input type="text" id="comune" list="listaComuni" placeholder="Comune" oninput="autoProvincia(); updateUI();">
+            <input type="text" id="comune" list="listaComuni" placeholder="Comune" oninput="autoProvincia(); updateUI();" autocomplete="address-level2">
             <datalist id="listaComuni"></datalist>
         </div>
         <div class="input-icon">
@@ -173,7 +187,7 @@
     </div>
 
     <div class="input-row">
-        <div class="input-icon"><span>📱</span><input type="tel" id="telefono" placeholder="Cellulare" oninput="updateUI()"></div>
+        <div class="input-icon"><span>📱</span><input type="tel" id="telefono" placeholder="Cellulare" oninput="updateUI()" autocomplete="tel"></div>
         <div class="input-icon"><span>☎️</span><input type="tel" id="telefono_fisso" placeholder="Fisso (opz)" oninput="updateUI()"></div>
     </div>
 
@@ -282,7 +296,7 @@
         setTimeout(() => { splash.classList.add('splash-hidden'); }, 2500);
     });
 
-    // DATABASE E LOGICA ORIGINALE
+    // --- DATABASE ORIGINALE ---
     const comuniDB = {"Napoli":"NA","Acerra":"NA","Afragola":"NA","Agerola":"NA","Anacapri":"NA","Arzano":"NA","Bacoli":"NA","Barano d'Ischia":"NA","Boscoreale":"NA","Boscotrecase":"NA","Brusciano":"NA","Caivano":"NA","Calvizzano":"NA","Camposano":"NA","Capri":"NA","Carbonara di Nola":"NA","Cardito":"NA","Casalnuovo di Napoli":"NA","Casamarciano":"NA","Casamicciola Terme":"NA","Casandrino":"NA","Casavatore":"NA","Casola di Napoli":"NA","Casoria":"NA","Castellammare di Stabia":"NA","Castello di Cisterna":"NA","Cercola":"NA","Cicciano":"NA","Cimitile":"NA","Comiziano":"NA","Crispano":"NA","Ercolano":"NA","Forio":"NA","Frattamaggiore":"NA","Frattaminore":"NA","Giugliano in Campania":"NA","Gragnano":"NA","Grumo Nevano":"NA","Ischia":"NA","Lacco Ameno":"NA","Lettere":"NA","Liveri":"NA","Marano di Napoli":"NA","Mariglianella":"NA","Marigliano":"NA","Massa Lubrense":"NA","Massa di Somma":"NA","Melito di Napoli":"NA","Meta":"NA","Monte di Procida":"NA","Mugnano di Napoli":"NA","Nola":"NA","Ottaviano":"NA","Palma Campania":"NA","Piano di Sorrento":"NA","Pimonte":"NA","Poggiomarino":"NA","Pollena Trocchia":"NA","Pomigliano d'Arco":"NA","Pompei":"NA","Portici":"NA","Pozzuoli":"NA","Procida":"NA","Qualiano":"NA","Quarto":"NA","Roccarainola":"NA","San Gennaro Vesuviano":"NA","San Giorgio a Cremano":"NA","San Giuseppe Vesuviano":"NA","San Paolo Bel Sito":"NA","San Sebastiano al Vesuvio":"NA","San Vitaliano":"NA","Sant'Agnello":"NA","Sant'Anastasia":"NA","Sant'Antimo":"NA","Sant'Antonio Abate":"NA","Santa Maria la Carità":"NA","Saviano":"NA","Scisciano":"NA","Serrara Fontana":"NA","Somma Vesuviana":"NA","Sorrento":"NA","Striano":"NA","Terzigno":"NA","Torre Annunziata":"NA","Torre del Greco":"NA","Trecase":"NA","Tufino":"NA","Vico Equense":"NA","Villaricca":"NA","Visciano":"NA","Volla":"NA","Salerno":"SA","Acerno":"SA","Agropoli":"SA","Albanella":"SA","Alfano":"SA","Altavilla Silentina":"SA","Amalfi":"SA","Angri":"SA","Aquara":"SA","Ascea":"SA","Atena Lucana":"SA","Atrani":"SA","Auletta":"SA","Baronissi":"SA","Battipaglia":"SA","Bellizzi":"SA","Bellosguardo":"SA","Bracigliano":"SA","Buccino":"SA","Buonabitacolo":"SA","Caggiano":"SA","Calvanico":"SA","Camerota":"SA","Campagna":"SA","Campora":"SA","Cannalonga":"SA","Capaccio Paestum":"SA","Casal Velino":"SA","Casalbuono":"SA","Casaletto Spartano":"SA","Caselle in Pittari":"SA","Castel San Giorgio":"SA","Castel San Lorenzo":"SA","Castelcivita":"SA","Castellabate":"SA","Castelnuovo Cilento":"SA","Castelnuovo di Conza":"SA","Castiglione del Genovesi":"SA","Cava de' Tirreni":"SA","Celle di Bulgheria":"SA","Centola":"SA","Ceraso":"SA","Cetara":"SA","Cicerale":"SA","Contursi Terme":"SA","Corbara":"SA","Corleto Monforte":"SA","Cuccaro Vetere":"SA","Eboli":"SA","Felitto":"SA","Fisciano":"SA","Furore":"SA","Futani":"SA","Giffoni Sei Casali":"SA","Giffoni Valle Piana":"SA","Gioi":"SA","Giungano":"SA","Ispani":"SA","Laureana Cilento":"SA","Laurino":"SA","Laurito":"SA","Laviano":"SA","Lustra":"SA","Magliano Vetere":"SA","Maiori":"SA","Mercato San Severino":"SA","Minori":"SA","Moio della Civitella":"SA","Montano Antilia":"SA","Monte San Giacomo":"SA","Montecorice":"SA","Montecorvino Pugliano":"SA","Montecorvino Rovella":"SA","Monteforte Cilento":"SA","Montesano sulla Marcellana":"SA","Morigerati":"SA","Nocera Inferiore":"SA","Nocera Superiore":"SA","Novi Velia":"SA","Ogliastro Cilento":"SA","Olevano sul Tusciano":"SA","Oliveto Citra":"SA","Omignano":"SA","Orria":"SA","Ottati":"SA","Padula":"SA","Pagani":"SA","Palomonte":"SA","Pellezzano":"SA","Perdifumo":"SA","Perito":"SA","Pertosa":"SA","Petina":"SA","Piaggine":"SA","Pisciotta":"SA","Polla":"SA","Pollica":"SA","Pontecagnano Faiano":"SA","Positano":"SA","Postiglione":"SA","Praiano":"SA","Prignano Cilento":"SA","Ravello":"SA","Ricigliano":"SA","Roccadaspide":"SA","Roccagloriosa":"SA","Roccapiemonte":"SA","Rofrano":"SA","Romagnano al Monte":"SA","Roscigno":"SA","Rutino":"SA","Sacco":"SA","Sala Consilina":"SA","Salento":"SA","San Cipriano Picentino":"SA","San Giovanni a Piro":"SA","San Gregorio Magno":"SA","San Mango Piemonte":"SA","San Marzano sul Sarno":"SA","San Mauro Cilento":"SA","San Mauro La Bruca":"SA","San Pietro al Tanagro":"SA","San Rufo":"SA","San Valentino Torio":"SA","Sant'Angelo a Fasanella":"SA","Sant'Arsenio":"SA","Sant'Egidio del Monte Albino":"SA","Santa Marina":"SA","Santomenna":"SA","Sanza":"SA","Sapri":"SA","Sarno":"SA","Sassano":"SA","Scafati":"SA","Scala":"SA","Serramezzana":"SA","Serre":"SA","Sessa Cilento":"SA","Siano":"SA","Sicignano degli Alburni":"SA","Stella Cilento":"SA","Stio":"SA","Teggiano":"SA","Torchiara":"SA","Torre Orsaia":"SA","Tortorella":"SA","Tramonti":"SA","Trentinara":"SA","Valle dell'Angelo":"SA","Vallo della Lucania":"SA","Valva":"SA","Vibonati":"SA","Vietri sul Mare":"SA","Avellino":"AV","Aiello del Sabato":"AV","Altavilla Irpina":"AV","Andretta":"AV","Aquilonia":"AV","Ariano Irpino":"AV","Atripalda":"AV","Avella":"AV","Bagnoli Irpino":"AV","Baiano":"AV","Bisaccia":"AV","Bonito":"AV","Cairano":"AV","Calabritto":"AV","Calitri":"AV","Candida":"AV","Caposele":"AV","Capriglia Irpina":"AV","Carife":"AV","Casalbore":"AV","Cassano Irpino":"AV","Castel Baronia":"AV","Castelfranci":"AV","Castelvetere sul Calore":"AV","Cervinara":"AV","Cesinali":"AV","Chianche":"AV","Chiusano di San Domenico":"AV","Contrada":"AV","Conza della Campania":"AV","Domicella":"AV","Flumeri":"AV","Fontanarosa":"AV","Forino":"AV","Frigento":"AV","Gesualdo":"AV","Greci":"AV","Grottaminarda":"AV","Grottolella":"AV","Guardia Lombardi":"AV","Lacedonia":"AV","Lapio":"AV","Lauro":"AV","Lioni":"AV","Luogosano":"AV","Manocalzati":"AV","Marzano di Nola":"AV","Melito Irpino":"AV","Mercogliano":"AV","Mirabella Eclano":"AV","Montaguto":"AV","Montecalvo Irpino":"AV","Montefalcione":"AV","Monteforte Irpino":"AV","Montefredane":"AV","Montefusco":"AV","Montella":"AV","Montemarano":"AV","Montemiletto":"AV","Monteverde":"AV","Montoro":"AV","Morra De Sanctis":"AV","Moschiano":"AV","Mugnano del Cardinale":"AV","Nusco":"AV","Ospedaletto d'Alpinolo":"AV","Pago del Vallo di Lauro":"AV","Parolise":"AV","Paternopoli":"AV","Petruuro Irpino":"AV","Pietradefusi":"AV","Pietrastornina":"AV","Prata di Principato Ultra":"AV","Pratola Serra":"AV","Quadrelle":"AV","Quindici":"AV","Rocca San Felice":"AV","Roccabascerana":"AV","Rotondi":"AV","Salza Irpina":"AV","San Mango sul Calore":"AV","San Martino Valle Caudina":"AV","San Michele di Serino":"AV","San Nicola Baronia":"AV","San Potito Ultra":"AV","San Sossio Baronia":"AV","Sant'Andrea di Conza":"AV","Sant'Angelo a Scala":"AV","Sant'Angelo all'Esca":"AV","Sant'Angelo dei Lombardi":"AV","Santa Lucia di Serino":"AV","Santa Paolina":"AV","Santo Stefano del Sole":"AV","Savignano Irpino":"AV","Scampitella":"AV","Senerchia":"AV","Serino":"AV","Sirignano":"AV","Solofra":"AV","Sorgibo":"AV","Sperone":"AV","Sturno":"AV","Summonte":"AV","Taurano":"AV","Taurasi":"AV","Teora":"AV","Torella dei Lombardi":"AV","Torre Le Nocelle":"AV","Torrioni":"AV","Trevico":"AV","Tufo":"AV","Vallata":"AV","Vallesaccarda":"AV","Venticano":"AV","Villamaina":"AV","Villanova del Battista":"AV","Volturara Irpina":"AV","Zungoli":"AV"};
 
     const erroriGenerici = ["AL 1 - Blackout / Mancanza Rete", "AL 2 - Sonda Fumi Guasta", "AL 3 - Hot Fumi (Eccessivo Calore)", "AL 4 - Guasto Estrattore Fumi", "AL 5 - Mancata Accensione", "AL 6 - Mancanza Pellet / Fiamma", "AL 7 - Sicurezza Termica (Reset)", "AL 8 - Errore Depressione / Canna Fumaria", "AL 9 - Blocco Sistema Carico Pellet", "SERVICE"];
@@ -325,54 +339,96 @@
     function saveLocalStorage() { ids.forEach(id => { const el = document.getElementById(id); if(el) localStorage.setItem(id, el.value); }); }
     function loadLocalStorage() { ids.forEach(id => { const savedValue = localStorage.getItem(id); const el = document.getElementById(id); if(savedValue !== null && el) el.value = savedValue; }); }
 
+    // --- LOGICA DI VALIDAZIONE E UI ---
+    function setValid(el, isValid) {
+        if (isValid) {
+            el.classList.add("valid-field");
+            el.parentElement.classList.add("is-valid");
+        } else {
+            el.classList.remove("valid-field");
+            el.parentElement.classList.remove("is-valid");
+        }
+    }
+
     function updateUI() {
         saveLocalStorage();
-        const fields = {
-            cliente: document.getElementById("nomeCognome").value,
-            indirizzo: document.getElementById("indirizzo").value,
-            comune: document.getElementById("comune").value,
-            provincia: document.getElementById("provincia").value,
-            telefono: document.getElementById("telefono").value,
-            marca: document.getElementById("marcaSelect").value,
-            tipo: document.getElementById("tipoIntervento").value
-        };
+        const nomeEl = document.getElementById("nomeCognome");
+        const indirizzoEl = document.getElementById("indirizzo");
+        const comuneEl = document.getElementById("comune");
+        const provEl = document.getElementById("provincia");
+        const telEl = document.getElementById("telefono");
+        const marcaEl = document.getElementById("marcaSelect");
+        const tipoEl = document.getElementById("tipoIntervento");
 
-        document.getElementById("marcaAltroGroup").style.display = (fields.marca === "Altro") ? "block" : "none";
+        // Controllo Nome e Cognome (Almeno 2 parole)
+        const nomeVal = nomeEl.value.trim();
+        const parole = nomeVal.split(/\s+/).filter(p => p.length >= 2);
+        const nomeValido = parole.length >= 2;
+        setValid(nomeEl, nomeValido);
+
+        // Controllo altri campi obbligatori
+        setValid(indirizzoEl, indirizzoEl.value.trim().length > 4);
+        setValid(comuneEl, comuneEl.value.trim().length > 2);
+        setValid(provEl, provEl.value !== "");
+        setValid(telEl, telEl.value.trim().length >= 9);
+        setValid(marcaEl, marcaEl.value !== "");
+        setValid(tipoEl, tipoEl.value !== "");
+
+        // Mostra/Nascondi condizionali
+        document.getElementById("marcaAltroGroup").style.display = (marcaEl.value === "Altro") ? "block" : "none";
         const probSel = document.getElementById("problemaSelect").value;
         document.getElementById("erroriDisplayGroup").style.display = (probSel === "Errore sul display") ? "block" : "none";
         document.getElementById("altroBox").style.display = (probSel === "Altro" || probSel === "Errore sul display") ? "block" : "none";
-        document.getElementById("sezioneProblemi").style.display = (fields.tipo === "Prima accensione") ? "none" : "block";
+        document.getElementById("sezioneProblemi").style.display = (tipoEl.value === "Prima accensione") ? "none" : "block";
 
+        // Calcolo Barra Progresso (su 5 campi fondamentali)
         let completed = 0;
-        if(fields.cliente) completed++; if(fields.indirizzo) completed++; if(fields.telefono) completed++; if(fields.marca) completed++; if(fields.tipo) completed++;
+        if(nomeValido) completed++;
+        if(indirizzoEl.value.trim().length > 4) completed++;
+        if(telEl.value.trim().length >= 9) completed++;
+        if(marcaEl.value !== "") completed++;
+        if(tipoEl.value !== "") completed++;
 
         const percent = Math.round((completed / 5) * 100);
         const bar = document.getElementById("progressBar");
         bar.style.width = percent + "%"; bar.innerText = percent + "%";
         if(percent < 50) bar.style.background = "#ef4444"; else if(percent < 100) bar.style.background = "#f59e0b"; else bar.style.background = "#22c55e";
 
-        const marcaFinale = fields.marca === "Altro" ? document.getElementById("marcaAltro").value : fields.marca;
+        // Anteprima Messaggio
+        const marcaFinale = marcaEl.value === "Altro" ? document.getElementById("marcaAltro").value : marcaEl.value;
         const modF = document.getElementById("modello").value;
         const erroreScelto = document.getElementById("listaErrori").value;
         const problemaFinale = probSel === "Errore sul display" ? "Errore: " + erroreScelto : probSel;
 
-        document.getElementById("previewContent").innerHTML = `<b>Cliente:</b> ${fields.cliente || '-'}<br><b>Città:</b> ${fields.comune || '-'} (${fields.provincia || '-'})<br><b>Cell:</b> ${fields.telefono || '-'}<br><b>Stufa:</b> ${marcaFinale || '-'} ${modF ? '('+modF+')' : ''}<br><b>Intervento:</b> ${fields.tipo || '-'}<br>${fields.tipo !== "Prima accensione" ? `<b>Problema:</b> ${problemaFinale || '-'}` : ''}`;
+        document.getElementById("previewContent").innerHTML = `<b>Cliente:</b> ${nomeVal || '-'}<br><b>Città:</b> ${comuneEl.value || '-'} (${provEl.value || '-'})<br><b>Cell:</b> ${telEl.value || '-'}<br><b>Stufa:</b> ${marcaFinale || '-'} ${modF ? '('+modF+')' : ''}<br><b>Intervento:</b> ${tipoEl.value || '-'}<br>${tipoEl.value !== "Prima accensione" ? `<b>Problema:</b> ${problemaFinale || '-'}` : ''}`;
     }
 
     let messaggioGlobal = "";
     document.getElementById("btn").onclick = function() {
         const cliente = document.getElementById("nomeCognome").value.trim();
+        const parole = cliente.split(/\s+/).filter(p => p.length >= 2);
+
+        // Blocco se Nome e Cognome mancano
+        if (parole.length < 2) {
+            alert("⚠️ Inserisci sia il Nome che il Cognome separati da uno spazio.");
+            document.getElementById("nomeCognome").focus();
+            return;
+        }
+
         const indirizzo = document.getElementById("indirizzo").value.trim();
         const comune = document.getElementById("comune").value.trim();
         const provincia = document.getElementById("provincia").value;
         const telefono = document.getElementById("telefono").value.trim();
         const marca = document.getElementById("marcaSelect").value === "Altro" ? document.getElementById("marcaAltro").value : document.getElementById("marcaSelect").value;
         const tipo = document.getElementById("tipoIntervento").value;
-        if(!cliente || !comune || !telefono || !marca || !tipo) { alert("Compila i campi obbligatori!"); return; }
+
+        if(!comune || !telefono || !marca || !tipo) { alert("Compila i campi obbligatori!"); return; }
+
         let prob = document.getElementById("problemaSelect").value;
         if(prob === "Errore sul display") prob = "Errore: " + document.getElementById("listaErrori").value;
         const note = document.getElementById("problemaNote").value;
         const mod = document.getElementById("modello").value;
+
         messaggioGlobal = `*RICHIESTA INTERVENTO*\n*C.A.T. SERVICE*\n\n👤 *Cliente:* ${cliente}\n📍 *Indirizzo:* ${indirizzo}\n🏙️ *Comune:* ${comune} (${provincia})\n📱 *Cell:* ${telefono}\n🔥 *Stufa:* ${marca} ${mod ? "("+mod+")" : ""}\n🧰 *Intervento:* ${tipo}\n${tipo !== "Prima accensione" ? "🛠️ *Problema:* "+prob+(note ? " ("+note+")" : "")+"\n" : ""}📅 *Data:* ${document.getElementById("data").value}`;
         document.getElementById("modal").style.display = "flex";
     };
